@@ -14,7 +14,7 @@
 - `conflict`: 충돌 해결
 - `publish` : 페이지 퍼블리싱
 
-## 기술 스택
+## 사용 라이브러리,프레임워크
 - react, axios,  Styled-components
 
 ## 브랜치 전략
