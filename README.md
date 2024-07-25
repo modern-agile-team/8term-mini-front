@@ -1,5 +1,5 @@
-# ModernWorld-Front
-모던애자일 7기 모던월드 프론트 레포지토리
+# ModernMovie-Front
+모던애자일 8기 미니프로젝트 모던무비 프론트 레포지토리
 
 ## 커밋 메시지 컨벤션
 
@@ -15,7 +15,7 @@
 - `publish` : 페이지 퍼블리싱
 
 ## 기술 스택
-- typescript, next.js
+- react, axios,  Styled-components
 
 ## 브랜치 전략
 - feature/기능이름/(#이슈번호)
