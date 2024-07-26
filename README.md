@@ -15,7 +15,7 @@
 - `publish` : 페이지 퍼블리싱
 
 ## 사용 라이브러리,프레임워크
-- react, axios,  Styled-components
+- React(Vite), Styled-Component, Axios, React-Route-Dom
 
 ## 브랜치 전략
 - feature/기능이름/(#이슈번호)
