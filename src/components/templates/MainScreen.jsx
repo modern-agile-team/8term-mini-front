@@ -1,12 +1,7 @@
 import Header from '../organisms/Header';
-import styled from 'styled-components';
-import mainscreen from '/mainscreen.jpg';
+import { MainScreenDiv } from './styled';
 
-const MainScreenDiv = styled.div`
-  height: 100vh;
-  background-image: url(${mainscreen});
-  background-size: cover;
-`;
+/** @메인스크린 사이트 들어왔을때 제일먼저 보이는 메인스크린 컴포넌트 */
 export default function MainScreen() {
   return (
     <MainScreenDiv>
