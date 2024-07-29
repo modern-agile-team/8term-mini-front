@@ -7,7 +7,7 @@ const HeaderDiv = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
-
+/** @헤더 헤더 컴포넌트 */
 export default function Header() {
   //로그인 페이지로 링크
   return (
