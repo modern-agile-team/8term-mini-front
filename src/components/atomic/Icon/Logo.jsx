@@ -6,6 +6,7 @@ const LogoImg = styled.img`
   height: 87px;
   margin-left: 59px;
 `;
+/** @모던무비로고 모던무비 로고 컴포넌트*/
 export default function Logo() {
   //메인화면으로 링크
   return (
