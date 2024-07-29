@@ -1,6 +1,7 @@
 import Title from '../components/atomic/icons/Title';
 import MovieContent from '../components/organisms/MovieContent';
 import MainScreen from '../components/templates/MainScreen';
+import { MovieContainer } from '../components/templates/MovieContainer';
 
 /** @메인페이지 메인스크린+영화목록 컴포넌트  */
 export default function MainPage() {
@@ -8,7 +9,7 @@ export default function MainPage() {
     <>
       <MainScreen></MainScreen>
       <Title></Title>
-      <MovieContent></MovieContent>
+      <MovieContainer></MovieContainer>
     </>
   );
 }

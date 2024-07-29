@@ -6,5 +6,14 @@ export const HeaderDiv = styled.div`
 `;
 export const MovieContentDiv = styled.div`
   display: flex;
-  color: wheat;
+  background-color: white;
+  justify-content: space-between;
+  padding-left: 20px;
+`;
+export const MovieInfoDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  width: 300px;
+  flex-grow: 1;
 `;

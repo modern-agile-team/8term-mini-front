@@ -33,10 +33,8 @@ export const FlexEndTextDiv = styled.div`
 /*영화 리스트의 영화이름 스타일*/
 export const MovieNameDiv = styled.div`
   color: #000000;
-  font-family: 'Pretendard-Regular';
 `;
 /*영화 개봉년도 스타일 */
 export const MovieYearDiv = styled.div`
   color: #000000;
-  font-family: 'Pretendard-Regular';
 `;

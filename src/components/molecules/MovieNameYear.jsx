@@ -1,11 +1,11 @@
 import MovieName from '../atomic/icons/MovieName';
 import MovieYear from '../atomic/icons/MovieYear';
-
-export default function MovieNameYear(props) {
+import { MovieNameYearDiv } from './styled';
+export default function MovieNameYear() {
   return (
-    <>
-      <MovieName name={props.name}></MovieName>
-      <MovieYear year={props.year}></MovieYear>
-    </>
+    <MovieNameYearDiv>
+      <MovieName name="이름"></MovieName>
+      <MovieYear year="1234"></MovieYear>
+    </MovieNameYearDiv>
   );
 }
