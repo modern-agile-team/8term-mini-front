@@ -1,7 +1,7 @@
 import React from 'react';
 import * as S from './styled';
-import InputEmail from '../../components/atomic/inputs/InputEmail';
-import InputPassword from '../../components/atomic/inputs/InputPassword';
+import InputEmail from '../../components/page_components/login/InputEmail';
+import InputPassword from '../../components/page_components/login/InputPassword';
 
 export default function LoginPage() {
   return (
