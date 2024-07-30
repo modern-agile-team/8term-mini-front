@@ -6,7 +6,7 @@ export default function Login() {
   //로그인 페이지로 링크
   return (
     <>
-      <Link to="#">
+      <Link to="login">
         <LoginDiv>LOGIN / SIGN IN</LoginDiv>
       </Link>
     </>
