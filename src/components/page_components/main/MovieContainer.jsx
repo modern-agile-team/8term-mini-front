@@ -1,14 +1,9 @@
-import { MovieContainerDiv } from './styled';
-import MovieContent from '../organisms/MovieContent';
-export function MovieContainer() {
-  const testArr = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-  ];
+import MovieItem from './MovieItem';
+import * as S from './mainStyled';
+export default function MovieContainer() {
   return (
-    <MovieContainerDiv>
-      {testArr.map(val => {
-        return <MovieContent key={val}></MovieContent>;
-      })}
-    </MovieContainerDiv>
+    <div>
+      <MovieItem></MovieItem>
+    </div>
   );
 }

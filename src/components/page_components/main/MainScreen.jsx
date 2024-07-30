@@ -1,10 +1,18 @@
-import Header from '../organisms/Header';
-import { MainScreenDiv } from './styled';
-/** @메인스크린 사이트 들어왔을때 제일먼저 보이는 메인스크린 컴포넌트 */
+import * as S from './mainStyled';
+import Header from '../../public_components/Header';
 export default function MainScreen() {
   return (
-    <MainScreenDiv>
-      <Header></Header>
-    </MainScreenDiv>
+    <>
+      <S.mainScreenDiv>
+        <Header></Header>
+      </S.mainScreenDiv>
+      <S.TitleDiv>
+        <S.TitleContainerDiv>
+          <S.FlexEndTextDiv>죽기</S.FlexEndTextDiv>
+          <S.FlexStartTextDiv>전에 봐야 할</S.FlexStartTextDiv>
+          <S.FlexEndTextDiv>영화 20선</S.FlexEndTextDiv>
+        </S.TitleContainerDiv>
+      </S.TitleDiv>
+    </>
   );
 }
