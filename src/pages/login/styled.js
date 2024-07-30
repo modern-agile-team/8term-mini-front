@@ -10,6 +10,16 @@ export const LoginPageDiv = styled.div`
   background-color: #f7f9f3;
 `;
 
+export const LogoImg = styled.img`
+  width: 200px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  transition: transform 0.3s;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
 export const LoginFont = styled.div`
   font-family: countach, sans-serif;
   font-size: 30px;
