@@ -6,6 +6,9 @@ export const LoginSearchDiv = styled.div`
 `;
 
 export const MovieNameYearDiv = styled.div`
+  font-family: 'Pretendard-Regular';
+  font-weight: 600;
   display: flex;
   flex-direction: column;
+  line-height: 24px;
 `;

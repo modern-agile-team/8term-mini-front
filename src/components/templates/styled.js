@@ -8,4 +8,10 @@ export const MainScreenDiv = styled.div`
   background-position: center;
   background-repeat: no-repeat;
 `;
-export const BackGroundImg = styled.div``;
+export const MovieContainerDiv = styled.div`
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+`;

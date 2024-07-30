@@ -33,10 +33,28 @@ export const FlexEndTextDiv = styled.div`
 /*영화 리스트의 영화이름 스타일*/
 export const MovieNameDiv = styled.div`
   color: #000000;
-  font-family: 'Pretendard-Regular';
 `;
 /*영화 개봉년도 스타일 */
 export const MovieYearDiv = styled.div`
   color: #000000;
-  font-family: 'Pretendard-Regular';
+`;
+export const LoginDiv = styled.div`
+  font-family: countach, sans-serif;
+  font-size: 25px;
+  line-height: 42px;
+  font-weight: 400;
+  color: #f7f9f3;
+  margin-right: 50px;
+  display: inline-block;
+`;
+/** @검색버튼 검색버튼 컴포넌트 */
+export const SearchDiv = styled.div`
+  font-family: countach, sans-serif;
+  display: inline-block;
+  font-size: 25px;
+  line-height: 42px;
+  font-weight: 400;
+  margin-right: 80px;
+
+  color: #f7f9f3;
 `;

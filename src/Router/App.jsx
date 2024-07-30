@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainPage from '../pages/MainPage';
+import MainPage from '../pages/main/MainPage';
 import NotFound from '../pages/error/NotFound';
 import LoginPage from '../pages/login/LoginPage';
 
