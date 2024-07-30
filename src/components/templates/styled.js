@@ -9,8 +9,8 @@ export const MainScreenDiv = styled.div`
   background-repeat: no-repeat;
 `;
 export const MovieContainerDiv = styled.div`
-  margin-left: 20px;
-  margin-right: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;

@@ -6,7 +6,7 @@ export function MovieContainer() {
   ];
   return (
     <MovieContainerDiv>
-      {testArr.map((val) => {
+      {testArr.map(val => {
         return <MovieContent key={val}></MovieContent>;
       })}
     </MovieContainerDiv>

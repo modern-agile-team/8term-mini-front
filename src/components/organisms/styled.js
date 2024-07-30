@@ -13,7 +13,9 @@ export const MovieContentDiv = styled.div`
 export const MovieInfoDiv = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 5px;
+  gap: 0;
+  margin: 10px;
   width: 300px;
   flex-grow: 1;
+  margin-bottom: 100px;
 `;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const MoviePhotoImg = styled.img`
-  height: 375px;
+  height: 430px;
   object-fit: cover;
   max-width: 100%;
 `;
