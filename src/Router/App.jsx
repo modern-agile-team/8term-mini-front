@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import NotFound from '../pages/error/NotFound';
+import NotFoundPage from '../pages/error/NotFoundPage';
 import LoginPage from '../pages/login/LoginPage';
 
 export default function App() {
@@ -8,7 +8,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<LoginPage />}></Route>
-          <Route path="/*" element={<NotFound />}></Route>
+          <Route path="/*" element={<NotFoundPage />}></Route>
         </Routes>
       </BrowserRouter>
     </>

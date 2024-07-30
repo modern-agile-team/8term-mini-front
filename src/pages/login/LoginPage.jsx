@@ -1,15 +1,20 @@
 import React from 'react';
-import * as S from './styled';
+import * as S from './LoginPageStyled';
 import LoginForm from '../../components/page_components/login/LoginForm';
 import logo3 from '/logo3.png';
-import { LogoImg } from './styled';
 
 export default function LoginPage() {
   return (
     <S.LoginPageDiv>
-      <LogoImg src={logo3} />
+      <S.LogoImg src={logo3} />
       <S.LoginFont>LOGIN</S.LoginFont>
       <LoginForm />
+      <S.ForgotDiv>FORGOT YOUR PASSWORD?</S.ForgotDiv>
+      <S.HorizontalLine />
+      <S.NoAccountDiv>
+        DON’T HAVE AN ACCOUNT?
+        <S.SignUpButton>SIGN UP</S.SignUpButton>
+      </S.NoAccountDiv>
     </S.LoginPageDiv>
   );
 }
