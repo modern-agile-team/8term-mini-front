@@ -1,9 +1,9 @@
 import React from 'react';
-import * as S from './styled';
+import * as S from './NotFoundPageStyled';
 import { useNavigate } from 'react-router-dom';
 
 /** @에러페이지 들어갔을 때 메인페이지로 이동*/
-export default function NotFound() {
+export default function NotFoundPage() {
   const navigate = useNavigate();
 
   return (
