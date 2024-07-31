@@ -1,17 +1,17 @@
 import React from 'react';
-import * as S from './ResisterPageStyled';
+import * as S from './RegisterPageStyled';
 import { useNavigate } from 'react-router-dom';
-import ResisterForm from '../../components/page_components/resister/ResisterForm';
+import RegisterForm from '../../components/page_components/resister/RegisterForm';
 import logo3 from '/logo3.png';
 
 export default function LoginPage() {
   const navigate = useNavigate();
 
   return (
-    <S.ResisterPageDiv>
+    <S.RegisterPageDiv>
       <S.LogoImg src={logo3} onClick={() => navigate('/')} />
-      <S.ResisterFont>SIGN UP</S.ResisterFont>
-      <ResisterForm />
+      <S.RegisterFont>SIGN UP</S.RegisterFont>
+      <RegisterForm />
       <S.HorizontalLine />
       <S.YesAccountDiv>
         ALREADY SIGNED UP?
@@ -19,6 +19,6 @@ export default function LoginPage() {
           SIGN IN
         </S.SignInButton>
       </S.YesAccountDiv>
-    </S.ResisterPageDiv>
+    </S.RegisterPageDiv>
   );
 }

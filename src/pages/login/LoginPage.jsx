@@ -16,7 +16,7 @@ export default function LoginPage() {
       <S.HorizontalLine />
       <S.NoAccountDiv>
         DON’T HAVE AN ACCOUNT?
-        <S.SignUpButton onClick={() => navigate('/resister')}>
+        <S.SignUpButton onClick={() => navigate('/register')}>
           SIGN UP
         </S.SignUpButton>
       </S.NoAccountDiv>
