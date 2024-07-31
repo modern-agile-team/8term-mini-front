@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
-/**로그인 페이지 div 요소 정렬 */
-export const LoginPageDiv = styled.div`
+/**회원가입 페이지 div 요소 정렬 */
+export const ResisterPageDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   width: 100vw;
   flex-direction: column;
-  background-color: #f7f9f3;
+  background-color: #000000;
 `;
 
 /**모던무비 로고 */
@@ -22,33 +22,25 @@ export const LogoImg = styled.img`
   }
 `;
 
-/**LOGIN 텍스트 */
-export const LoginFont = styled.div`
+/**SIGN UP 텍스트 */
+export const ResisterFont = styled.div`
   font-family: countach, sans-serif;
   font-size: 30px;
+  color: #ffffff;
   margin-bottom: 15px;
   cursor: default;
-`;
-
-/**FORGOT YOUR PASSWORD */
-export const ForgotDiv = styled.div`
-  font-family: 'Pretendard-Regular';
-  color: #8d8d8d;
-  font-size: 14px;
-  margin-top: 30px;
-  cursor: pointer;
 `;
 
 /**밑줄 */
 export const HorizontalLine = styled.hr`
   width: 80%;
   border: none;
-  border-top: 2px solid #000000;
-  margin-top: 25px;
+  border-top: 2px solid #ffffff;
+  margin-top: 45px;
 `;
 
-/**DON’T HAVE AN ACCOUNT? */
-export const NoAccountDiv = styled.div`
+/**ALREADY SIGNED UP? */
+export const YesAccountDiv = styled.div`
   font-family: 'Pretendard-Regular';
   color: #8d8d8d;
   font-size: 14px;
@@ -56,12 +48,12 @@ export const NoAccountDiv = styled.div`
   cursor: default;
 `;
 
-/**회원가입 페이지 이동 */
-export const SignUpButton = styled.button`
+/**로그인 페이지 이동 */
+export const SignInButton = styled.button`
   font-family: 'Pretendard-Regular';
   font-size: 18px;
   font-weight: 600;
-  color: #000000
+  color: #ffffff;
   background: none;
   background-color: transparent;
   border: none;
