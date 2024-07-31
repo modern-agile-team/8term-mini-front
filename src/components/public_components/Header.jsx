@@ -6,9 +6,11 @@ export default function Header() {
   return (
     <>
       <S.HeaderDiv>
-        <S.HeaderImg src={logo2}></S.HeaderImg>
+        <Link to="/">
+          <S.HeaderImg src={logo2}></S.HeaderImg>
+        </Link>
         <S.LoginSerchDiv>
-          <Link to="#">
+          <Link to="/login">
             <S.HeaderTextDiv>LOGIN / SIGN IN</S.HeaderTextDiv>
           </Link>
           <Link to="#">

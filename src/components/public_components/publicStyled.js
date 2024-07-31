@@ -11,6 +11,7 @@ export const HeaderDiv = styled.div`
 export const HeaderImg = styled.img`
   width: 125px;
   height: 75px;
+  cursor: pointer;
 `;
 export const LoginSerchDiv = styled.div`
   font-family: 'countach', sans-serif;
