@@ -3,7 +3,6 @@ import * as S from './publicStyled';
 import logo2 from '/logo2.png';
 /** @헤더 헤더 컴포넌트 */
 export default function Header() {
-  //로그인 페이지로 링크
   return (
     <>
       <S.HeaderDiv>

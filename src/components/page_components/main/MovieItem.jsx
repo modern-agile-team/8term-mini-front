@@ -1,16 +1,18 @@
 import FavoriteButton from './FavoriteButton';
-import * as S from './mainStyled';
+import * as S from './MainStyled';
 import testImg from '/testImg.jpg';
-export default function MovieItem() {
+export default function MovieItem({ movieName, movieYear }) {
   return (
     <S.MovieItemDiv>
       <S.ItemImg src={testImg}></S.ItemImg>
       <S.ItemInfoDiv>
-        <S.ItemDesDiv>
-          <div>영화이름</div>
-          <div>개봉년도</div>
-        </S.ItemDesDiv>
-        <FavoriteButton></FavoriteButton>
+        <S.ItemCoulmnDiv>
+          <div>{movieName}</div>
+          <FavoriteButton></FavoriteButton>
+        </S.ItemCoulmnDiv>
+        <S.ItemCoulmnDiv>
+          <div>{movieYear}</div>
+        </S.ItemCoulmnDiv>
       </S.ItemInfoDiv>
     </S.MovieItemDiv>
   );

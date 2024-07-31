@@ -1,4 +1,4 @@
-import * as S from './mainStyled';
+import * as S from './MainStyled';
 import Header from '../../public_components/Header';
 export default function MainScreen() {
   return (

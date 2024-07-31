@@ -6,11 +6,11 @@ export const HeaderDiv = styled.div`
   align-items: center;
   padding: 10px;
   padding-left: 50px;
-  padding-top: 10px;
+  padding-top: 15px;
 `;
 export const HeaderImg = styled.img`
-  width: 100px;
-  height: 50px;
+  width: 125px;
+  height: 75px;
 `;
 export const LoginSerchDiv = styled.div`
   font-family: 'countach', sans-serif;
@@ -20,7 +20,7 @@ export const LoginSerchDiv = styled.div`
   font-size: 25px;
   width: 300px;
   justify-content: space-between;
-  margin-right: 60px;
+  margin-right: 80px;
 `;
 export const HeaderTextDiv = styled.div`
   color: #f7f9f3;
