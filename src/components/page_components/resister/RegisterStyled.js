@@ -27,7 +27,7 @@ export const InputDiv = styled.input`
 `;
 
 /**회원가입 button*/
-export const ResisterButton = styled.button`
+export const RegisterButton = styled.button`
   font-family: 'Pretendard-Regular';
   background-color: #000000;
   color: #ffffff;
