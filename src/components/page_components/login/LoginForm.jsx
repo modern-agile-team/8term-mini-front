@@ -1,5 +1,6 @@
-import * as S from './styled.js';
+import * as S from './LoginStyled.js';
 
+/**@로그인폼 */
 export default function LoginForm() {
   return (
     <S.LootDiv>
