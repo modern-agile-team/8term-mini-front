@@ -1,11 +1,13 @@
 import * as S from './MainStyled';
 import Header from '../../public_components/Header';
 import Sortify from './Sortify';
+import SearchBar from './SearchBar';
 export default function MainScreen() {
   return (
     <>
       <S.mainScreenDiv>
         <Header></Header>
+        <SearchBar></SearchBar>
       </S.mainScreenDiv>
       <S.TitleDiv>
         <S.TitleContainerDiv>

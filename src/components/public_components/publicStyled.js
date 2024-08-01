@@ -22,6 +22,7 @@ export const LoginSerchDiv = styled.div`
   font-weight: 400;
   font-size: 25px;
   width: 300px;
+  padding-right: 50px;
   justify-content: space-between;
   margin-right: 80px;
 `;
