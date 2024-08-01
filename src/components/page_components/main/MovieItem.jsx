@@ -6,13 +6,13 @@ export default function MovieItem({ movieName, movieYear }) {
     <S.MovieItemDiv>
       <S.ItemImg src={testImg}></S.ItemImg>
       <S.ItemInfoDiv>
-        <S.ItemCoulmnDiv>
+        <S.ItemColumnDiv>
           <div>{movieName}</div>
           <FavoriteButton></FavoriteButton>
-        </S.ItemCoulmnDiv>
-        <S.ItemCoulmnDiv>
-          <div>{movieYear}</div>
-        </S.ItemCoulmnDiv>
+        </S.ItemColumnDiv>
+        <S.ItemColumnDiv>
+          <S.ItemYearDiv>{movieYear}</S.ItemYearDiv>
+        </S.ItemColumnDiv>
       </S.ItemInfoDiv>
     </S.MovieItemDiv>
   );
