@@ -47,8 +47,8 @@ export const MovieContainerDiv = styled.div`
   grid-auto-rows: 500px;
   grid-column-gap: 15px;
   grid-row-gap: 140px;
+  padding-top: 0px;
 `;
-
 /*MovieItem 스타일 컴포넌트 */
 export const ItemImg = styled.img`
   height: 85%;
@@ -60,6 +60,7 @@ export const MovieItemDiv = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+  cursor: pointer;
 `;
 export const ItemInfoDiv = styled.div`
   height: 15%;
@@ -70,7 +71,7 @@ export const ItemInfoDiv = styled.div`
   justify-content: center;
   background-color: white;
 `;
-export const ItemCoulmnDiv = styled.div`
+export const ItemColumnDiv = styled.div`
   font-size: 25px;
   font-family: 'Pretendard-Regular';
   font-weight: 600;
@@ -79,9 +80,24 @@ export const ItemCoulmnDiv = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+export const ItemYearDiv = styled.div`
+  padding-top: 2px;
+  padding-left: 3px;
+  font-size: 16px;
+`;
 /** 찜버튼 컴포넌트 스타일 */
 export const FavoriteButtonImg = styled.img`
   width: 20px;
   height: 20px;
 `;
-/* 영화목록 컬럼 컴포넌트 스타일 */
+/* 정렬박스 스타일 */
+export const SortifyDiv = styled.div`
+  display: grid;
+  margin: 20px;
+  padding-bottom: 0;
+  border-top: 2px solid white;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 200px;
+  grid-column-gap: 15px;
+  grid-row-gap: 140px;
+`;

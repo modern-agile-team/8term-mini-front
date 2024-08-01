@@ -1,5 +1,6 @@
 import * as S from './MainStyled';
 import Header from '../../public_components/Header';
+import Sortify from './Sortify';
 export default function MainScreen() {
   return (
     <>
@@ -13,6 +14,7 @@ export default function MainScreen() {
           <S.FlexEndTextDiv>영화 20선</S.FlexEndTextDiv>
         </S.TitleContainerDiv>
       </S.TitleDiv>
+      <Sortify></Sortify>
     </>
   );
 }
