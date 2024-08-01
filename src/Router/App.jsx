@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from '../pages/main/MainPage';
 import NotFoundPage from '../pages/error/NotFoundPage';
 import LoginPage from '../pages/login/LoginPage';
-import RegisterPage from '../pages/resister/RegisterPage';
+import RegisterPage from '../pages/register/RegisterPage';
 
 export default function App() {
   return (

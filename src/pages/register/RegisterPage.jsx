@@ -1,7 +1,7 @@
 import React from 'react';
 import * as S from './RegisterPageStyled';
 import { useNavigate } from 'react-router-dom';
-import RegisterForm from '../../components/page_components/resister/RegisterForm';
+import RegisterForm from '../../components/page_components/register/RegisterForm';
 import logo3 from '/logo3.png';
 
 export default function LoginPage() {
