@@ -8,6 +8,7 @@ export const HeaderDiv = styled.div`
   padding-left: 50px;
   padding-top: 15px;
 `;
+//
 export const HeaderImg = styled.img`
   width: 125px;
   height: 75px;
