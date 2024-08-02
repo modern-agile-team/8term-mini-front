@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import * as S from './publicStyled';
 import logo3 from '/logo3.png';
-import { useEffect, useState } from 'react';
 /** @헤더 헤더 컴포넌트 */
 export default function Header() {
   return (

@@ -3,11 +3,10 @@ import mainscreen from '/mainscreen.jpg';
 
 /** MainScreen 스타일 컴포넌트 */
 export const mainScreenDiv = styled.div`
-  width: 100%;
+  display: flex;
+  width: 200%;
   height: 100vh;
-  background-image: url(${mainscreen});
-  background-size: 125%;
-  background-repeat: no-repeat;
+  transform: translateX(-50%);
 `;
 
 export const TitleContainerDiv = styled.div`
@@ -36,6 +35,15 @@ export const TitleDiv = styled.div`
   display: flex;
   align-items: center;
   padding-left: 30px;
+`;
+export const MainImg = styled.img`
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+`;
+export const ImgBox = styled.div`
+  width: 100%;
+  height: 100vh;
 `;
 /*MovieContainer 스타일 컴포넌트 */
 
@@ -80,6 +88,7 @@ export const ItemColumnDiv = styled.div`
   width: 90%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 export const ItemreleaseDiv = styled.div`
   padding-top: 2px;
@@ -167,6 +176,7 @@ export const SearchBarDiv = styled.div`
   align-items: center;
   justify-content: center;
   width: 50%;
+  z-index: 10;
 `;
 export const SearchBarImg = styled.img`
   width: 32px;

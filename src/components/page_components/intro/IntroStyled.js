@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 /**div 요소 정렬 */
 export const LootDiv = styled.div`
+  padding-top: 12%;
   color: #f7f9f3;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   flex-direction: row;
-  margin-top: 40px;
 `;
 
 /**image 감싸는 div */
