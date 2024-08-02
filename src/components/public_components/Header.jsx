@@ -14,7 +14,7 @@ export default function Header() {
           <Link to="/login">
             <S.HeaderTextDiv>LOGIN / SIGN UP</S.HeaderTextDiv>
           </Link>
-          <Link to="#">
+          <Link to="/mypage">
             <S.HeaderTextDiv>MYPAGE</S.HeaderTextDiv>
           </Link>
         </S.LoginSerchDiv>

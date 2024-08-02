@@ -70,7 +70,7 @@ export const ItemInfoDiv = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: white;
+  background-color: #f7f9f3;
 `;
 export const ItemColumnDiv = styled.div`
   font-size: 25px;
@@ -81,7 +81,7 @@ export const ItemColumnDiv = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-export const ItemYearDiv = styled.div`
+export const ItemreleaseDiv = styled.div`
   padding-top: 2px;
   padding-left: 3px;
   font-size: 16px;
@@ -150,6 +150,7 @@ export const SearchBarInput = styled.input`
   font-size: 30px;
   color: #f7f9f3;
   width: 100%;
+  font-weight: 600;
   background-color: transparent;
   border: none;
   border-bottom: 2px solid #f7f9f3;
@@ -162,7 +163,6 @@ export const SearchBarDiv = styled.div`
   top: 12%;
   left: 50%;
   transform: translateX(-60%);
-
   display: flex;
   align-items: center;
   justify-content: center;
