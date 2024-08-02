@@ -55,7 +55,7 @@ export const MovieContainerDiv = styled.div`
   margin-bottom: 500px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 500px;
+  grid-auto-rows: 800px;
   grid-column-gap: 15px;
   grid-row-gap: 140px;
   padding-top: 0px;
@@ -150,9 +150,11 @@ export const SortListDiv = styled.div`
   font-weight: 600;
   line-height: normal;
   text-transform: uppercase;
+  transform: translateY(-${props => props.$translate}px);
+  transition: all 500ms ease-in;
   &:hover {
     transform: translateY(-30px);
-    transition: all 500ms ease-in; //모든 속성을 1초동안 ease-in
+    transition: all 500ms ease-in;
   }
 `;
 /*검색박스 컴포넌트 */
@@ -181,6 +183,7 @@ export const SearchBarDiv = styled.div`
   z-index: 10;
 `;
 export const SearchBarImg = styled.img`
+  cursor: pointer;
   width: 32px;
   height: 32px;
 `;
