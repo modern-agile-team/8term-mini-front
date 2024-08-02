@@ -4,6 +4,7 @@ import NotFoundPage from '../pages/error/NotFoundPage';
 import LoginPage from '../pages/login/LoginPage';
 import RegisterPage from '../pages/register/RegisterPage';
 import IntroPage from '../pages/intro/IntroPage';
+import MyPage from '../pages/mypage/MyPage';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/register" element={<RegisterPage />}></Route>
           <Route path="/intro" element={<IntroPage />}></Route>
+          <Route path="/mypage" element={<MyPage />}></Route>
           <Route path="/*" element={<NotFoundPage />}></Route>
         </Routes>
       </BrowserRouter>

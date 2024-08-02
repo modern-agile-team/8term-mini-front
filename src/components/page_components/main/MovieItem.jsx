@@ -3,7 +3,7 @@ import * as S from './MainStyled';
 import testImg from '/testImg.jpg';
 import arrrow from '/arrow.png';
 import { useNavigate } from 'react-router-dom';
-export default function MovieItem({ movieName, movieYear }) {
+export default function MovieItem({ movieName, release }) {
   const navigate = useNavigate();
   return (
     <>
@@ -23,7 +23,7 @@ export default function MovieItem({ movieName, movieYear }) {
             <FavoriteButton></FavoriteButton>
           </S.ItemColumnDiv>
           <S.ItemColumnDiv>
-            <S.ItemYearDiv>{movieYear}</S.ItemYearDiv>
+            <S.ItemreleaseDiv>{release}</S.ItemreleaseDiv>
           </S.ItemColumnDiv>
         </S.ItemInfoDiv>
       </S.MovieItemDiv>
