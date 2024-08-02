@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 import mainscreen from '/mainscreen.jpg';
-
+import mainscreen2 from '/mainscreen2.jpg';
 /** MainScreen 스타일 컴포넌트 */
 export const mainScreenDiv = styled.div`
   display: flex;
-  width: 200%;
+  width: 200vw;
   height: 100vh;
-  transform: translateX(-50%);
 `;
 
 export const TitleContainerDiv = styled.div`
@@ -42,7 +41,10 @@ export const MainImg = styled.img`
   object-fit: cover;
 `;
 export const ImgBox = styled.div`
-  width: 100%;
+  background-image: url(${props => props.$bgImg});
+  background-size: cover;
+  flex-shrink: 0;
+  width: 100vw;
   height: 100vh;
 `;
 /*MovieContainer 스타일 컴포넌트 */
