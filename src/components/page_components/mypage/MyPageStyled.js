@@ -121,6 +121,7 @@ export const Button = styled.button`
   border-radius: 8px;
   width: 110px;
   height: 50px;
+  cursor: pointer;
   margin-right: ${props => props.$marginRight || '0px'};
   background-color: ${props => props.$bgColor || '#000000'};
   color: ${props => props.$fontColor || '#000000'};

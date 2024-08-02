@@ -19,6 +19,7 @@ export default function MovieContainer() {
         return (
           <MovieItem
             key={idx}
+            id={val.id}
             movieName={val.title}
             release={val.release_date.slice(0, 4)}
             imgSrc={val.poster_path}

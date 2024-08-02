@@ -1,9 +1,16 @@
 import * as S from './IntroStyled';
 import dummyphoto1 from '/dummyphoto1.png';
 import dummyphoto2 from '/dummyphoto2.png';
+import { useLocation, useParams } from 'react-router-dom';
 
 /**@영화소개폼 */
 export default function IntroForm() {
+  const { id } = useParams();
+  const { state } = useLocation();
+  const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500/';
+  console.log(id);
+  console.log(state);
+
   return (
     <S.LootDiv>
       <S.ImageWrapperDiv>

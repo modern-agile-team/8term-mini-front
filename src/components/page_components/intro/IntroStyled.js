@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 /**div 요소 정렬 */
 export const LootDiv = styled.div`
-  padding-top: 12%;
+  padding-top: 10%;
   color: #f7f9f3;
   display: flex;
   justify-content: center;
