@@ -1,6 +1,5 @@
 import FavoriteButton from './FavoriteButton';
 import * as S from './MainStyled';
-import testImg from '/testImg.jpg';
 import arrrow from '/arrow.png';
 import { useNavigate } from 'react-router-dom';
 export default function MovieItem({
