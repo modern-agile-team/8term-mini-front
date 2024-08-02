@@ -1,7 +1,4 @@
 import * as S from './MainStyled';
-import Header from '../../public_components/Header';
-import Sortify from './Sortify';
-import SearchBar from './SearchBar';
 import mainscreen from '/mainscreen.jpg';
 import mainscreen2 from '/mainscreen2.jpg';
 import { useEffect, useState } from 'react';
@@ -17,8 +14,6 @@ export default function MainScreen() {
 
   return (
     <>
-      <Header></Header>
-      <SearchBar></SearchBar>
       <S.mainScreenDiv>
         <S.ImgBox>
           <S.MainImg src={mainscreen}></S.MainImg>
@@ -34,7 +29,6 @@ export default function MainScreen() {
           <S.FlexEndTextDiv>영화 20선</S.FlexEndTextDiv>
         </S.TitleContainerDiv>
       </S.TitleDiv>
-      <Sortify></Sortify>
     </>
   );
 }
