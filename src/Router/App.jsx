@@ -14,7 +14,7 @@ export default function App() {
           <Route path="/" element={<MainPage />}></Route>
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/register" element={<RegisterPage />}></Route>
-          <Route path="/intro" element={<IntroPage />}></Route>
+          <Route path="/intro/:id" element={<IntroPage />}></Route>
           <Route path="/mypage" element={<MyPage />}></Route>
           <Route path="/*" element={<NotFoundPage />}></Route>
         </Routes>
