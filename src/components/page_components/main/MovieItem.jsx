@@ -3,18 +3,24 @@ import * as S from './MainStyled';
 import testImg from '/testImg.jpg';
 import arrrow from '/arrow.png';
 import { useNavigate } from 'react-router-dom';
-export default function MovieItem({ movieName, release }) {
+export default function MovieItem({
+  movieName,
+  release,
+  imgSrc,
+  originalTitle,
+}) {
   const navigate = useNavigate();
+  const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500/';
   return (
     <>
       <S.MovieItemDiv>
-        <S.ItemImg src={testImg}></S.ItemImg>
+        <S.ItemImg src={IMG_BASE_URL + imgSrc}></S.ItemImg>
         <S.HoverItemDiv
           onClick={() => {
             navigate('/intro');
           }}
         >
-          영화이름이요
+          {originalTitle}
           <S.HoverItemImg src={arrrow}></S.HoverItemImg>
         </S.HoverItemDiv>
         <S.ItemInfoDiv>

@@ -1,13 +1,29 @@
 import * as S from './MainStyled';
 import MovieItem from './MovieItem';
+import { useEffect, useState } from 'react';
 export default function MovieContainer() {
-  const testArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch('/movies', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(data => setData(data.results));
+  }, []);
   return (
     <S.MovieContainerDiv>
-      {testArr.map((val, idx) => {
+      {data.map((val, idx) => {
         return (
-          <MovieItem key={idx} movieName={'하이요'} movieYear={val}></MovieItem>
+          <MovieItem
+            key={idx}
+            movieName={val.title}
+            release={val.release_date.slice(0, 4)}
+            imgSrc={val.poster_path}
+            originalTitle={val.original_title}
+          ></MovieItem>
         );
       })}
     </S.MovieContainerDiv>

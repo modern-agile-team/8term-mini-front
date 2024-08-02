@@ -2,12 +2,14 @@ import styled from 'styled-components';
 
 export const HeaderDiv = styled.div`
   display: flex;
+  position: absolute;
   width: 100%;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
   padding-left: 50px;
   padding-top: 15px;
+  z-index: 10;
 `;
 //
 export const HeaderImg = styled.img`

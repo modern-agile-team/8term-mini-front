@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 /*메인스크린 div 스타일 컴포넌트 */
 export const MainScreenDiv = styled.div`
+  padding-top: 10%;
   display: flex;
   flex-direction: column;
   align-items: center;
