@@ -8,12 +8,14 @@ export default function MovieContainer() {
     { key: 'popularity', label: '인기순' },
     { key: 'title', label: '제목순' },
   ];
-  const [checked, setChecked] = useState([0, 0, 0, 0]);
+  const [checked, setChecked] = useState({ 0: 0, 1: 0, 2: 0, 3: 0 });
   const [data, setData] = useState([]);
 
   function sortChecked(id) {
-    checked[id] = checked[id] === 0 ? 30 : 0;
-    setChecked([...checked]);
+    setChecked(prev => ({
+      ...{ 0: 0, 1: 0, 2: 0, 3: 0 },
+      [id]: prev[id] === 0 ? 30 : 0,
+    }));
   }
 
   useEffect(() => {
