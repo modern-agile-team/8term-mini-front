@@ -1,26 +1,26 @@
 import * as S from './MainStyled';
 import mainscreen from '/mainscreen.jpg';
 import mainscreen2 from '/mainscreen2.jpg';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function MainScreen() {
-  function nextSlide() {
-    console.log(1);
-  }
+  const [slideRange, setSlideRange] = useState(0);
+  const slideRef = useRef(null);
   useEffect(() => {
-    const interval = setInterval(nextSlide, 4000);
-    return () => clearInterval(interval); // Clean up the interval on component unmount
+    const interval = setInterval(() => {
+      setSlideRange(prevRange => (prevRange === -100 ? 0 : -100));
+    }, 4000);
+    return () => clearInterval(interval);
   }, []);
-
+  useEffect(() => {
+    slideRef.current.style.transition = 'all 1s ease-in-out';
+    slideRef.current.style.transform = `translateX(${slideRange}vw)`;
+  }, [slideRange]);
   return (
     <>
-      <S.mainScreenDiv>
-        <S.ImgBox>
-          <S.MainImg src={mainscreen}></S.MainImg>
-        </S.ImgBox>
-        <S.ImgBox>
-          <S.MainImg src={mainscreen2}></S.MainImg>
-        </S.ImgBox>
+      <S.mainScreenDiv ref={slideRef}>
+        <S.ImgBox $bgImg={mainscreen}></S.ImgBox>
+        <S.ImgBox $bgImg={mainscreen2}></S.ImgBox>
       </S.mainScreenDiv>
       <S.TitleDiv>
         <S.TitleContainerDiv>
