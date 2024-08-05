@@ -26,9 +26,12 @@ export const ReviewAddButton = styled.div`
 `;
 export const Hr = styled.div`
   width: 90%;
+  ${props => {
+    props.$width || '90%';
+  }}
   height: 1px;
   background-color: #f7f9f3;
-  margin-bottom: 100px;
+  margin-bottom: ${props => props.$marginBottom || '100px'};
 `;
 export const ReviewContainer = styled.div`
   display: flex;
@@ -40,14 +43,27 @@ export const ReviewContainer = styled.div`
 
 export const ReviewDiv = styled.div`
   display: flex;
-  padding: 30px;
+  padding: 50px;
+  padding: 30px 50px 30px 50px;
   background-color: #f7f9f3;
   flex-direction: column;
   align-items: flex-start;
   width: 74%;
-  height: 200px;
+  height: 150px;
   border-radius: 10px;
 `;
 export const ReviewColumnDiv = styled.div`
+  font-family: 'Pretendard-Regular';
   display: flex;
+  width: 100%;
+  height: ${props => props.$height || 'auto'};
+  align-items: center;
+  justify-content: ${props => props.$justifyContent || 'flex-start'};
+`;
+export const ReviewRowDiv = styled.div`
+  text-align: center;
+  font-size: ${props => props.$fontSize || '15px'};
+  color: ${props => props.$color || '#000000'};
+  font-weight: ${props => props.$fontWeight || '1000'};
+  margin-right: ${props => props.$marginRight || '0px'};
 `;
