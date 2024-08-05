@@ -5,13 +5,15 @@ import IntroForm from './IntroForm';
 export default function MovieDetail() {
   /**URL에서 영화 ID 가져오기 */
   const { id } = useParams();
-  const [movie, setMovie] = useState([]);
+  const [movie, setMovie] = useState();
 
   useEffect(() => {
     fetch(`/movies?movie-id=${id}`)
       .then(response => response.json())
       .then(data => setMovie(data));
   }, [id]);
+
+  if (!movie) return <div>Loading...</div>;
 
   return (
     <div>

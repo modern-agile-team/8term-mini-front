@@ -25,13 +25,11 @@ export const ReviewAddButton = styled.div`
   text-transform: uppercase;
 `;
 export const Hr = styled.div`
-  width: 90%;
-  ${props => {
-    props.$width || '90%';
-  }}
+  width: ${props => props.$width || '90%'};
   height: 1px;
-  background-color: #f7f9f3;
+  background-color: ${props => props.$bgColor || '#f7f9f3'};
   margin-bottom: ${props => props.$marginBottom || '100px'};
+  margin-top: ${props => props.$marginTop || '0px'};
 `;
 export const ReviewContainer = styled.div`
   display: flex;
@@ -40,17 +38,18 @@ export const ReviewContainer = styled.div`
   align-items: center;
   margin-bottom: 300px;
 `;
-
+/*리뷰 스타일 */
 export const ReviewDiv = styled.div`
   display: flex;
-  padding: 50px;
-  padding: 30px 50px 30px 50px;
+  margin-bottom: ${props => props.$marginBottom || '60px'};
+  padding: ${props => props.$padding || '30px 50px 30px 50px'};
   background-color: #f7f9f3;
   flex-direction: column;
   align-items: flex-start;
-  width: 74%;
+  width: ${props => props.$width || '74%'};
   height: 150px;
   border-radius: 10px;
+  cursor: pointer;
 `;
 export const ReviewColumnDiv = styled.div`
   font-family: 'Pretendard-Regular';
@@ -64,6 +63,40 @@ export const ReviewRowDiv = styled.div`
   text-align: center;
   font-size: ${props => props.$fontSize || '15px'};
   color: ${props => props.$color || '#000000'};
-  font-weight: ${props => props.$fontWeight || '1000'};
+  font-weight: ${props => props.$fontWeight || '600'};
   margin-right: ${props => props.$marginRight || '0px'};
+`;
+export const ReviewImg = styled.img`
+  width: 25px;
+  height: 25px;
+  object-fit: fill;
+  cursor: pointer;
+`;
+/*리뷰  */
+export const CommentContainerDiv = styled.div`
+  width: 100%;
+  padding: 0 20px 0 20px;
+`;
+
+/*리뷰 모달창 스타일 컴포넌트*/
+export const ModalContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+`;
+export const ModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  background: #f7f9f3;
+  width: 65%;
+  height: 70%;
+  padding: 40px;
 `;
