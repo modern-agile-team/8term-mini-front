@@ -95,6 +95,7 @@ export const InfoGroupDiv = styled.div`
   width: 100%;
 `;
 
+/** 영화 정보 div */
 export const InfoDiv = styled.div`
   font-family: 'Pretendard-Regular';
   font-size: 15px;
@@ -102,24 +103,29 @@ export const InfoDiv = styled.div`
   width: 100%;
 `;
 
+/** 정보 항목의 키 */
 export const InfoKey = styled.div`
   font-weight: 600;
   width: 20%;
 `;
 
+/** 정보 항목의 값 */
 export const InfoValue = styled.div`
   width: 80%;
 `;
 
+/** 줄거리를 감싸는 div */
 export const SummaryWrapperDiv = styled.div`
   font-family: 'Pretendard-Regular';
   margin-top: 20px;
 `;
 
+/** 줄거리 */
 export const SummaryDiv = styled.div`
   font-weight: 600;
 `;
 
+/** 줄거리 값 div */
 export const SummaryTextDiv = styled.div`
   font-size: 15px;
   line-height: 1.5;

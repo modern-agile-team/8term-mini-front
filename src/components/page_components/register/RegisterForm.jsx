@@ -4,6 +4,7 @@ import * as S from './RegisterStyled.js';
 export default function RegisterForm() {
   return (
     <S.LootDiv>
+      <S.InputDiv type="text" placeholder="닉네임" />
       <S.InputDiv type="text" placeholder="아이디" />
       <S.InputDiv type="password" placeholder="비밀번호" />
       <S.InputDiv type="password" placeholder="비밀번호 확인" />
