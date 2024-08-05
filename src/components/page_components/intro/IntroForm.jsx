@@ -1,28 +1,29 @@
+import React from 'react';
 import * as S from './IntroStyled';
-import dummyphoto1 from '/dummyphoto1.png';
-import dummyphoto2 from '/dummyphoto2.png';
-import { useLocation, useParams } from 'react-router-dom';
 
-/**@영화소개폼 */
-export default function IntroForm() {
-  const { id } = useParams();
-  const { state } = useLocation();
+export default function IntroForm({ movie }) {
   const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500/';
-  console.log(id);
-  console.log(state);
+  const { backdrop_path, original_title, title, overview, release_date } =
+    movie;
 
   return (
     <S.LootDiv>
       <S.ImageWrapperDiv>
-        <S.DummyPhotoImg src={dummyphoto1} />
-        <S.DummyPhotoImg src={dummyphoto2} />
+        <S.DummyPhotoImg
+          src={`${IMG_BASE_URL}${backdrop_path}`}
+          alt={original_title}
+        />
+        <S.DummyPhotoImg
+          src={`${IMG_BASE_URL}${backdrop_path}`}
+          alt={original_title}
+        />
       </S.ImageWrapperDiv>
       <S.TextWrapperDiv>
-        <S.MovieEnTitleDiv>Mulholland Drive</S.MovieEnTitleDiv>
+        <S.MovieEnTitleDiv>{original_title}</S.MovieEnTitleDiv>
         <S.HorizontalLine />
         <S.TitleGroupDiv>
-          <S.MovieKoTitleDiv>멀홀랜드 드라이브</S.MovieKoTitleDiv>
-          <S.ReleaseDiv>1952</S.ReleaseDiv>
+          <S.MovieKoTitleDiv>{title}</S.MovieKoTitleDiv>
+          <S.ReleaseDiv>{new Date(release_date).getFullYear()}</S.ReleaseDiv>
         </S.TitleGroupDiv>
         <S.InfoWrapperDiv>
           <S.InfoGroupDiv>
@@ -50,11 +51,7 @@ export default function IntroForm() {
         </S.InfoWrapperDiv>
         <S.SummaryWrapperDiv>
           <S.SummaryDiv>줄거리</S.SummaryDiv>
-          <S.SummaryTextDiv>
-            어느 날 밤 교통사고에서 가까스로 살아남은 리타는 기억을 잃은 채 근처
-            빌라에 숨어들고, 할리우드 스타의 꿈을 안고 LA의 친척 집에 도착한
-            베티는 숨어있던 리타를 발견한다.
-          </S.SummaryTextDiv>
+          <S.SummaryTextDiv>{overview}</S.SummaryTextDiv>
         </S.SummaryWrapperDiv>
       </S.TextWrapperDiv>
     </S.LootDiv>
