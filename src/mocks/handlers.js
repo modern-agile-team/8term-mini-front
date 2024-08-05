@@ -24,5 +24,13 @@ export const handlers = [
         movieData.results.sort((a, b) => a.title.localeCompare(b.title))
       );
     }
+
+    const movie = movieData.results.find(
+      movie => movie.id.toString() === movieId
+    );
+
+    if (movie) {
+      return HttpResponse.json(movie);
+    }
   }),
 ];

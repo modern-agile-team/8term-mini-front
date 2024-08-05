@@ -3,12 +3,21 @@ import MovieItem from './MovieItem';
 import { useEffect, useState } from 'react';
 export default function MovieContainer() {
   const sortList = [
-    { eng: 'favoite', kor: '찜한 영화' },
-    { eng: 'release', kor: '개봉순' },
-    { eng: 'popularity', kor: '인기순' },
-    { eng: 'title', kor: '제목순' },
+    { key: 'favoite', label: '찜한 영화' },
+    { key: 'release', label: '개봉순' },
+    { key: 'popularity', label: '인기순' },
+    { key: 'title', label: '제목순' },
   ];
+  const [checked, setChecked] = useState({ 0: 0, 1: 0, 2: 0, 3: 0 });
   const [data, setData] = useState([]);
+
+  function sortChecked(id) {
+    setChecked(prev => ({
+      ...{ 0: 0, 1: 0, 2: 0, 3: 0 },
+      [id]: prev[id] === 0 ? 30 : 0,
+    }));
+  }
+
   useEffect(() => {
     fetch('/movies', {
       method: 'GET',
@@ -38,12 +47,14 @@ export default function MovieContainer() {
           return (
             <S.SortListDiv
               key={idx}
-              id={val.eng}
+              id={val.key}
               onClick={e => {
                 sortQuery(e.target.id);
+                sortChecked(idx);
               }}
+              $translate={checked[idx]}
             >
-              {val.kor}
+              {val.label}
             </S.SortListDiv>
           );
         })}
