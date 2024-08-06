@@ -28,7 +28,7 @@ export default function Review({ styled }) {
             (qwe12****)
           </S.ReviewRowDiv>
         </S.ReviewColumnDiv>
-        <S.ReviewColumnDiv $height="100px">
+        <S.ReviewColumnDiv $height="100px" $cursor="pointer">
           <S.ReviewRowDiv $fontSize="20px" onClick={toggleModal}>
             asdasdasd
           </S.ReviewRowDiv>

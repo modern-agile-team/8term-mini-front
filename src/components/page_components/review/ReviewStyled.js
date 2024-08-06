@@ -35,7 +35,6 @@ export const ReviewContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 300px;
 `;
 /*리뷰 스타일 */
 export const ReviewDiv = styled.div`
@@ -48,7 +47,6 @@ export const ReviewDiv = styled.div`
   width: ${props => props.$width || '74%'};
   height: 150px;
   border-radius: 10px;
-  cursor: pointer;
 `;
 export const ReviewColumnDiv = styled.div`
   font-family: 'Pretendard-Regular';
@@ -59,6 +57,7 @@ export const ReviewColumnDiv = styled.div`
   align-items: center;
   justify-content: ${props => props.$justifyContent || 'flex-start'};
   padding: ${props => props.$padding || '0px'};
+  cursor: ${props => props.$cursor || 'default'};
 `;
 export const ReviewRowDiv = styled.div`
   display: flex;
@@ -69,8 +68,8 @@ export const ReviewRowDiv = styled.div`
   align-items: center;
 `;
 export const ReviewImg = styled.img`
-  width: 18px;
-  height: 18px;
+  width: 25px;
+  height: 25px;
   object-fit: fill;
   cursor: pointer;
 `;
@@ -99,9 +98,9 @@ export const ModalContent = styled.div`
   align-items: center;
   border-radius: 10px;
   background: #f7f9f3;
-  width: 65%;
-  height: 75%;
-  padding: 40px;
+  width: 60%;
+  height: 70%;
+  padding: 30px 60px 60px 60px;
 `;
 /*댓글 스타일 */
 export const CommentInput = styled.input`
@@ -109,16 +108,35 @@ export const CommentInput = styled.input`
   border: none;
   border-radius: 5px;
   width: 800px;
-  height: 24px;
+  height: 30px;
   font-size: 18px;
+  margin-right: auto;
 `;
-export const CommentAddBtn = styled.div`
-  font-size: 16px;
-  text-align: center;
+export const AddBtn = styled.div`
+  display: flex;
+  width: ${props => props.$width || '80px'};
+  height: ${props => props.$height || '26px'};
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  font-size: 12px;
   padding: 3px;
-  height: 24px;
   cursor: pointer;
   border: 1px solid #000000;
-  border-radius: 5px;
+  border-radius: 8px;
   color: #000000;
+  &:hover {
+    background-color: #000000;
+    color: #ffffff;
+  }
+`;
+/* 리뷰 추가하기 스타일 */
+export const InputTextArea = styled.textarea`
+  font-family: 'Pretendard-Regular';
+  resize: none;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background: #d9d9d9;
+  font-size: 20px;
 `;

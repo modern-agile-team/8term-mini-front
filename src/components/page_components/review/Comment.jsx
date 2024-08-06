@@ -1,4 +1,5 @@
 import * as S from './ReviewStyled';
+
 export default function Comment() {
   return (
     <>
@@ -9,7 +10,11 @@ export default function Comment() {
         <S.ReviewRowDiv $color="#8D8D8D" $fontWeight="400" $marginRight="100px">
           (qwe12****)
         </S.ReviewRowDiv>
-        <S.ReviewRowDiv $aliginSelf="center" $marginRight="auto">
+        <S.ReviewRowDiv
+          $aliginSelf="center"
+          $marginRight="auto"
+          $fontWeight="400"
+        >
           내용
         </S.ReviewRowDiv>
         <S.ReviewRowDiv $color="#8D8D8D" $fontWeight="400" $fontSize="10px">

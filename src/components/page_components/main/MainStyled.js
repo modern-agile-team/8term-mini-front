@@ -52,7 +52,6 @@ export const ImgBox = styled.div`
 export const MovieContainerDiv = styled.div`
   box-sizing: border-box;
   padding: 20px;
-  margin-bottom: 500px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: 800px;
