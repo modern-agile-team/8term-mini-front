@@ -7,14 +7,9 @@ export const MainScreenDiv = styled.div`
   align-items: center;
   justify-content: center;
   box-sizing: border-box; /* 패딩과 보더를 포함한 너비 계산 */
-  margin-bottom: 500px;
 `;
-export const MainScreenImg = styled.img`
-  width: 20%;
-  height: 20%;
-`;
+
 export const MainScreenTextDiv = styled.div`
-  margin-top: 60px;
   color: #f7f9f3;
   font-family: Countach;
   font-size: 40px;
@@ -30,7 +25,7 @@ export const UserProfileDiv = styled.div`
   display: flex;
   border-radius: 5px;
   padding: 50px;
-  margin-top: 140px;
+  margin-top: 50px;
   width: 75%;
   background-color: #f7f9f3;
 `;
@@ -68,7 +63,7 @@ export const UserProfileInfoDiv = styled.div`
   flex-direction: column;
   padding-right: 60px;
 `;
-export const UserProfileCoulmnDiv = styled.div`
+export const UserProfileColumnDiv = styled.div`
   display: flex;
   width: 100%;
   font-size: 20px;
