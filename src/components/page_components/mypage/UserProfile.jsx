@@ -29,7 +29,7 @@ export default function UserProfile() {
             </S.UserProfileRowDiv>
             <S.UserProfileRowDiv>
               <S.labelDiv>아이디</S.labelDiv>
-              <S.UserInfoInput disabled={!isEditing}></S.UserInfoInput>
+              <S.UserInfoInput disabled={true}></S.UserInfoInput>
             </S.UserProfileRowDiv>
           </S.UserProfileColumnDiv>
 
