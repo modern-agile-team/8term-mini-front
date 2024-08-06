@@ -5,11 +5,13 @@ import LoginPage from '../pages/login/LoginPage';
 import RegisterPage from '../pages/register/RegisterPage';
 import IntroPage from '../pages/intro/IntroPage';
 import MyPage from '../pages/mypage/MyPage';
+import ScrollToTop from '../components/public_components/ScrollToTop';
 
 export default function App() {
   return (
     <>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<MainPage />}></Route>
           <Route path="/login" element={<LoginPage />}></Route>
