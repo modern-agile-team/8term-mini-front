@@ -9,19 +9,19 @@ export default function Header() {
         <Link to="/">
           <S.HeaderImg src={logo3}></S.HeaderImg>
         </Link>
-        <S.LoginSerchDiv>
-          <S.HeaderCoulumnDiv>
+        <S.LoginSearchDiv>
+          <S.HeaderColumnDiv>
             <Link to="/login">
               <S.HeaderTextDiv>LOGIN / </S.HeaderTextDiv>
             </Link>
             <Link to="/register">
               <S.HeaderTextDiv>SIGN UP</S.HeaderTextDiv>
             </Link>
-          </S.HeaderCoulumnDiv>
+          </S.HeaderColumnDiv>
           <Link to="/mypage">
             <S.HeaderTextDiv>MYPAGE</S.HeaderTextDiv>
           </Link>
-        </S.LoginSerchDiv>
+        </S.LoginSearchDiv>
       </S.HeaderDiv>
     </>
   );
