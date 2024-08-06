@@ -2,13 +2,12 @@ import { useEffect, useState } from 'react';
 import PagiNation from '../../public_components/PagiNation.jsx';
 import Review from './Review.jsx';
 import * as S from './ReviewStyled.js';
-import { ReviewModal } from './ReviewModal.jsx';
 import { useParams } from 'react-router-dom';
+import AddReviewModal from './AddReviewModal.jsx';
 
 export default function ReviewContainer() {
   const { id } = useParams();
   const [reviews, setReviews] = useState();
-
   useEffect(() => {
     fetch(`/movies/${id}/reviews`, {
       method: 'GET',
@@ -34,7 +33,7 @@ export default function ReviewContainer() {
         </S.ReviewAddButton>
       </S.ReviewHeaderDiv>
       {addReviewModal && (
-        <ReviewModal toggleModal={toggleaddReviewModal} mod={'addReview'} />
+        <AddReviewModal toggleaddReviewModal={toggleaddReviewModal} />
       )}
 
       <S.ReviewContainer>

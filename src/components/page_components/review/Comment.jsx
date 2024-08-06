@@ -1,7 +1,6 @@
 import * as S from './ReviewStyled';
 
 export default function Comment({ comment }) {
-  console.log(comment);
   return (
     <>
       <S.ReviewColumnDiv>
