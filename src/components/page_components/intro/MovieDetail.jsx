@@ -13,7 +13,7 @@ export default function MovieDetail() {
       .then(data => setMovie(data));
   }, [id]);
 
-  if (!movie) return;
+  if (!movie) return <div>Loading...</div>;
 
   return (
     <div>
