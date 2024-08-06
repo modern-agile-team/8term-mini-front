@@ -2,13 +2,12 @@ import Comment from './Comment';
 import * as S from './ReviewStyled';
 import PagiNation from './../../public_components/PagiNation';
 
-export default function ReviewComment() {
-  const testArr = [0, 1, 2, 3, 4];
+export default function ReviewComment({ comments }) {
   return (
     <>
       <S.CommentContainerDiv>
-        {testArr.map(val => (
-          <Comment key={val} />
+        {comments.map(val => (
+          <Comment key={val.comment_id} comment={val} />
         ))}
       </S.CommentContainerDiv>
       <PagiNation

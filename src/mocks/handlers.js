@@ -1,5 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import movieData from '../db/movies.json';
+import reviewData from '../db/review.json';
+import comment from '../db/comment.json';
 export const handlers = [
   // Intercept "GET https://example.com/user" requests...
   http.get('/movies', ({ request }) => {
@@ -32,5 +34,19 @@ export const handlers = [
     if (movie) {
       return HttpResponse.json(movie);
     }
+  }),
+  http.get('/movies/:movieId/reviews', (req, res, ctx) => {
+    const { movieId } = req.params;
+    const filterReviews = reviewData.filter(
+      val => val.movie_id === parseInt(movieId, 10)
+    );
+    return HttpResponse.json(filterReviews);
+  }),
+  http.get('/reviews/:id/comment', (req, res, ctx) => {
+    const { id } = req.params;
+    const filterComments = comment.filter(
+      val => val.review_id == parseInt(id, 10)
+    );
+    return HttpResponse.json(filterComments);
   }),
 ];
