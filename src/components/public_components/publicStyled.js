@@ -50,8 +50,8 @@ export const PageSpan = styled.span`
   cursor: pointer;
 `;
 export const BraceImg = styled.img`
-  width: ${props => props.$width || '7.5px'};
-  height: ${props => props.$height || '15px'};
+  width: 1%;
+  height: 50%;
   cursor: pointer;
   padding-right: 10px;
   transform: rotate(${props => props.$rotate || '0deg'});

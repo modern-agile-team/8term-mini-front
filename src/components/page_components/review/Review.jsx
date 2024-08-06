@@ -30,7 +30,7 @@ export default function Review({ styled }) {
         </S.ReviewColumnDiv>
         <S.ReviewColumnDiv $height="100px">
           <S.ReviewRowDiv $fontSize="20px" onClick={toggleModal}>
-            리뷰내용ㅁㄴㅇㅁㄴㅇㅁ
+            asdasdasd
           </S.ReviewRowDiv>
 
           {reviewModal && <ReviewModal toggleModal={toggleModal}></ReviewModal>}
@@ -39,12 +39,7 @@ export default function Review({ styled }) {
           <S.ReviewRowDiv>(2024/08/12)</S.ReviewRowDiv>
         </S.ReviewColumnDiv>
 
-        <S.Hr
-          $marginBottom="10px"
-          $bgColor="#000"
-          $width="100%"
-          $marginTop="10px"
-        ></S.Hr>
+        <S.Hr $bgColor="#000" $width="100%" $margin="10px 0px 10px 0px"></S.Hr>
         <S.ReviewColumnDiv>
           <S.ReviewRowDiv $marginRight="20px">
             {isLiked ? (
@@ -53,7 +48,7 @@ export default function Review({ styled }) {
               <S.ReviewImg src={favoriteOn} onClick={toggleLiked} />
             )}
           </S.ReviewRowDiv>
-          <S.ReviewRowDiv $marginRight="20px" $fontWeight="800">
+          <S.ReviewRowDiv $marginRight="20px">
             <div>20</div>
           </S.ReviewRowDiv>
           <S.ReviewRowDiv $marginRight="20px" onClick={toggleModal}>

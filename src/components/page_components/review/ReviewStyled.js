@@ -28,8 +28,7 @@ export const Hr = styled.div`
   width: ${props => props.$width || '90%'};
   height: 1px;
   background-color: ${props => props.$bgColor || '#f7f9f3'};
-  margin-bottom: ${props => props.$marginBottom || '100px'};
-  margin-top: ${props => props.$marginTop || '0px'};
+  margin: ${props => props.$margin || '10px 0px 100px 0px'};
 `;
 export const ReviewContainer = styled.div`
   display: flex;
@@ -53,22 +52,25 @@ export const ReviewDiv = styled.div`
 `;
 export const ReviewColumnDiv = styled.div`
   font-family: 'Pretendard-Regular';
+  font-weight: 600;
   display: flex;
   width: 100%;
   height: ${props => props.$height || 'auto'};
   align-items: center;
   justify-content: ${props => props.$justifyContent || 'flex-start'};
+  padding: ${props => props.$padding || '0px'};
 `;
 export const ReviewRowDiv = styled.div`
-  text-align: center;
+  display: flex;
   font-size: ${props => props.$fontSize || '15px'};
   color: ${props => props.$color || '#000000'};
   font-weight: ${props => props.$fontWeight || '600'};
   margin-right: ${props => props.$marginRight || '0px'};
+  align-items: center;
 `;
 export const ReviewImg = styled.img`
-  width: 25px;
-  height: 25px;
+  width: 18px;
+  height: 18px;
   object-fit: fill;
   cursor: pointer;
 `;
@@ -76,6 +78,7 @@ export const ReviewImg = styled.img`
 export const CommentContainerDiv = styled.div`
   width: 100%;
   padding: 0 20px 0 20px;
+  margin-bottom: 40px;
 `;
 
 /*리뷰 모달창 스타일 컴포넌트*/
@@ -97,6 +100,25 @@ export const ModalContent = styled.div`
   border-radius: 10px;
   background: #f7f9f3;
   width: 65%;
-  height: 70%;
+  height: 75%;
   padding: 40px;
+`;
+/*댓글 스타일 */
+export const CommentInput = styled.input`
+  background-color: #d9d9d9;
+  border: none;
+  border-radius: 5px;
+  width: 800px;
+  height: 24px;
+  font-size: 18px;
+`;
+export const CommentAddBtn = styled.div`
+  font-size: 16px;
+  text-align: center;
+  padding: 3px;
+  height: 24px;
+  cursor: pointer;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  color: #000000;
 `;
