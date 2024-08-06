@@ -10,7 +10,7 @@ export default function UserProfile() {
         </S.UserProfileImgDiv>
 
         <S.UserProfileInfoDiv>
-          <S.UserProfileCoulmnDiv $marginBottom={'70px'} $marginTop={'20px'}>
+          <S.UserProfileColumnDiv $marginBottom={'70px'} $marginTop={'20px'}>
             <S.UserProfileRowDiv>
               <S.labelDiv>닉네임</S.labelDiv>
               <S.UserInfoInput></S.UserInfoInput>
@@ -19,9 +19,9 @@ export default function UserProfile() {
               <S.labelDiv>아이디</S.labelDiv>
               <S.UserInfoInput></S.UserInfoInput>
             </S.UserProfileRowDiv>
-          </S.UserProfileCoulmnDiv>
+          </S.UserProfileColumnDiv>
 
-          <S.UserProfileCoulmnDiv $marginBottom={'70px'}>
+          <S.UserProfileColumnDiv $marginBottom={'70px'}>
             <S.UserProfileRowDiv>
               <S.labelDiv>비밀번호 수정</S.labelDiv>
               <S.PasswordInput></S.PasswordInput>
@@ -30,7 +30,7 @@ export default function UserProfile() {
               <S.labelDiv>비밀번호 확인</S.labelDiv>
               <S.PasswordInput></S.PasswordInput>
             </S.UserProfileRowDiv>
-          </S.UserProfileCoulmnDiv>
+          </S.UserProfileColumnDiv>
 
           <S.ButtonDiv>
             <S.Button $bgColor="#F7F9F3" $marginRight="30px">
