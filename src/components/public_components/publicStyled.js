@@ -43,6 +43,7 @@ export const FooterDiv = styled.div`
   display: flex;
   color: #f7f9f3;
   flex-direction: column;
+  text-transform: uppercase;
 `;
 
 export const SectionWrapperDiv = styled.div`

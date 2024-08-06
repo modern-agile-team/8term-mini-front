@@ -28,7 +28,13 @@ export default function Footer() {
             <S.MoreModernDiv>
               <S.HrTopDiv>more MODERN MOVIE</S.HrTopDiv>
               <S.HorizontalLine />
-              <S.ModernAgileYoutubeDiv>Youtube</S.ModernAgileYoutubeDiv>
+              <S.ModernAgileYoutubeDiv
+                onClick={() =>
+                  window.open(import.meta.env.VITE_MODERN_AGILE_YOUTUBE)
+                }
+              >
+                Youtube
+              </S.ModernAgileYoutubeDiv>
             </S.MoreModernDiv>
           </S.SectionDiv>
         </S.SectionWrapperDiv>
