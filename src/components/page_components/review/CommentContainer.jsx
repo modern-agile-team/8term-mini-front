@@ -3,36 +3,29 @@ import * as S from './ReviewStyled';
 import PagiNation from './../../public_components/PagiNation';
 import { useRef, useState, useEffect } from 'react';
 import Review from './Review';
+import axios from 'axios';
 export default function CommentContainer({ reviews, toggleModal }) {
   const inputRef = useRef();
   const [comments, setCommnets] = useState();
   useEffect(() => {
-    fetch(`/reviews/${reviews.review_id}/comment`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => res.json())
-      .then(data => setCommnets(data));
+    axios
+      .get(`/reviews/${reviews.review_id}/comment`)
+      .then(({ data }) => setCommnets(data));
   }, []);
 
   function addCommnet() {
-    fetch(`/reviews/${reviews.review_id}/comment`, {
-      method: 'POST',
-      body: JSON.stringify({ text: inputRef.current.value }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => res.json())
-      .then(data => {
+    if (!inputRef.current.value) {
+      alert('텍스트가 없어요');
+      return;
+    }
+    axios
+      .post(`/reviews/${reviews.review_id}/comment`, {
+        text: inputRef.current.value,
+      })
+      .then(({ data }) => {
         setCommnets([...comments, data]);
         inputRef.current.value = '';
       });
-    if (!inputRef.current.value) {
-      alert('텍스트가 없어요');
-    }
   }
   if (!comments) return <div>Loding...</div>;
   return (

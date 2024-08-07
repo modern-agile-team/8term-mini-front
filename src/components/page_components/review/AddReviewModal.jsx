@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import * as S from './ReviewStyled';
 import profileimg from '/profileimg.png';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 export default function AddReview({
   toggleaddReviewModal,
   reviews,
@@ -10,22 +11,15 @@ export default function AddReview({
   const { id } = useParams();
   const textRef = useRef();
   function AddReview() {
-    fetch(`/movies/${id}/reviews`, {
-      method: 'POST',
-      body: JSON.stringify({
-        text: textRef.current.value,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => res.json())
-      .then(data => setReviews([...reviews, data]));
     if (!textRef.current.value) {
       alert('텍스트가 없어요');
+      return;
     } else {
       toggleaddReviewModal();
     }
+    axios
+      .post(`/movies/${id}/reviews`, { text: textRef.current.value })
+      .then(({ data }) => setReviews([...reviews, data]));
   }
   return (
     <>

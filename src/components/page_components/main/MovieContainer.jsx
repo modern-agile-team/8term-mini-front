@@ -1,3 +1,4 @@
+import axios from 'axios';
 import * as S from './MainStyled';
 import MovieItem from './MovieItem';
 import { useEffect, useState } from 'react';
@@ -21,25 +22,11 @@ export default function MovieContainer() {
   }
 
   useEffect(() => {
-    fetch('/movies', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => res.json())
-      .then(data => setData(data.results));
+    axios.get('/movies').then(({ data }) => setData(data.results));
   }, []);
 
   function sortQuery(sort) {
-    fetch(`/movies/?movie-id=${sort}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => res.json())
-      .then(data => setData(data));
+    axios.get(`/movies/?movie-id=${sort}`).then(({ data }) => setData(data));
   }
 
   return (
