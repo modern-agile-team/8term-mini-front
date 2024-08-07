@@ -2,7 +2,11 @@ import { useRef } from 'react';
 import * as S from './ReviewStyled';
 import profileimg from '/profileimg.png';
 import { useParams } from 'react-router-dom';
-export default function AddReview({ toggleaddReviewModal }) {
+export default function AddReview({
+  toggleaddReviewModal,
+  reviews,
+  setReviews,
+}) {
   const { id } = useParams();
   const textRef = useRef();
   function AddReview() {
@@ -14,7 +18,9 @@ export default function AddReview({ toggleaddReviewModal }) {
       headers: {
         'Content-Type': 'application/json',
       },
-    });
+    })
+      .then(res => res.json())
+      .then(data => setReviews([...reviews, data]));
     if (!textRef.current.value) {
       alert('텍스트가 없어요');
     } else {

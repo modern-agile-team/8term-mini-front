@@ -7,7 +7,7 @@ import AddReviewModal from './AddReviewModal.jsx';
 
 export default function ReviewContainer() {
   const { id } = useParams();
-  const [reviews, setReviews] = useState();
+  const [reviews, setReviews] = useState([]);
   useEffect(() => {
     fetch(`/movies/${id}/reviews`, {
       method: 'GET',
@@ -33,7 +33,11 @@ export default function ReviewContainer() {
         </S.ReviewAddButton>
       </S.ReviewHeaderDiv>
       {addReviewModal && (
-        <AddReviewModal toggleaddReviewModal={toggleaddReviewModal} />
+        <AddReviewModal
+          toggleaddReviewModal={toggleaddReviewModal}
+          reviews={reviews}
+          setReviews={setReviews}
+        />
       )}
 
       <S.ReviewContainer>
