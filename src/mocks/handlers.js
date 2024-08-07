@@ -1,11 +1,12 @@
 import { http, HttpResponse } from 'msw';
 import movieData from '../db/movies.json';
+
 export const handlers = [
-  // Intercept "GET https://example.com/user" requests...
+  // Intercept "GET /movies" requests...
   http.get('/movies', ({ request }) => {
-    // ...and respond to them using this JSON response.
     const url = new URL(request.url);
     const movieId = url.searchParams.get('movie-id');
+
     if (!movieId) {
       return HttpResponse.json(movieData);
     }
@@ -32,5 +33,19 @@ export const handlers = [
     if (movie) {
       return HttpResponse.json(movie);
     }
+  }),
+
+  http.post('/users', async ({ request }) => {
+    const { nickname, id, password, confirmPassword } = await request.json();
+
+    // Simple validation (example purposes)
+    if (!nickname || !id || !password || password !== confirmPassword) {
+    }
+
+    // Mock response with user profile and JWT token
+    return HttpResponse.json({
+      user: { id: 1, nickname },
+      jwt: 'fake-jwt-token',
+    });
   }),
 ];
