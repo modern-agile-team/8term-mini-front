@@ -1,6 +1,8 @@
+import axios from 'axios';
 import * as S from './MainStyled';
 import MovieItem from './MovieItem';
 import { useEffect, useState } from 'react';
+
 export default function MovieContainer() {
   const sortList = [
     { key: 'favoite', label: '찜한 영화' },
@@ -8,6 +10,7 @@ export default function MovieContainer() {
     { key: 'popularity', label: '인기순' },
     { key: 'title', label: '제목순' },
   ];
+
   const [checked, setChecked] = useState({ 0: 0, 1: 0, 2: 0, 3: 0 });
   const [data, setData] = useState([]);
 
@@ -19,25 +22,11 @@ export default function MovieContainer() {
   }
 
   useEffect(() => {
-    fetch('/movies', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => res.json())
-      .then(data => setData(data.results));
+    axios.get('/movies').then(({ data }) => setData(data.results));
   }, []);
 
   function sortQuery(sort) {
-    fetch(`/movies/?movie-id=${sort}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => res.json())
-      .then(data => setData(data));
+    axios.get(`/movies/?movie-id=${sort}`).then(({ data }) => setData(data));
   }
 
   return (
