@@ -82,6 +82,7 @@ export const CommentContainerDiv = styled.div`
 
 /*리뷰 모달창 스타일 컴포넌트*/
 export const ModalContainer = styled.div`
+  cursor: pointer;
   width: 100%;
   height: 100%;
   position: fixed;
@@ -93,6 +94,7 @@ export const ModalContainer = styled.div`
   background: rgba(0, 0, 0, 0.5);
 `;
 export const ModalContent = styled.div`
+  cursor: default;
   display: flex;
   flex-direction: column;
   align-items: center;

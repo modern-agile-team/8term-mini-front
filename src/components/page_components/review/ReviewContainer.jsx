@@ -1,15 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PagiNation from '../../public_components/PagiNation.jsx';
 import Review from './Review.jsx';
 import * as S from './ReviewStyled.js';
-import { ReviewModal } from './ReviewModal.jsx';
+import { useParams } from 'react-router-dom';
+import AddReviewModal from './AddReviewModal.jsx';
+import axios from 'axios';
 
 export default function ReviewContainer() {
-  const testArr = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+  const { id } = useParams();
+  const [reviews, setReviews] = useState([]);
+  useEffect(() => {
+    axios.get(`/movies/${id}/reviews`).then(({ data }) => setReviews(data));
+  }, []);
+
   const [addReviewModal, setAddReviewModal] = useState(false);
   function toggleaddReviewModal() {
     setAddReviewModal(!addReviewModal);
   }
+  if (!reviews) return <div>Loding...</div>;
   return (
     <>
       <S.ReviewHeaderDiv>
@@ -19,13 +27,17 @@ export default function ReviewContainer() {
         </S.ReviewAddButton>
       </S.ReviewHeaderDiv>
       {addReviewModal && (
-        <ReviewModal toggleModal={toggleaddReviewModal} mod={'addReview'} />
+        <AddReviewModal
+          toggleaddReviewModal={toggleaddReviewModal}
+          reviews={reviews}
+          setReviews={setReviews}
+        />
       )}
 
       <S.ReviewContainer>
         <S.Hr></S.Hr>
-        {testArr.map(val => (
-          <Review key={val}>리뷰1</Review>
+        {reviews.map(val => (
+          <Review key={val.review_id} reviews={val} isModal={true} />
         ))}
         <PagiNation styled={{ $color: '#f7f9f3' }}></PagiNation>
       </S.ReviewContainer>
