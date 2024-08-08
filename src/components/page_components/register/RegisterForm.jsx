@@ -1,6 +1,7 @@
 import * as S from './RegisterStyled.js';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { successAlert, errorAlert } from '../../public_components/Aleart.jsx';
 import axios from 'axios';
 
 export default function RegisterForm() {
@@ -44,7 +45,7 @@ export default function RegisterForm() {
     }
 
     if (!nickname || !id || !password || !confirmPassword) {
-      alert('모든 필드를 입력해 주세요.');
+      errorAlert('회원가입 실패', '모든 필드를 입력해주세요.')
     }
 
     setError(newError);
@@ -66,7 +67,7 @@ export default function RegisterForm() {
           console.log('User profile', response.data.user);
           console.log('User token', response.data.jwt);
           localStorage.setItem('token', response.data.jwt);
-          console.log(response);
+          successAlert('회원가입 성공!', '회원가입이 성공적으로 완료되었습니다.');
           navigate('/login');
         })
         .catch(error => {
