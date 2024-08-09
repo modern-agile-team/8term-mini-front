@@ -3,14 +3,14 @@ import * as S from './ReviewStyled';
 import PagiNation from './../../public_components/PagiNation';
 import { useRef, useState, useEffect } from 'react';
 import Review from './Review';
-import AXIOS from '../../../axios/instance';
+import { basicAxios } from '../../../axios/instance';
 export default function CommentContainer({ reviews, toggleModal }) {
   const inputRef = useRef();
   const [comments, setCommnets] = useState();
   useEffect(() => {
-    AXIOS.get(`/reviews/${reviews.review_id}/comment`).then(data =>
-      setCommnets(data)
-    );
+    basicAxios
+      .get(`/reviews/${reviews.review_id}/comment`)
+      .then(data => setCommnets(data));
   }, []);
 
   function addCommnet() {
@@ -18,12 +18,14 @@ export default function CommentContainer({ reviews, toggleModal }) {
       alert('텍스트가 없어요');
       return;
     }
-    AXIOS.post(`/reviews/${reviews.review_id}/comment`, {
-      text: inputRef.current.value,
-    }).then(data => {
-      setCommnets([...comments, data]);
-      inputRef.current.value = '';
-    });
+    basicAxios
+      .post(`/reviews/${reviews.review_id}/comment`, {
+        text: inputRef.current.value,
+      })
+      .then(data => {
+        setCommnets([...comments, data]);
+        inputRef.current.value = '';
+      });
   }
   if (!comments) return <div>Loding...</div>;
   return (

@@ -44,3 +44,15 @@ export const RegisterButton = styled.button`
     border: none;
   }
 `;
+
+export const ErrorText = styled.div`
+  margin-top: 5px;
+  font-family: 'Pretendard-Regular';
+  color: #ff0000;
+`;
+
+export const SuccessText = styled.div`
+  margin-top: 5px;
+  font-family: 'Pretendard-Regular';
+  color: #00ff00;
+`;

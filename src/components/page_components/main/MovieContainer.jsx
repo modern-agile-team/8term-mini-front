@@ -1,12 +1,12 @@
 import * as S from './MainStyled';
 import MovieItem from './MovieItem';
 import { useEffect, useState } from 'react';
-import AXIOS from '../../../axios/instance.js';
+import { basicAxios, authAxios } from '../../../axios/instance.js';
+import { confirmLoginAlert } from '../../public_components/Alert.jsx';
 export default function MovieContainer() {
   localStorage.setItem('id', 1);
-  console.log(localStorage.getItem('id'));
   const sortList = [
-    { key: 'favoite', label: '찜한 영화' },
+    { key: 'wishList', label: '찜한 영화' },
     { key: 'release', label: '개봉순' },
     { key: 'popularity', label: '인기순' },
     { key: 'title', label: '제목순' },
@@ -14,7 +14,6 @@ export default function MovieContainer() {
 
   const [checked, setChecked] = useState({ 0: 0, 1: 0, 2: 0, 3: 0 });
   const [data, setData] = useState([]);
-
   function sortChecked(id) {
     setChecked(prev => ({
       ...{ 0: 0, 1: 0, 2: 0, 3: 0 },
@@ -22,11 +21,24 @@ export default function MovieContainer() {
     }));
   }
   useEffect(() => {
-    AXIOS.get('/movies').then(data => setData(data.results));
+    basicAxios.get('/movies').then(data => setData(data.results));
   }, []);
 
   function sortQuery(sort) {
-    AXIOS.get(`/movies/?movie-id=${sort}`).then(data => setData(data));
+    if (sort === 'wishList') {
+      authAxios
+        .get(`users/${localStorage.getItem('id')}/wish-lists`)
+        .catch(err => {
+          confirmLoginAlert(
+            '로그인 필요',
+            '로그인이 필요한 기능입니다.',
+            '로그인 페이지 이동',
+            '확인'
+          );
+        });
+    } else {
+      basicAxios.get(`/movies/?movie-id=${sort}`).then(data => setData(data));
+    }
   }
   if (!data) return <div>Loading...</div>;
   return (

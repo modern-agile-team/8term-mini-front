@@ -1,21 +1,38 @@
 import axios, { Axios } from 'axios';
 import.meta.env.VITE_MODERN_AGILE_YOUTUBE;
-const AXIOS = axios.create({
+const basicAxios = axios.create({
   baseURL: 'http://localhost:5173',
   withCredentials: true,
   timeout: 3000,
 });
-AXIOS.interceptors.request.use(config => {
-  const accessToken = 'Access-Token';
-  config.headers['Authorization'] = `Bearer ${accessToken}`;
-  return config;
+
+const authAxios = axios.create({
+  baseURL: 'http://localhost:5173',
+  withCredentials: true,
+  timeout: 3000,
 });
-AXIOS.interceptors.response.use(
-  res => {
-    return res.data;
-  },
-  error => {
-    return Promise.reject(error);
+
+authAxios.interceptors.request.use(config => {
+  const accessToken = localStorage.getItem('token');
+  if (accessToken) {
+    config.headers['Authorization'] = `Bearer ${accessToken}`;
+    return config;
   }
-);
-export default AXIOS;
+  return Promise.reject(new Error('No access token found'));
+});
+
+basicAxios.interceptors.response.use(publicResHandler, publicErrorHandler);
+authAxios.interceptors.response.use(publicResHandler, publicErrorHandler);
+
+function publicErrorHandler(error) {
+  const status = error.response.status;
+  if (status === 403) {
+    return Promise.reject({ status: status });
+  }
+  return Promise.reject('');
+}
+function publicResHandler(res) {
+  return res.data;
+}
+
+export { basicAxios, authAxios };
