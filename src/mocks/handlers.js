@@ -47,7 +47,7 @@ export const handlers = [
 
     // Mock response with user profile and JWT token
     return HttpResponse.json({
-      user: { id: 1, nickname },
+      user: { id, nickname, password },
       jwt: 'fake-jwt-token',
     });
   }),
