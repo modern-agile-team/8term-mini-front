@@ -1,9 +1,10 @@
-import axios from 'axios';
 import * as S from './MainStyled';
 import MovieItem from './MovieItem';
 import { useEffect, useState } from 'react';
-
+import AXIOS from '../../../axios/instance.js';
 export default function MovieContainer() {
+  localStorage.setItem('id', 1);
+  console.log(localStorage.getItem('id'));
   const sortList = [
     { key: 'favoite', label: '찜한 영화' },
     { key: 'release', label: '개봉순' },
@@ -20,15 +21,14 @@ export default function MovieContainer() {
       [id]: prev[id] === 0 ? 30 : 0,
     }));
   }
-
   useEffect(() => {
-    axios.get('/movies').then(({ data }) => setData(data.results));
+    AXIOS.get('/movies').then(data => setData(data.results));
   }, []);
 
   function sortQuery(sort) {
-    axios.get(`/movies/?movie-id=${sort}`).then(({ data }) => setData(data));
+    AXIOS.get(`/movies/?movie-id=${sort}`).then(data => setData(data));
   }
-
+  if (!data) return <div>Loading...</div>;
   return (
     <>
       <S.SortifyDiv>
