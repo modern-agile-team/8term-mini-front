@@ -4,13 +4,13 @@ import Review from './Review.jsx';
 import * as S from './ReviewStyled.js';
 import { useParams } from 'react-router-dom';
 import AddReviewModal from './AddReviewModal.jsx';
-import axios from 'axios';
+import AXIOS from '../../../axios/instance.js';
 
 export default function ReviewContainer() {
   const { id } = useParams();
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
-    axios.get(`/movies/${id}/reviews`).then(({ data }) => setReviews(data));
+    AXIOS.get(`/movies/${id}/reviews`).then(data => setReviews(data));
   }, []);
 
   const [addReviewModal, setAddReviewModal] = useState(false);
