@@ -3,14 +3,14 @@ import * as S from './ReviewStyled';
 import PagiNation from './../../public_components/PagiNation';
 import { useRef, useState, useEffect } from 'react';
 import Review from './Review';
-import axios from 'axios';
+import AXIOS from '../../../axios/instance';
 export default function CommentContainer({ reviews, toggleModal }) {
   const inputRef = useRef();
   const [comments, setCommnets] = useState();
   useEffect(() => {
-    axios
-      .get(`/reviews/${reviews.review_id}/comment`)
-      .then(({ data }) => setCommnets(data));
+    AXIOS.get(`/reviews/${reviews.review_id}/comment`).then(data =>
+      setCommnets(data)
+    );
   }, []);
 
   function addCommnet() {
@@ -18,14 +18,12 @@ export default function CommentContainer({ reviews, toggleModal }) {
       alert('텍스트가 없어요');
       return;
     }
-    axios
-      .post(`/reviews/${reviews.review_id}/comment`, {
-        text: inputRef.current.value,
-      })
-      .then(({ data }) => {
-        setCommnets([...comments, data]);
-        inputRef.current.value = '';
-      });
+    AXIOS.post(`/reviews/${reviews.review_id}/comment`, {
+      text: inputRef.current.value,
+    }).then(data => {
+      setCommnets([...comments, data]);
+      inputRef.current.value = '';
+    });
   }
   if (!comments) return <div>Loding...</div>;
   return (
@@ -33,7 +31,6 @@ export default function CommentContainer({ reviews, toggleModal }) {
       <S.ModalContainer
         id="rootModal"
         onClick={e => {
-          console.log(e.target.id);
           if (e.target.id === 'rootModal') {
             toggleModal();
           }

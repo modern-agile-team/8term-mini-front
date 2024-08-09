@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import * as S from './ReviewStyled';
 import profileimg from '/profileimg.png';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import AXIOS from '../../../axios/instance';
 export default function AddReview({
   toggleaddReviewModal,
   reviews,
@@ -17,9 +17,9 @@ export default function AddReview({
     } else {
       toggleaddReviewModal();
     }
-    axios
-      .post(`/movies/${id}/reviews`, { text: textRef.current.value })
-      .then(({ data }) => setReviews([...reviews, data]));
+    AXIOS.post(`/movies/${id}/reviews`, { text: textRef.current.value }).then(
+      data => setReviews([...reviews, data])
+    );
   }
   return (
     <>
