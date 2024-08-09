@@ -3,7 +3,7 @@ import movieData from '../db/movies.json';
 import reviewData from '../db/review.json';
 import comment from '../db/comment.json';
 import fs from 'fs';
-
+import wishList from '../db/wishList.json';
 export const handlers = [
   // Intercept "GET /movies" requests...
   http.get('/movies', ({ request }) => {
@@ -92,5 +92,16 @@ export const handlers = [
     };
     comment.push(newComment);
     return HttpResponse.json(newComment, { status: 201 });
+  }),
+  http.get('users/:id/wish-lists', ({ request, params }, res, ctx) => {
+    const { id } = params;
+    if (request.headers.get('Authorization')) {
+      const userWishList = wishList.filter(val => {
+        val.user_id == id;
+      });
+
+      return HttpResponse.json({ status: 200 });
+    }
+    return HttpResponse.json(null, { status: 403 });
   }),
 ];

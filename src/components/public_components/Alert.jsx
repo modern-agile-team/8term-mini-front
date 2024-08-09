@@ -48,3 +48,18 @@ export const confirmDeleteAlert = (title, text) => {
     }
   });
 };
+
+export const confirmLoginAlert = (title, text, confirm, cancel) => {
+  Swal.fire({
+    title: title,
+    text: text,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: confirm,
+    cancelButtonText: cancel,
+  }).then(result => {
+    if (result.isConfirmed) {
+      window.location.href = '/login';
+    }
+  });
+};
