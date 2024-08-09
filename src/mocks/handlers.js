@@ -67,13 +67,13 @@ export const handlers = [
   }),
   http.post('/movies/:id/reviews', async ({ request, params }) => {
     const { id } = params;
-    const newPost = await request.json();
-
+    const { user_id, text } = await request.json();
     const newReview = {
       review_id: reviewData.length + 1,
-      user_id: 123123,
+      id: user_id,
+      nickname: '백엔드가',
       movie_id: id,
-      comment: newPost.text,
+      comment: text,
       date: new Date().toISOString().slice(0, 10),
     };
     reviewData.push(newReview);

@@ -22,10 +22,10 @@ export default function Review({ styled, reviews, isModal }) {
             <S.ReviewImg src={profileimg}></S.ReviewImg>
           </S.ReviewRowDiv>
           <S.ReviewRowDiv $fontSize="20px" $marginRight="7px">
-            {reviews.user_id}
+            {reviews.nickname}
           </S.ReviewRowDiv>
           <S.ReviewRowDiv $color="#8D8D8D" $fontWeight="400">
-            ({reviews.user_id})
+            ({reviews.user_id}*****)
           </S.ReviewRowDiv>
         </S.ReviewColumnDiv>
         <S.ReviewColumnDiv

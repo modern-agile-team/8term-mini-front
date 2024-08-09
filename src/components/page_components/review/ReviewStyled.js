@@ -136,9 +136,18 @@ export const AddBtn = styled.div`
 export const InputTextArea = styled.textarea`
   font-family: 'Pretendard-Regular';
   resize: none;
-  width: 100%;
+  width: 92%;
   height: 100%;
+  border: none;
+  margin: 0;
+  padding: 40px;
   border-radius: 10px;
   background: #d9d9d9;
   font-size: 20px;
+`;
+export const TextCountDiv = styled.div`
+  font-family: 'Pretendard-Regular';
+  position: relative;
+  top: 25px;
+  left: 46%;
 `;
