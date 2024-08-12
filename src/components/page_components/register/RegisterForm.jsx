@@ -1,7 +1,10 @@
 import * as S from './RegisterStyled.js';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { successAlert, errorAlert } from '../../public_components/Alert.jsx';
+import {
+  registerSuccessAlert,
+  errorAlert,
+} from '../../public_components/Alert.jsx';
 import axios from 'axios';
 
 export default function RegisterForm() {
@@ -101,10 +104,7 @@ export default function RegisterForm() {
           console.log('User profile', response.data.user);
           console.log('User token', response.data.jwt);
           localStorage.setItem('token', response.data.jwt);
-          successAlert(
-            '회원가입 성공!',
-            '회원가입이 성공적으로 완료되었습니다.'
-          );
+          registerSuccessAlert();
           navigate('/login');
         })
         .catch(error => {

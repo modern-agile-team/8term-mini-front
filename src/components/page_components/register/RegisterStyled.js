@@ -20,7 +20,7 @@ export const InputDiv = styled.input`
   font-size: 15px;
   font-weight: 500;
   border: none;
-  height: 40px;
+  height: 35px;
   width: 100%;
   outline: none;
   padding-left: 10px;
