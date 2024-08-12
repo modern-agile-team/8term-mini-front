@@ -92,26 +92,27 @@ export default function RegisterForm() {
   }
 
   function handleRegister() {
-    if (validateField()) {
-      axios
-        .post('/users', {
-          nickname: nickname,
-          id: id,
-          password: password,
-          confirmPassword: confirmPassword,
-        })
-        .then(response => {
-          console.log('User profile', response.data.user);
-          console.log('User token', response.data.jwt);
-          localStorage.setItem('token', response.data.jwt);
-          registerSuccessAlert();
-          navigate('/login');
-        })
-        .catch(error => {
-          console.log('An error occurred:', error);
-        });
-    }
+  if (validateField()) {
+    axios
+      .post('/users', {
+        nickname: nickname,
+        id: id,
+        password: password,
+        confirmPassword: confirmPassword,
+      })
+      .then(response => {
+        console.log('User profile', response.data.user);
+        console.log('User registration :', response.data.message);
+        registerSuccessAlert();
+        navigate('/login');
+      })
+      .catch(error => {
+        console.log('An error occurred:', error);
+        errorAlert('회원가입 실패', '서버 오류가 발생했습니다. 다시 시도해주세요.');
+      });
   }
+}
+
 
   function handleCheckId() {
     if (regex_id.test(id)) {

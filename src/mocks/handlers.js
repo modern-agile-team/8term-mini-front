@@ -40,6 +40,7 @@ export const handlers = [
     }
   }),
 
+  // 중복 확인 검사 핸들러
   http.get('/users/check-id', ({ request }) => {
     const url = new URL(request.url);
     const userId = url.searchParams.get('id');
@@ -66,10 +67,10 @@ export const handlers = [
     }
   }),
 
+  // 회원가입 핸들러
   http.post('/users', async ({ request }) => {
     const { nickname, id, password, confirmPassword } = await request.json();
 
-    // Simple validation (example purposes)
     if (!nickname || !id || !password || password !== confirmPassword) {
       return HttpResponse.json(
         { message: '유효하지 않은 입력입니다.' },
@@ -77,10 +78,9 @@ export const handlers = [
       );
     }
 
-    // Mock response with user profile and JWT token
     return HttpResponse.json({
-      user: { id, nickname, password },
-      jwt: 'fake-jwt-token',
+      user: { id, nickname },
+      message: '회원가입이 성공적으로 완료되었습니다.',
     });
   }),
 
@@ -90,7 +90,6 @@ export const handlers = [
       const { id } = params;
       const { password } = await request.json();
 
-      // 코드에서 예외가 발생할 수 있는 부분
       const user = userData.find(user => user.id === id);
 
       if (!user) {
