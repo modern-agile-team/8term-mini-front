@@ -47,6 +47,21 @@ export const CheckButton = styled.button`
   background-color: ${({ checked }) => (checked ? '#B5B5B5' : '#000000')};
 `;
 
+export const PasswordContainerDiv = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
+export const ToggleIconDiv = styled.div`
+  position: absolute;
+  right: 10px;
+  margin-top: 20px;
+  cursor: pointer;
+  font-size: 1.2em;
+  color: #000000;
+`;
+
 /**회원가입 button*/
 export const RegisterButton = styled.button`
   font-family: 'Pretendard-Regular';

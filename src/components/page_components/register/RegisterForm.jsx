@@ -5,6 +5,7 @@ import {
   registerSuccessAlert,
   errorAlert,
 } from '../../public_components/Alert.jsx';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from 'axios';
 
 export default function RegisterForm() {
@@ -14,6 +15,8 @@ export default function RegisterForm() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState({});
   const [isIdChecked, setIsIdChecked] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
   const regex_nickname = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
@@ -160,7 +163,7 @@ export default function RegisterForm() {
         ) : (
           <S.ErrorText>{error.nickname}</S.ErrorText>
         ))}
-
+  
       <S.IdContainerDiv>
         <S.InputDiv
           type="text"
@@ -182,35 +185,45 @@ export default function RegisterForm() {
         ) : (
           <S.ErrorText>{error.id}</S.ErrorText>
         ))}
-
-      <S.InputDiv
-        type="password"
-        placeholder="비밀번호"
-        value={password}
-        maxLength={16}
-        onChange={e => setPassword(e.target.value)}
-      />
+  
+      <S.PasswordContainerDiv>
+        <S.InputDiv
+          type={showPassword ? 'text' : 'password'}
+          placeholder="비밀번호"
+          value={password}
+          maxLength={16}
+          onChange={e => setPassword(e.target.value)}
+        />
+        <S.ToggleIconDiv onClick={() => setShowPassword(!showPassword)}>
+          {showPassword ? <FaEyeSlash /> : <FaEye />}
+        </S.ToggleIconDiv>
+      </S.PasswordContainerDiv>
       {error.password &&
         (error.password.includes('사용 가능한') ? (
           <S.SuccessText>{error.password}</S.SuccessText>
         ) : (
           <S.ErrorText>{error.password}</S.ErrorText>
         ))}
-
-      <S.InputDiv
-        type="password"
-        placeholder="비밀번호 확인"
-        value={confirmPassword}
-        maxLength={16}
-        onChange={e => setConfirmPassword(e.target.value)}
-      />
+  
+      <S.PasswordContainerDiv>
+        <S.InputDiv
+          type={showConfirmPassword ? 'text' : 'password'}
+          placeholder="비밀번호 확인"
+          value={confirmPassword}
+          maxLength={16}
+          onChange={e => setConfirmPassword(e.target.value)}
+        />
+        <S.ToggleIconDiv onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+          {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+        </S.ToggleIconDiv>
+      </S.PasswordContainerDiv>
       {error.confirmPassword &&
         (error.confirmPassword.includes('일치합니다') ? (
           <S.SuccessText>{error.confirmPassword}</S.SuccessText>
         ) : (
           <S.ErrorText>{error.confirmPassword}</S.ErrorText>
         ))}
-
+  
       <S.RegisterButton onClick={handleRegister}>회원가입</S.RegisterButton>
     </S.LootDiv>
   );
