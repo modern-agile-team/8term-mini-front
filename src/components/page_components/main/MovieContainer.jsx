@@ -3,8 +3,6 @@ import MovieItem from './MovieItem';
 import { useEffect, useState } from 'react';
 import AXIOS from '../../../axios/instance.js';
 export default function MovieContainer() {
-  localStorage.setItem('id', 1);
-  console.log(localStorage.getItem('id'));
   const sortList = [
     { key: 'favoite', label: '찜한 영화' },
     { key: 'release', label: '개봉순' },
