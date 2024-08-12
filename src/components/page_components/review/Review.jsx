@@ -17,7 +17,9 @@ export default function Review({
   const [reviewModal, setReviewModal] = useState(false);
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   const [editModal, setEditModal] = useToggle();
-  const userId = JSON.parse(localStorage.getItem('user')).user_id || undefined;
+  const userId = JSON.parse(localStorage.getItem('user'))
+    ? JSON.parse(localStorage.getItem('user')).user_id
+    : undefined;
 
   function toggleModal() {
     setReviewModal(!reviewModal);
