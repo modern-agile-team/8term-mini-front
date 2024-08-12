@@ -14,7 +14,7 @@ export default function ReviewDetailModal({
   toggleModal,
   setReRequest,
   reRequest,
-  displayReviewLike,
+  isLiked,
 }) {
   const inputRef = useRef();
   const [comments, setCommnets] = useState();
@@ -69,7 +69,7 @@ export default function ReviewDetailModal({
             styled={{ $padding: '0px', $width: '100%', $marginBottom: '30px' }}
             reviews={reviews}
             isModal={false}
-            displayReviewLike={displayReviewLike}
+            isLiked={isLiked}
             setReRequest={setReRequest}
           ></Review>
           <S.CommentContainerDiv>

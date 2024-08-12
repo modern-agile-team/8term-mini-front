@@ -20,7 +20,6 @@ export default function ReviewContainer() {
   const [addReviewModal, setAddReviewModal] = useToggle();
   const [reRequest, setReRequest] = useState(0);
   const [displayReviewLike, setdisplayReviewLike] = useState([]);
-
   useEffect(() => {
     //영화에대한 리뷰 가져오기
     basicAxios.get(`/movies/${id}/reviews`).then(data => setReviews(data));
@@ -32,7 +31,10 @@ export default function ReviewContainer() {
             JSON.parse(localStorage.getItem('user')).user_id
           }/review-likes`
         )
-        .then(data => setdisplayReviewLike(data));
+        .then(data => {
+          console.log(data);
+          setdisplayReviewLike(data);
+        });
     }
   }, [reRequest]);
   //리뷰 쓰기 모달창 함수
@@ -75,9 +77,7 @@ export default function ReviewContainer() {
             isModal={true}
             reRequest={reRequest}
             setReRequest={setReRequest}
-            displayReviewLike={displayReviewLike.includes(
-              Number(val.review_id)
-            )}
+            isLiked={displayReviewLike.includes(Number(val.review_id))}
           />
         ))}
         <PagiNation styled={{ $color: '#f7f9f3' }}></PagiNation>

@@ -4,10 +4,7 @@ import * as S from './ReviewStyled.js';
 import { useState, useEffect, createContext } from 'react';
 import useToggle from '../../../hooks/useToggle.js';
 import ReviewModal from './ReviewModal.jsx';
-import {
-  confirmLoginAlert,
-  warningAlert,
-} from '../../public_components/Alert.jsx';
+import { confirmLoginAlert } from '../../public_components/Alert.jsx';
 
 export default function Review({
   styled,
@@ -15,19 +12,13 @@ export default function Review({
   isModal,
   reRequest,
   setReRequest,
-  displayReviewLike,
+  isLiked,
 }) {
   const [reviewModal, setReviewModal] = useState(false);
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
-  const [isLiked, setIsLiked] = useToggle(true);
   const [editModal, setEditModal] = useToggle();
   const userId = JSON.parse(localStorage.getItem('user')).user_id || undefined;
 
-  useEffect(() => {
-    if (displayReviewLike) {
-      setIsLiked();
-    }
-  }, [displayReviewLike]);
   function toggleModal() {
     setReviewModal(!reviewModal);
   }
@@ -37,8 +28,7 @@ export default function Review({
     });
   }
   function reviewLike() {
-    if (userId === 'undefined') {
-      console.log(userId);
+    if (userId === undefined) {
       return confirmLoginAlert(
         '로그인 필요',
         '로그인이 필요한 기능입니다.',
@@ -46,7 +36,7 @@ export default function Review({
         '확인'
       );
     }
-    if (isLiked) {
+    if (!isLiked) {
       authAxios
         .post(
           `/users/${
@@ -58,7 +48,6 @@ export default function Review({
         )
         .then(() => {
           setReRequest(new Date());
-          setIsLiked();
         });
     } else {
       authAxios
@@ -69,7 +58,6 @@ export default function Review({
         )
         .then(() => {
           setReRequest(new Date());
-          setIsLiked();
         });
     }
   }
@@ -128,7 +116,7 @@ export default function Review({
             reviews={reviews}
             setReRequest={setReRequest}
             reRequest={reRequest}
-            displayReviewLike={displayReviewLike}
+            isLiked={isLiked}
           ></ReviewDetailModal>
         )}
         {/*수정버튼 눌렀을때 모달창 띄우는 로직 */}
@@ -150,7 +138,7 @@ export default function Review({
         {/* 좋아요버튼 로직 */}
         <S.ReviewColumnDiv>
           <S.ReviewRowDiv $marginRight="20px">
-            {isLiked ? (
+            {!isLiked ? (
               <S.ReviewImg
                 src={`${baseUrl}favoriteOff.png`}
                 onClick={reviewLike}

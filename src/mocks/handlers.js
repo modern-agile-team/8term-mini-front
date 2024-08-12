@@ -167,6 +167,7 @@ export const handlers = [
         const a = reviewLike.findIndex(
           val => val.review_id == reviewId && val.user_id == userId
         );
+        reviewLike.splice(a, 1);
         return HttpResponse.json(null, { status: 200 });
       }
       return HttpResponse.json(null, { status: 403 });
@@ -191,6 +192,7 @@ export const handlers = [
       if (request.headers.get('Authorization')) {
         const a = comment.findIndex(val => val.comment_id == id);
         comment.splice(a, 1);
+
         return HttpResponse.json(null, { status: 200 });
       }
       return HttpResponse.json(null, { status: 403 });
