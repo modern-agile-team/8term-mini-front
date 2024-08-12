@@ -3,6 +3,9 @@ import movieData from '../db/movies.json';
 import reviewData from '../db/review.json';
 import comment from '../db/comment.json';
 import userData from '../db/user.json';
+import { SignJWT } from 'jose';
+
+const SECRET_KEY = 'your-access-token-secret-key';
 
 export const handlers = [
   // Intercept "GET /movies" requests...
@@ -23,7 +26,6 @@ export const handlers = [
     }
 
     if (movieId === 'title') {
-      console.log(movieData);
       return HttpResponse.json(
         movieData.results.sort((a, b) => a.title.localeCompare(b.title))
       );
@@ -69,6 +71,10 @@ export const handlers = [
 
     // Simple validation (example purposes)
     if (!nickname || !id || !password || password !== confirmPassword) {
+      return HttpResponse.json(
+        { message: '유효하지 않은 입력입니다.' },
+        { status: 400 }
+      );
     }
 
     // Mock response with user profile and JWT token
@@ -77,6 +83,50 @@ export const handlers = [
       jwt: 'fake-jwt-token',
     });
   }),
+
+  // 로그인 핸들러
+  http.post('/users/:id', async ({ request, params }) => {
+    try {
+      const { id } = params;
+      const { password } = await request.json();
+
+      // 코드에서 예외가 발생할 수 있는 부분
+      const user = userData.find(user => user.id === id);
+
+      if (!user) {
+        return HttpResponse.json(
+          { message: '존재하지 않는 아이디입니다.' },
+          { status: 401 }
+        );
+      }
+
+      if (user.password !== password) {
+        return HttpResponse.json(
+          { message: '비밀번호가 올바르지 않습니다.' },
+          { status: 401 }
+        );
+      }
+
+      // JWT 생성
+      const token = await new SignJWT({ id: user.id, nickname: user.nickname })
+        .setProtectedHeader({ alg: 'HS256', typ: 'JWT' }) // Set the header with algorithm and type
+        .setExpirationTime('1h')
+        .setIssuer('your-app')
+        .sign(new TextEncoder().encode(SECRET_KEY));
+
+      return HttpResponse.json({
+        user: { id: user.id, nickname: user.nickname },
+        jwt: token,
+      });
+    } catch (error) {
+      console.error('Error in /users/:id handler:', error);
+      return HttpResponse.json(
+        { message: '서버 오류가 발생했습니다.' },
+        { status: 500 }
+      );
+    }
+  }),
+
   http.get('/movies/:movieId/reviews', (req, res, ctx) => {
     const { movieId } = req.params;
     const filterReviews = reviewData.filter(
@@ -84,6 +134,7 @@ export const handlers = [
     );
     return HttpResponse.json(filterReviews);
   }),
+
   http.get('/reviews/:id/comment', (req, res, ctx) => {
     const { id } = req.params;
     const filterComments = comment.filter(
@@ -91,6 +142,7 @@ export const handlers = [
     );
     return HttpResponse.json(filterComments);
   }),
+
   http.post('/movies/:id/reviews', async ({ request, params }) => {
     const { id } = params;
     const newPost = await request.json();
@@ -105,6 +157,7 @@ export const handlers = [
     reviewData.push(newReview);
     return HttpResponse.json(newReview, { status: 201 });
   }),
+
   http.post('/reviews/:id/comment', async ({ request, params }) => {
     const { id } = params;
     const newPost = await request.json();
