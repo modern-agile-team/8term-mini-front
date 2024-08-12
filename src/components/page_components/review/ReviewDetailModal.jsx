@@ -1,29 +1,55 @@
 import Comment from './Comment';
 import * as S from './ReviewStyled';
 import PagiNation from './../../public_components/PagiNation';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useContext } from 'react';
 import Review from './Review';
 import { basicAxios } from '../../../axios/instance';
-export default function CommentContainer({ reviews, toggleModal }) {
+import {
+  confirmLoginAlert,
+  warningAlert,
+} from '../../public_components/Alert.jsx';
+
+export default function ReviewDetailModal({
+  reviews,
+  toggleModal,
+  setReRequest,
+  reRequest,
+  displayReviewLike,
+}) {
   const inputRef = useRef();
   const [comments, setCommnets] = useState();
+  const user = JSON.parse(localStorage.getItem('user'));
+
   useEffect(() => {
     basicAxios
       .get(`/reviews/${reviews.review_id}/comment`)
       .then(data => setCommnets(data));
-  }, []);
+  }, [reRequest]);
 
   function addCommnet() {
+    if (localStorage.getItem('user') === null) {
+      return confirmLoginAlert(
+        '로그인 필요',
+        '로그인이 필요한 기능입니다.',
+        '로그인 페이지 이동',
+        '확인'
+      );
+    }
     if (!inputRef.current.value) {
-      alert('텍스트가 없어요');
+      warningAlert('입력값 없음', '텍스트를 입력해주세요');
       return;
     }
+
     basicAxios
       .post(`/reviews/${reviews.review_id}/comment`, {
         text: inputRef.current.value,
+        review_id: reviews.review_id,
+        user_id: user.user_id,
+        nickName: user.nickName,
+        id: user.id,
       })
-      .then(data => {
-        setCommnets([...comments, data]);
+      .then(() => {
+        setReRequest(new Date());
         inputRef.current.value = '';
       });
   }
@@ -43,10 +69,16 @@ export default function CommentContainer({ reviews, toggleModal }) {
             styled={{ $padding: '0px', $width: '100%', $marginBottom: '30px' }}
             reviews={reviews}
             isModal={false}
+            displayReviewLike={displayReviewLike}
+            setReRequest={setReRequest}
           ></Review>
           <S.CommentContainerDiv>
             {comments.map(val => (
-              <Comment key={val.comment_id} comment={val} />
+              <Comment
+                key={val.comment_id}
+                comment={val}
+                setReRequest={setReRequest}
+              />
             ))}
           </S.CommentContainerDiv>
           <PagiNation
@@ -59,7 +91,7 @@ export default function CommentContainer({ reviews, toggleModal }) {
             <S.CommentInput
               type="text"
               ref={inputRef}
-              onKeyDown={e => {
+              onKeyPress={e => {
                 if (e.code === 'Enter') {
                   addCommnet();
                 }

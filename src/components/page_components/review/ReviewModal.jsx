@@ -3,12 +3,14 @@ import * as S from './ReviewStyled';
 import profileimg from '/profileimg.png';
 import { useParams } from 'react-router-dom';
 import { authAxios } from '../../../axios/instance';
-import { warningAlert, errorAlert } from '../../public_components/Alert';
+import { warningAlert } from '../../public_components/Alert';
 import { useState } from 'react';
 export default function AddReview({
   toggleaddReviewModal,
-  reviews,
-  setReviews,
+  setReRequest,
+  textValue,
+  mod,
+  reviewId,
 }) {
   const { id } = useParams();
   const textRef = useRef();
@@ -17,23 +19,37 @@ export default function AddReview({
 
   function charCount(e) {
     setTextLength(e.target.value.length);
-    if (textLength >= 255) {
-      errorAlert('입력값 초과', '255자를 넘길 수 없습니다.');
-    }
   }
   function AddReview() {
     if (!textRef.current.value) {
       warningAlert('입력값 없음', '텍스트를 입력해주세요');
       return;
-    } else {
-      toggleaddReviewModal();
     }
     authAxios
       .post(`/movies/${id}/reviews`, {
         user_id: user.user_id,
         text: textRef.current.value,
+        nickName: user.nickName,
+        id: user.id,
       })
-      .then(data => setReviews([...reviews, data]));
+      .then(() => {
+        setReRequest(new Date());
+        toggleaddReviewModal();
+      });
+  }
+  function editReview() {
+    if (!textRef.current.value) {
+      warningAlert('입력값 없음', '텍스트를 입력해주세요');
+      return;
+    }
+    authAxios
+      .patch(`/users/my/reviews/${reviewId}`, {
+        text: textRef.current.value,
+      })
+      .then(() => {
+        setReRequest(new Date());
+        toggleaddReviewModal();
+      });
   }
   return (
     <>
@@ -60,7 +76,11 @@ export default function AddReview({
             >
               ({user.id.slice(0, 3)}*****)
             </S.ReviewRowDiv>
-            <S.AddBtn $height="35px" $width="90px" onClick={AddReview}>
+            <S.AddBtn
+              $height="35px"
+              $width="90px"
+              onClick={mod === 'add' ? AddReview : editReview}
+            >
               저장
             </S.AddBtn>
           </S.ReviewColumnDiv>
@@ -69,6 +89,8 @@ export default function AddReview({
           <S.InputTextArea
             ref={textRef}
             onKeyDown={charCount}
+            maxLength={255}
+            defaultValue={textValue}
           ></S.InputTextArea>
         </S.ModalContent>
       </S.ModalContainer>
