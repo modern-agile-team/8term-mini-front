@@ -17,7 +17,6 @@ export const InputDiv = styled.input`
   border: none;
   height: 30px;
   width: 100%;
-  outline: none;
   padding-left: 10px;
   padding-right: 10px;
   margin-top: 20px;

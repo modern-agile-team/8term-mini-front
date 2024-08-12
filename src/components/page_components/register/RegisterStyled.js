@@ -6,24 +6,45 @@ export const LootDiv = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 230px;
+  width: 250px;
 `;
 
-/**input 요소 */
+export const IdContainerDiv = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+`;
+
 export const InputDiv = styled.input`
   font-family: 'Pretendard-Regular';
-  background-color: #f7f9f3;
-  color: #000000;
+  font-size: 15px;
+  font-weight: 500;
   border: none;
-  height: 30px;
+  height: 40px;
   width: 100%;
   outline: none;
   padding-left: 10px;
-  padding-right: 10px;
+  padding-right: 80px;
   margin-top: 20px;
+  box-sizing: border-box;
   &::placeholder {
-    color: #bababa;
+    color: #d9d9d9;
   }
+`;
+
+export const CheckButton = styled.button`
+  font-family: 'Pretendard-Regular';
+  font-weight: 500;
+  position: absolute;
+  right: 0;
+  height: 50%;
+  margin-right: 5px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: ${({ checked }) => (checked ? '#D9D9D9' : '#ffffff')};
+  background-color: ${({ checked }) => (checked ? '#B5B5B5' : '#000000')};
 `;
 
 /**회원가입 button*/
@@ -31,8 +52,8 @@ export const RegisterButton = styled.button`
   font-family: 'Pretendard-Regular';
   background-color: #000000;
   color: #ffffff;
-  height: 30px;
-  width: 109%;
+  height: 35px;
+  width: 100%;
   border: 1px solid #ffffff;
   padding-left: 10px;
   padding-right: 10px;
@@ -46,13 +67,17 @@ export const RegisterButton = styled.button`
 `;
 
 export const ErrorText = styled.div`
-  margin-top: 5px;
   font-family: 'Pretendard-Regular';
-  color: #ff0000;
+  font-weight: 600;
+  font-size: 13px;
+  margin-top: 5px;
+  color: #616161;
 `;
 
 export const SuccessText = styled.div`
-  margin-top: 5px;
   font-family: 'Pretendard-Regular';
-  color: #00ff00;
+  font-weight: 600;
+  font-size: 13px;
+  margin-top: 5px;
+  color: #b5b5b5;
 `;

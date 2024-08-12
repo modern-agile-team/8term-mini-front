@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw';
 import movieData from '../db/movies.json';
 import reviewData from '../db/review.json';
 import comment from '../db/comment.json';
-import fs from 'fs';
+import userData from '../db/user.json';
 
 export const handlers = [
   // Intercept "GET /movies" requests...
@@ -35,6 +35,32 @@ export const handlers = [
 
     if (movie) {
       return HttpResponse.json(movie);
+    }
+  }),
+
+  http.get('/users/check-id', ({ request }) => {
+    const url = new URL(request.url);
+    const userId = url.searchParams.get('id');
+
+    if (!userId) {
+      return HttpResponse.json(
+        { message: '아이디를 입력해주세요.' },
+        { status: 400 }
+      );
+    }
+
+    const userExists = userData.some(user => user.id === userId);
+
+    if (userExists) {
+      return HttpResponse.json(
+        { message: '이미 사용중인 아이디 입니다.' },
+        { status: 409 }
+      );
+    } else {
+      return HttpResponse.json(
+        { message: '사용 가능한 아이디 입니다.' },
+        { status: 200 }
+      );
     }
   }),
 
