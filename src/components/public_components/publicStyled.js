@@ -58,7 +58,6 @@ export const BraceImg = styled.img`
 `;
 export const FooterDiv = styled.div`
   font-family: 'Pretendard-Regular';
-
   margin-top: 80px;
   display: flex;
   color: #f7f9f3;
@@ -112,11 +111,48 @@ export const MoreModernDiv = styled.div`
   margin-top: 50px;
 `;
 
+export const ModernSnsDiv = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+`;
+
 export const ModernAgileYoutubeDiv = styled.div`
-  cursor: pointer;
-  display: inline-block;
-  &:hover {
-    text-decoration: underline;
+  display: flex;
+  align-items: center;
+  margin-right: 20%;
+  span {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 2px solid #000000;
+    cursor: pointer;
+    &:hover {
+      border-bottom: 2px solid;
+    }
+    svg {
+      margin-left: 5px;
+    }
+  }
+`;
+
+export const ModernMovieInstagramDiv = styled.div`
+  display: flex;
+  align-items: center;
+  span {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 2px solid #000000;
+    cursor: pointer;
+    &:hover {
+      border-bottom: 2px solid;
+    }
+    svg {
+      margin-left: 5px;
+    }
   }
 `;
 
