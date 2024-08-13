@@ -18,13 +18,18 @@ export default function ReviewDetailModal({
 }) {
   const inputRef = useRef();
   const [comments, setCommnets] = useState();
+  const [page, setPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
   const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
     basicAxios
-      .get(`/reviews/${reviews.review_id}/comment`)
-      .then(data => setCommnets(data));
-  }, [reRequest]);
+      .get(`/reviews/${reviews.review_id}/comment/?page=${page}`)
+      .then(data => {
+        setTotalItems(data.totalPages);
+        setCommnets(data.data);
+      });
+  }, [reRequest, page]);
 
   function addCommnet() {
     if (localStorage.getItem('user') === null) {
@@ -83,9 +88,11 @@ export default function ReviewDetailModal({
           </S.CommentContainerDiv>
           <PagiNation
             styled={{ $color: '#000', $width: '600px', $fontSize: '12px' }}
+            setPage={setPage}
+            totalItems={totalItems}
           />
           <S.ReviewColumnDiv
-            $padding="50px 80px 0px 80px"
+            $padding="30px 80px 0px 80px"
             $justifyContent="center"
           >
             <S.CommentInput

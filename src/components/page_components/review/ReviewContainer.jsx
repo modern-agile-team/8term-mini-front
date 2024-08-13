@@ -9,20 +9,25 @@ import { confirmLoginAlert } from '../../public_components/Alert.jsx';
 import useToggle from '../../../hooks/useToggle.js';
 export default function ReviewContainer() {
   //이거있으면 로그인상태
-  // localStorage.setItem(
-  //   'user',
-  //   JSON.stringify({ user_id: 1, id: 'rhehfl0101', nickName: 'doyoon' })
-  // );
+  localStorage.setItem(
+    'user',
+    JSON.stringify({ user_id: 1, id: 'rhehfl0101', nickName: 'doyoon' })
+  );
   //로그인 해제
-  localStorage.removeItem('user');
+  // localStorage.removeItem('user');
   const { id } = useParams();
   const [reviews, setReviews] = useState([]);
   const [addReviewModal, setAddReviewModal] = useToggle();
   const [reRequest, setReRequest] = useState(0);
   const [displayReviewLike, setdisplayReviewLike] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
   useEffect(() => {
     //영화에대한 리뷰 가져오기
-    basicAxios.get(`/movies/${id}/reviews`).then(data => setReviews(data));
+    basicAxios.get(`/movies/${id}/reviews/?page=${page}`).then(data => {
+      setTotalItems(data.totalPages);
+      setReviews(data.data);
+    });
     //로그인되어있으면 좋아요한 리뷰 가져옴
     if (localStorage.getItem('user') !== null) {
       authAxios
@@ -32,11 +37,10 @@ export default function ReviewContainer() {
           }/review-likes`
         )
         .then(data => {
-          console.log(data);
           setdisplayReviewLike(data);
         });
     }
-  }, [reRequest]);
+  }, [reRequest, page]);
   //리뷰 쓰기 모달창 함수
   function toggleaddReviewModal() {
     if (localStorage.getItem('user') === null) {
@@ -80,7 +84,11 @@ export default function ReviewContainer() {
             isLiked={displayReviewLike.includes(Number(val.review_id))}
           />
         ))}
-        <PagiNation styled={{ $color: '#f7f9f3' }}></PagiNation>
+        <PagiNation
+          styled={{ $color: '#f7f9f3' }}
+          totalItems={totalItems}
+          setPage={setPage}
+        ></PagiNation>
       </S.ReviewContainer>
     </>
   );
