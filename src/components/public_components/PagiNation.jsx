@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import * as S from './publicStyled.js';
-import useToggle from './../../hooks/useToggle';
-
+import { warningAlert } from './Alert.jsx';
 export default function PagiNation({
   styled,
-  totalItems = 1, //총 몇페이지인지
+  totalItems, //총 데이터 수
   setPage,
 }) {
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
@@ -17,72 +16,71 @@ export default function PagiNation({
     }
     return result;
   }
-  function nextPage() {
-    if (currentPage < slicedPageArray.length - 1) {
-      setCurrentPage(currentPage + 1);
-      console.log(currentPage, slicedPageArray.length);
-    } else {
-      setLastPage();
+  function prevPage() {
+    if (slicedPageArray[currentPage - 1] === undefined) {
+      return warningAlert('처음 페이지입니다');
     }
+    setCurrentPage(currentPage - 1);
   }
-  function prevPage() {}
+  function nextPage() {
+    if (slicedPageArray[currentPage + 1] === undefined) {
+      return warningAlert('마지막 페이지입니다');
+    }
+    setCurrentPage(currentPage + 1);
+  }
+
   //자르고싶은 배열, 몇개씩 자를지
-  const testarr = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-    22, 23, 24, 25, 26,
-  ];
-  const totalPage =
-    Array.from(Array(Math.ceil(totalItems / 5)), (_, index) => index + 1) || 1;
-  const [lastPage, lastPageToggle] = useToggle(true);
-  const [firstPage, firstPageToggle] = useToggle(false);
-  const [slicedPageArray, setSlicedPageArray] = useState([[]]);
+
+  const [slicedPageArray, setSlicedPageArray] = useState();
   const [currentPage, setCurrentPage] = useState(0);
+  const [clickedIndex, setClickedIndex] = useState(0);
+  const totalPage = Array.from(
+    Array(Math.ceil(totalItems / 5)),
+    (_, index) => index + 1
+  );
   useEffect(() => {
-    setSlicedPageArray(slicePage(testarr, 5));
+    setSlicedPageArray(() => slicePage(totalPage, 5));
   }, [totalItems]);
   //페이지를 n개씩 나누기
+  if (!slicedPageArray) return <div>Loding...</div>;
   return (
     <S.PaginationDiv {...styled}>
-      {styled.$color === '#000'
-        ? firstPage && (
-            <S.BraceImg
-              src={`${baseUrl}braceBlack.png`}
-              onClick={prevPage}
-            ></S.BraceImg>
-          )
-        : firstPage && (
-            <S.BraceImg
-              src={`${baseUrl}brace.png`}
-              onClick={prevPage}
-            ></S.BraceImg>
-          )}
+      {styled.$color === '#000' ? (
+        <S.BraceImg
+          src={`${baseUrl}braceBlack.png`}
+          onClick={prevPage}
+        ></S.BraceImg>
+      ) : (
+        <S.BraceImg src={`${baseUrl}brace.png`} onClick={prevPage}></S.BraceImg>
+      )}
 
-      {slicedPageArray[currentPage].map((val, idx) => (
-        <S.PageSpan
-          key={idx}
-          onClick={e => {
-            setPage(() => e.target.innerText);
-          }}
-        >
-          {val}
-        </S.PageSpan>
-      ))}
+      {slicedPageArray[currentPage] &&
+        slicedPageArray[currentPage].map((val, idx) => (
+          <S.PageSpan
+            key={idx}
+            onClick={e => {
+              setPage(() => e.target.innerText);
+              setClickedIndex(idx);
+            }}
+            $scale={clickedIndex === idx ? 1.5 : 1}
+          >
+            {val}
+          </S.PageSpan>
+        ))}
 
-      {styled.$color === '#000'
-        ? lastPage && (
-            <S.BraceImg
-              src={`${baseUrl}braceBlack.png`}
-              $rotate="180deg"
-              onClick={nextPage}
-            ></S.BraceImg>
-          )
-        : lastPage && (
-            <S.BraceImg
-              src={`${baseUrl}brace.png`}
-              $rotate="180deg"
-              onClick={nextPage}
-            ></S.BraceImg>
-          )}
+      {styled.$color === '#000' ? (
+        <S.BraceImg
+          src={`${baseUrl}braceBlack.png`}
+          $rotate="180deg"
+          onClick={nextPage}
+        ></S.BraceImg>
+      ) : (
+        <S.BraceImg
+          src={`${baseUrl}brace.png`}
+          $rotate="180deg"
+          onClick={nextPage}
+        ></S.BraceImg>
+      )}
     </S.PaginationDiv>
   );
 }

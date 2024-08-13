@@ -86,7 +86,7 @@ export default function ReviewContainer() {
         ))}
         <PagiNation
           styled={{ $color: '#f7f9f3' }}
-          totalItems={totalItems}
+          totalItems={totalItems || 1}
           setPage={setPage}
         ></PagiNation>
       </S.ReviewContainer>

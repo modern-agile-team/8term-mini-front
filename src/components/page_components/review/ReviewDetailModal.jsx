@@ -89,7 +89,7 @@ export default function ReviewDetailModal({
           <PagiNation
             styled={{ $color: '#000', $width: '600px', $fontSize: '12px' }}
             setPage={setPage}
-            totalItems={totalItems}
+            totalItems={totalItems || 1}
           />
           <S.ReviewColumnDiv
             $padding="30px 80px 0px 80px"
