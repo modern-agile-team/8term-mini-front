@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
 import * as S from './publicStyled';
-import logo3 from '/logo3.png';
+
 /** @헤더 헤더 컴포넌트 */
 export default function Header() {
+  const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
+
   return (
     <>
       <S.HeaderDiv>
         <Link to="/">
-          <S.HeaderImg src={logo3}></S.HeaderImg>
+          <S.HeaderImg src={`${baseUrl}logo3.png`}></S.HeaderImg>
         </Link>
         <S.LoginSearchDiv>
           <S.HeaderColumnDiv>

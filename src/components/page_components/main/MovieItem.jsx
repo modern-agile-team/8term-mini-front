@@ -1,10 +1,11 @@
 import FavoriteButton from './FavoriteButton';
 import * as S from './MainStyled';
-import arrrow from '/arrow.png';
 import { useNavigate } from 'react-router-dom';
 export default function MovieItem(props) {
   const navigate = useNavigate();
   const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500/';
+  const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
+
   return (
     <>
       <S.MovieItemDiv>
@@ -17,7 +18,7 @@ export default function MovieItem(props) {
           }}
         >
           {props.originalTitle}
-          <S.HoverItemImg src={arrrow}></S.HoverItemImg>
+          <S.HoverItemImg src={`${baseUrl}arrow.png`}></S.HoverItemImg>
         </S.HoverItemDiv>
         <S.ItemInfoDiv>
           <S.ItemColumnDiv>

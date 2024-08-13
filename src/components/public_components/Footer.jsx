@@ -1,9 +1,10 @@
 import * as S from './publicStyled';
-import Join from '/Join.png';
 import { Link } from 'react-router-dom';
 
 /**@푸터 컴포넌트 */
 export default function Footer() {
+  const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
+
   return (
     <>
       <S.FooterDiv>
@@ -21,7 +22,7 @@ export default function Footer() {
             <S.JoinGroupDiv>
               <S.HrTopDiv>join to MODERN MOVIE</S.HrTopDiv>
               <Link to="/register">
-                <S.JoinImg src={Join}></S.JoinImg>
+                <S.JoinImg src={`${baseUrl}Join.png`}></S.JoinImg>
               </Link>
             </S.JoinGroupDiv>
             <S.HorizontalLine />
