@@ -14,7 +14,7 @@ export default function ReviewContainer() {
   //   JSON.stringify({ user_id: 1, id: 'rhehfl0101', nickName: 'doyoon' })
   // );
   //로그인 해제
-  localStorage.removeItem('user');
+  // localStorage.removeItem('user');
   const { id } = useParams();
   const [reviews, setReviews] = useState([]);
   const [addReviewModal, setAddReviewModal] = useToggle();
