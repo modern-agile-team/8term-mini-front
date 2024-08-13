@@ -47,6 +47,8 @@ export const ReviewDiv = styled.div`
   width: ${props => props.$width || '74%'};
   height: 150px;
   border-radius: 10px;
+  word-break: break-all;
+  word-wrap: break-word;
 `;
 export const ReviewColumnDiv = styled.div`
   font-family: 'Pretendard-Regular';
@@ -65,7 +67,6 @@ export const ReviewRowDiv = styled.div`
   color: ${props => props.$color || '#000000'};
   font-weight: ${props => props.$fontWeight || '600'};
   margin-right: ${props => props.$marginRight || '0px'};
-  align-items: center;
 `;
 export const ReviewImg = styled.img`
   width: 25px;
@@ -115,16 +116,18 @@ export const CommentInput = styled.input`
   margin-right: auto;
 `;
 export const AddBtn = styled.div`
+  font-family: 'pretendard-Regular';
   display: flex;
   width: ${props => props.$width || '80px'};
   height: ${props => props.$height || '26px'};
   align-items: center;
   justify-content: center;
-  font-weight: 400;
-  font-size: 12px;
+  font-weight: 600;
+  font-size: ${props => props.$fontSize || '12px'};
   padding: 3px;
   cursor: pointer;
-  border: 1px solid #000000;
+  border: ${props =>
+    props.$border ? `${props.$border} solid #000000` : '1px solid #000000'};
   border-radius: 8px;
   color: #000000;
   &:hover {
@@ -136,9 +139,26 @@ export const AddBtn = styled.div`
 export const InputTextArea = styled.textarea`
   font-family: 'Pretendard-Regular';
   resize: none;
-  width: 100%;
+  width: 92%;
   height: 100%;
+  border: none;
+  margin: 0;
+  padding: 40px;
   border-radius: 10px;
   background: #d9d9d9;
   font-size: 20px;
+`;
+export const TextCountDiv = styled.div`
+  font-family: 'Pretendard-Regular';
+  position: relative;
+  top: 25px;
+  left: 46%;
+`;
+export const DeleteImg = styled.img`
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  margin-left: 15px;
+  align-self: center;
+  margin-right: ${props => props.$marginRight || '0px'};
 `;

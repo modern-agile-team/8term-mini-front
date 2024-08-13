@@ -6,6 +6,8 @@ import userData from '../db/user.json';
 import { SignJWT } from 'jose';
 
 const SECRET_KEY = 'your-access-token-secret-key';
+import wishList from '../db/wishList.json';
+import reviewLike from '../db/reviewLike.json';
 
 export const handlers = [
   // Intercept "GET /movies" requests...
@@ -126,12 +128,23 @@ export const handlers = [
     }
   }),
 
+  //영화별 리뷰 데이터 요청
   http.get('/movies/:movieId/reviews', (req, res, ctx) => {
     const { movieId } = req.params;
-    const filterReviews = reviewData.filter(
+    let filterReviews = reviewData.filter(
       val => val.movie_id === parseInt(movieId, 10)
     );
-    return HttpResponse.json(filterReviews);
+
+    filterReviews = filterReviews.map(reviewData => ({
+      ...reviewData,
+      likeLen: reviewLike.filter(
+        likeData => likeData.review_id == reviewData.review_id
+      ).length,
+      commentLen: comment.filter(
+        commentData => commentData.review_id == reviewData.review_id
+      ).length,
+    }));
+    return HttpResponse.json(filterReviews.reverse());
   }),
 
   http.get('/reviews/:id/comment', (req, res, ctx) => {
@@ -139,36 +152,127 @@ export const handlers = [
     const filterComments = comment.filter(
       val => val.review_id == parseInt(id, 10)
     );
-    return HttpResponse.json(filterComments);
+    return HttpResponse.json(filterComments.reverse());
   }),
-
-  http.post('/movies/:id/reviews', async ({ request, params }) => {
-    const { id } = params;
-    const newPost = await request.json();
-
+  http.post('/movies/:movieId/reviews', async ({ request, params }) => {
+    const { movieId } = params;
+    const { user_id, text, nickName, id } = await request.json();
     const newReview = {
       review_id: reviewData.length + 1,
-      user_id: 123123,
-      movie_id: id,
-      comment: newPost.text,
+      id: id.slice(0, 3),
+      nickname: nickName,
+      movie_id: parseInt(movieId, 10),
+      comment: text,
+      user_id: user_id,
       date: new Date().toISOString().slice(0, 10),
     };
     reviewData.push(newReview);
-    return HttpResponse.json(newReview, { status: 201 });
+    return HttpResponse.json(null, { status: 201 });
   }),
-
-  http.post('/reviews/:id/comment', async ({ request, params }) => {
-    const { id } = params;
-    const newPost = await request.json();
+  http.post('/reviews/:reviewId/comment', async ({ request, params }) => {
+    const { reviewId } = params;
+    const { text, id, user_id, nickName } = await request.json();
 
     const newComment = {
       comment_id: comment.length + 1,
-      user_id: 244,
-      review_id: id,
-      text: newPost.text,
+      user_id: user_id,
+      id: id.slice(0, 3),
+      review_id: reviewId,
+      text: text,
+      nickName: nickName,
       date: new Date().toISOString().slice(0, 10),
     };
     comment.push(newComment);
     return HttpResponse.json(newComment, { status: 201 });
   }),
+  http.get('users/:id/wish-lists', ({ request, params }, res, ctx) => {
+    const { id } = params;
+    if (request.headers.get('Authorization')) {
+      const userWishList = wishList.filter(val => {
+        val.user_id == id;
+      });
+
+      return HttpResponse.json(null, { status: 200 });
+    }
+    return HttpResponse.json(null, { status: 403 });
+  }),
+  http.delete('/users/my/reveiws/:id', ({ request, params }, res, ctx) => {
+    const { id } = params;
+
+    if (request.headers.get('Authorization')) {
+      const a = reviewData.findIndex(val => val.review_id == id);
+      reviewData.splice(a, 1);
+      return HttpResponse.json('asd', { status: 200 });
+    }
+    return HttpResponse.json(null, { status: 403 });
+  }),
+  http.patch('/users/my/reviews/:id', async ({ request, params }, res, ctx) => {
+    const { id } = params;
+    const { text } = await request.json();
+    if (request.headers.get('Authorization')) {
+      const a = reviewData.findIndex(val => val.review_id == id);
+
+      reviewData[a].comment = text;
+      return HttpResponse.json(null, { status: 200 });
+    }
+    return HttpResponse.json(null, { status: 403 });
+  }),
+  http.post(
+    '/users/:id/review-likes',
+    async ({ request, params }, res, ctx) => {
+      const { id } = params;
+      const { review_id } = await request.json();
+      if (request.headers.get('Authorization')) {
+        const newLike = {
+          review_like_id: reviewLike.length + 1,
+          user_id: Number(id),
+          review_id: review_id,
+        };
+        reviewLike.push(newLike);
+        return HttpResponse.json(null, { status: 200 });
+      }
+      return HttpResponse.json(null, { status: 403 });
+    }
+  ),
+  http.delete(
+    '/users/my/review-likes',
+    async ({ request, params }, res, ctx) => {
+      const url = new URL(request.url);
+      const userId = url.searchParams.get('user-id');
+      const reviewId = url.searchParams.get('review-id');
+      if (request.headers.get('Authorization')) {
+        const a = reviewLike.findIndex(
+          val => val.review_id == reviewId && val.user_id == userId
+        );
+        reviewLike.splice(a, 1);
+        return HttpResponse.json(null, { status: 200 });
+      }
+      return HttpResponse.json(null, { status: 403 });
+    }
+  ),
+  //특정 유저의 좋아요 데이터 요청
+  http.get('/users/:id/review-likes', async ({ request, params }, res, ctx) => {
+    const { id } = params;
+    if (request.headers.get('Authorization')) {
+      let newReviewLike = reviewLike.filter(val => val.user_id == id);
+      newReviewLike = newReviewLike.map(val => {
+        return val.review_id;
+      });
+      return HttpResponse.json(newReviewLike, { status: 200 });
+    }
+    return HttpResponse.json(null, { status: 403 });
+  }),
+  http.delete(
+    '/users/my/comments/:id',
+    async ({ request, params }, res, ctx) => {
+      const { id } = params;
+      if (request.headers.get('Authorization')) {
+        const a = comment.findIndex(val => val.comment_id == id);
+        comment.splice(a, 1);
+
+        return HttpResponse.json(null, { status: 200 });
+      }
+      return HttpResponse.json(null, { status: 403 });
+    }
+  ),
 ];
