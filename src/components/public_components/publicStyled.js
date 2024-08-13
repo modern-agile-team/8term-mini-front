@@ -40,14 +40,16 @@ export const PaginationDiv = styled.div`
   display: flex;
   color: ${props => props.$color || '#f7f9f3'};
   align-items: center;
+  justify-content: space-around;
   font-size: ${props => props.$fontSize || '18px'};
   width: ${props => props.$width || '1000px'};
 `;
-export const PageSpan = styled.span`
+export const PageSpan = styled.div`
   text-align: center;
   font-family: 'Asterone DEMO', sans-serif;
-  width: 20%;
+  padding: 10px 20px 10px 20px;
   cursor: pointer;
+  transform: scale(${props => props.$scale || '1'});
 `;
 export const BraceImg = styled.img`
   width: 1%;

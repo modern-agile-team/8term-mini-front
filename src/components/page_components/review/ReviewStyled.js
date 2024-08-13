@@ -78,7 +78,7 @@ export const ReviewImg = styled.img`
 export const CommentContainerDiv = styled.div`
   width: 100%;
   padding: 0 20px 0 20px;
-  margin-bottom: 40px;
+  margin-bottom: auto;
 `;
 
 /*리뷰 모달창 스타일 컴포넌트*/

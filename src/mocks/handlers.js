@@ -133,31 +133,59 @@ export const handlers = [
   }),
 
   //영화별 리뷰 데이터 요청
-  http.get('/movies/:movieId/reviews', (req, res, ctx) => {
-    const { movieId } = req.params;
+  http.get('/movies/:movieId/reviews/', ({ request, params }) => {
+    const { movieId } = params;
+    const url = new URL(request.url);
+    const page = url.searchParams.get('page');
+    const itemCountPerPage = 5;
+    let result = [];
     let filterReviews = reviewData.filter(
       val => val.movie_id === parseInt(movieId, 10)
     );
 
-    filterReviews = filterReviews.map(reviewData => ({
-      ...reviewData,
-      likeLen: reviewLike.filter(
-        likeData => likeData.review_id == reviewData.review_id
-      ).length,
-      commentLen: comment.filter(
-        commentData => commentData.review_id == reviewData.review_id
-      ).length,
-    }));
-    return HttpResponse.json(filterReviews.reverse());
-  }),
+    filterReviews = filterReviews
+      .map(reviewData => ({
+        ...reviewData,
+        likeLen: reviewLike.filter(
+          likeData => likeData.review_id == reviewData.review_id
+        ).length,
+        commentLen: comment.filter(
+          commentData => commentData.review_id == reviewData.review_id
+        ).length,
+      }))
+      .reverse();
 
-  http.get('/reviews/:id/comment', (req, res, ctx) => {
-    const { id } = req.params;
-    const filterComments = comment.filter(
-      val => val.review_id == parseInt(id, 10)
-    );
-    return HttpResponse.json(filterComments.reverse());
+    for (let i = 0; i < filterReviews.length; i += itemCountPerPage) {
+      result.push(filterReviews.slice(i, i + itemCountPerPage));
+    }
+
+    //1페이지라치면 인덱스 0부터 2 2페이지면
+    const dataLen = filterReviews.length;
+    return HttpResponse.json({
+      data: result[page - 1] || [],
+      totalPages: dataLen,
+    });
   }),
+  //특정 리뷰의 댓글 요청
+  http.get('/reviews/:id/comment', ({ request, params }) => {
+    const { id } = params;
+    const url = new URL(request.url);
+    const page = url.searchParams.get('page');
+    let result = [];
+    const itemCountPerPage = 5;
+    const filterComments = comment
+      .filter(val => val.review_id == parseInt(id, 10))
+      .reverse();
+    for (let i = 0; i < filterComments.length; i += itemCountPerPage) {
+      result.push(filterComments.slice(i, i + itemCountPerPage));
+    }
+    const dataLen = filterComments.length;
+    return HttpResponse.json({
+      data: result[page - 1] || [],
+      totalPages: dataLen,
+    });
+  }),
+  //특정 영회의 리뷰 쓰기
   http.post('/movies/:movieId/reviews', async ({ request, params }) => {
     const { movieId } = params;
     const { user_id, text, nickName, id } = await request.json();
