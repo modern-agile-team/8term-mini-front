@@ -9,6 +9,10 @@ export const LootDiv = styled.div`
   width: 250px;
 `;
 
+export const LoginForm = styled.form`
+  width: 250px;
+`;
+
 export const InputWrapper = styled.div`
   position: relative;
   width: 100%;

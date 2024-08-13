@@ -109,14 +109,18 @@ export const handlers = [
       }
 
       // JWT 생성
-      const token = await new SignJWT({ id: user.id, nickname: user.nickname })
+      const token = await new SignJWT({
+        user_id: user.user_id,
+        id: user.id,
+        nickname: user.nickname,
+      })
         .setProtectedHeader({ alg: 'HS256', typ: 'JWT' }) // Set the header with algorithm and type
         .setExpirationTime('1h')
         .setIssuer('your-app')
         .sign(new TextEncoder().encode(SECRET_KEY));
 
       return HttpResponse.json({
-        user: { id: user.id, nickname: user.nickname },
+        user: { user_id: user.user_id, id: user.id, nickName: user.nickname },
         jwt: token,
       });
     } catch (error) {

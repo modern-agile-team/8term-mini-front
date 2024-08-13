@@ -42,6 +42,7 @@ export default function LoginForm() {
           console.log('User profile', response.data.user);
           console.log('User token', response.data.jwt);
           localStorage.setItem('token', response.data.jwt);
+          localStorage.setItem('user', JSON.stringify(response.data.user));
           loginSuccessAlert();
           navigate('/');
         })
@@ -69,7 +70,7 @@ export default function LoginForm() {
 
   return (
     <S.LootDiv>
-      <form onSubmit={handleSubmit}>
+      <S.LoginForm onSubmit={handleSubmit}>
         <S.InputWrapper $hasError={!!error.id}>
           <S.InputDiv
             type="text"
@@ -93,7 +94,7 @@ export default function LoginForm() {
         </S.InputWrapper>
 
         <S.LoginButton type="submit">로그인</S.LoginButton>
-      </form>
+      </S.LoginForm>
     </S.LootDiv>
   );
 }
