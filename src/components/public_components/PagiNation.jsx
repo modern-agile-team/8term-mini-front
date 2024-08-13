@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import * as S from './publicStyled.js';
-import brace from '/brace.png';
-import braceBlack from '/braceBlack.png';
 import useToggle from './../../hooks/useToggle';
 
 export default function PagiNation({
@@ -9,6 +7,7 @@ export default function PagiNation({
   totalItems = 1, //총 몇페이지인지
   setPage,
 }) {
+  const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   function slicePage(sliceArr, sliceLen) {
     const result = [];
     for (let i = 0; i < sliceArr.length; i += sliceLen) {
@@ -46,9 +45,17 @@ export default function PagiNation({
     <S.PaginationDiv {...styled}>
       {styled.$color === '#000'
         ? firstPage && (
-            <S.BraceImg src={braceBlack} onClick={prevPage}></S.BraceImg>
+            <S.BraceImg
+              src={`${baseUrl}braceBlack.png`}
+              onClick={prevPage}
+            ></S.BraceImg>
           )
-        : firstPage && <S.BraceImg src={brace} onClick={prevPage}></S.BraceImg>}
+        : firstPage && (
+            <S.BraceImg
+              src={`${baseUrl}brace.png`}
+              onClick={prevPage}
+            ></S.BraceImg>
+          )}
 
       {slicedPageArray[currentPage].map((val, idx) => (
         <S.PageSpan
@@ -64,14 +71,14 @@ export default function PagiNation({
       {styled.$color === '#000'
         ? lastPage && (
             <S.BraceImg
-              src={braceBlack}
+              src={`${baseUrl}braceBlack.png`}
               $rotate="180deg"
               onClick={nextPage}
             ></S.BraceImg>
           )
         : lastPage && (
             <S.BraceImg
-              src={brace}
+              src={`${baseUrl}brace.png`}
               $rotate="180deg"
               onClick={nextPage}
             ></S.BraceImg>

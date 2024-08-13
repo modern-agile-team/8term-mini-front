@@ -1,11 +1,11 @@
 import * as S from './MainStyled';
-import mainscreen from '/mainscreen.jpg';
-import mainscreen2 from '/mainscreen2.jpg';
 import { useEffect, useRef, useState } from 'react';
 
 export default function MainScreen() {
   const [slideRange, setSlideRange] = useState(0);
   const slideRef = useRef(null);
+  const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
+
   useEffect(() => {
     const interval = setInterval(() => {
       setSlideRange(prevRange => (prevRange === -100 ? 0 : -100));
@@ -19,8 +19,8 @@ export default function MainScreen() {
   return (
     <>
       <S.mainScreenDiv ref={slideRef}>
-        <S.ImgBox $bgImg={mainscreen}></S.ImgBox>
-        <S.ImgBox $bgImg={mainscreen2}></S.ImgBox>
+        <S.ImgBox $bgImg={`${baseUrl}mainscreen.jpg`}></S.ImgBox>
+        <S.ImgBox $bgImg={`${baseUrl}mainscreen2.jpg`}></S.ImgBox>
       </S.mainScreenDiv>
       <S.TitleDiv>
         <S.TitleContainerDiv>

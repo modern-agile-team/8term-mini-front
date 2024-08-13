@@ -1,9 +1,12 @@
 import * as S from './publicStyled';
-import Join from '/Join.png';
 import { Link } from 'react-router-dom';
+import { FaYoutube } from 'react-icons/fa';
+import { AiFillInstagram } from 'react-icons/ai';
 
 /**@푸터 컴포넌트 */
 export default function Footer() {
+  const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
+
   return (
     <>
       <S.FooterDiv>
@@ -21,20 +24,33 @@ export default function Footer() {
             <S.JoinGroupDiv>
               <S.HrTopDiv>join to MODERN MOVIE</S.HrTopDiv>
               <Link to="/register">
-                <S.JoinImg src={Join}></S.JoinImg>
+                <S.JoinImg src={`${baseUrl}Join.png`}></S.JoinImg>
               </Link>
             </S.JoinGroupDiv>
             <S.HorizontalLine />
             <S.MoreModernDiv>
               <S.HrTopDiv>more MODERN MOVIE</S.HrTopDiv>
               <S.HorizontalLine />
-              <S.ModernAgileYoutubeDiv
-                onClick={() =>
-                  window.open(import.meta.env.VITE_MODERN_AGILE_YOUTUBE)
-                }
-              >
-                Youtube
-              </S.ModernAgileYoutubeDiv>
+              <S.ModernSnsDiv>
+                <S.ModernAgileYoutubeDiv>
+                  <span
+                    onClick={() =>
+                      window.open(import.meta.env.VITE_MODERN_AGILE_YOUTUBE)
+                    }
+                  >
+                    Youtube <FaYoutube />
+                  </span>
+                </S.ModernAgileYoutubeDiv>
+                <S.ModernMovieInstagramDiv>
+                  <span
+                    onClick={() =>
+                      window.open(import.meta.env.VITE_MODERN_MOVIE_INSTAGRAM)
+                    }
+                  >
+                    INSTAGRAM <AiFillInstagram />
+                  </span>
+                </S.ModernMovieInstagramDiv>
+              </S.ModernSnsDiv>
             </S.MoreModernDiv>
           </S.SectionDiv>
         </S.SectionWrapperDiv>

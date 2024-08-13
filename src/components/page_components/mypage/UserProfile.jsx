@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import * as S from './MyPageStyled';
-import profileimg from '/profileimg.png';
 
 export default function UserProfile() {
+  const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditClick = () => {
@@ -17,7 +17,7 @@ export default function UserProfile() {
     <>
       <S.UserProfileDiv>
         <S.UserProfileImgDiv>
-          <S.UserProfileImg src={profileimg}></S.UserProfileImg>
+          <S.UserProfileImg src={`${baseUrl}profileimg.png`}></S.UserProfileImg>
           <S.UserProfileChangeDiv>변경</S.UserProfileChangeDiv>
         </S.UserProfileImgDiv>
 

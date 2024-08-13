@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import mainscreen from '/mainscreen.jpg';
-import mainscreen2 from '/mainscreen2.jpg';
+
 /** MainScreen 스타일 컴포넌트 */
 export const mainScreenDiv = styled.div`
   display: flex;
