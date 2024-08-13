@@ -1,13 +1,14 @@
 import * as S from './publicStyled.js';
-import brace from '/brace.png';
-import braceBlack from '/braceBlack.png';
+
 export default function PagiNation({ styled }) {
+  const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
+
   return (
     <S.PaginationDiv {...styled}>
       {styled.$color === '#000' ? (
-        <S.BraceImg src={braceBlack}></S.BraceImg>
+        <S.BraceImg src={`${baseUrl}braceBlack.png`}></S.BraceImg>
       ) : (
-        <S.BraceImg src={brace}></S.BraceImg>
+        <S.BraceImg src={`${baseUrl}brace.png`}></S.BraceImg>
       )}
 
       <S.PageSpan>1</S.PageSpan>
@@ -18,9 +19,12 @@ export default function PagiNation({ styled }) {
       <S.PageSpan>···</S.PageSpan>
 
       {styled.$color === '#000' ? (
-        <S.BraceImg src={braceBlack} $rotate="180deg"></S.BraceImg>
+        <S.BraceImg
+          src={`${baseUrl}braceBlack.png`}
+          $rotate="180deg"
+        ></S.BraceImg>
       ) : (
-        <S.BraceImg src={brace} $rotate="180deg"></S.BraceImg>
+        <S.BraceImg src={`${baseUrl}brace.png`} $rotate="180deg"></S.BraceImg>
       )}
     </S.PaginationDiv>
   );

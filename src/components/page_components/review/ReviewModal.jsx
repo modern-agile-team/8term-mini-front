@@ -1,10 +1,10 @@
 import { useRef } from 'react';
 import * as S from './ReviewStyled';
-import profileimg from '/profileimg.png';
 import { useParams } from 'react-router-dom';
 import { authAxios } from '../../../axios/instance';
 import { warningAlert } from '../../public_components/Alert';
 import { useState } from 'react';
+
 export default function AddReview({
   toggleaddReviewModal,
   setReRequest,
@@ -12,6 +12,7 @@ export default function AddReview({
   mod,
   reviewId,
 }) {
+  const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   const { id } = useParams();
   const textRef = useRef();
   const user = JSON.parse(localStorage.getItem('user'));
@@ -64,7 +65,7 @@ export default function AddReview({
         <S.ModalContent>
           <S.ReviewColumnDiv>
             <S.ReviewRowDiv $marginRight="7px">
-              <S.ReviewImg src={profileimg}></S.ReviewImg>
+              <S.ReviewImg src={`${baseUrl}profileimg.png`}></S.ReviewImg>
             </S.ReviewRowDiv>
             <S.ReviewRowDiv $fontSize="20px" $marginRight="7px">
               {user.nickName}

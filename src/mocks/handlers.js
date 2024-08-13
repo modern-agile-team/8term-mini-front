@@ -2,6 +2,10 @@ import { http, HttpResponse } from 'msw';
 import movieData from '../db/movies.json';
 import reviewData from '../db/review.json';
 import comment from '../db/comment.json';
+import userData from '../db/user.json';
+import { SignJWT } from 'jose';
+
+const SECRET_KEY = 'your-access-token-secret-key';
 import wishList from '../db/wishList.json';
 import reviewLike from '../db/reviewLike.json';
 
@@ -24,7 +28,6 @@ export const handlers = [
     }
 
     if (movieId === 'title') {
-      console.log(movieData);
       return HttpResponse.json(
         movieData.results.sort((a, b) => a.title.localeCompare(b.title))
       );
@@ -39,19 +42,92 @@ export const handlers = [
     }
   }),
 
+  // 중복 확인 검사 핸들러
+  http.get('/users/check-id', ({ request }) => {
+    const url = new URL(request.url);
+    const userId = url.searchParams.get('id');
+
+    if (!userId) {
+      return HttpResponse.json(
+        { message: '아이디를 입력해주세요.' },
+        { status: 400 }
+      );
+    }
+
+    const userExists = userData.some(user => user.id === userId);
+
+    if (userExists) {
+      return HttpResponse.json(
+        { message: '이미 사용중인 아이디 입니다.' },
+        { status: 409 }
+      );
+    } else {
+      return HttpResponse.json(
+        { message: '사용 가능한 아이디 입니다.' },
+        { status: 200 }
+      );
+    }
+  }),
+
+  // 회원가입 핸들러
   http.post('/users', async ({ request }) => {
     const { nickname, id, password, confirmPassword } = await request.json();
 
-    // Simple validation (example purposes)
     if (!nickname || !id || !password || password !== confirmPassword) {
+      return HttpResponse.json(
+        { message: '유효하지 않은 입력입니다.' },
+        { status: 400 }
+      );
     }
 
-    // Mock response with user profile and JWT token
     return HttpResponse.json({
-      user: { id, nickname, password },
-      jwt: 'fake-jwt-token',
+      user: { id, nickname },
+      message: '회원가입이 성공적으로 완료되었습니다.',
     });
   }),
+
+  // 로그인 핸들러
+  http.post('/users/:id', async ({ request, params }) => {
+    try {
+      const { id } = params;
+      const { password } = await request.json();
+
+      const user = userData.find(user => user.id === id);
+
+      if (!user) {
+        return HttpResponse.json(
+          { message: '존재하지 않는 아이디입니다.' },
+          { status: 401 }
+        );
+      }
+
+      if (user.password !== password) {
+        return HttpResponse.json(
+          { message: '비밀번호가 올바르지 않습니다.' },
+          { status: 401 }
+        );
+      }
+
+      // JWT 생성
+      const token = await new SignJWT({ id: user.id, nickname: user.nickname })
+        .setProtectedHeader({ alg: 'HS256', typ: 'JWT' }) // Set the header with algorithm and type
+        .setExpirationTime('1h')
+        .setIssuer('your-app')
+        .sign(new TextEncoder().encode(SECRET_KEY));
+
+      return HttpResponse.json({
+        user: { id: user.id, nickname: user.nickname },
+        jwt: token,
+      });
+    } catch (error) {
+      console.error('Error in /users/:id handler:', error);
+      return HttpResponse.json(
+        { message: '서버 오류가 발생했습니다.' },
+        { status: 500 }
+      );
+    }
+  }),
+
   //영화별 리뷰 데이터 요청
   http.get('/movies/:movieId/reviews', (req, res, ctx) => {
     const { movieId } = req.params;
@@ -70,6 +146,7 @@ export const handlers = [
     }));
     return HttpResponse.json(filterReviews.reverse());
   }),
+
   http.get('/reviews/:id/comment', (req, res, ctx) => {
     const { id } = req.params;
     const filterComments = comment.filter(
