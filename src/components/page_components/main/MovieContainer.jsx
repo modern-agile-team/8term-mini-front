@@ -4,14 +4,12 @@ import { useEffect, useState } from 'react';
 import { basicAxios, authAxios } from '../../../axios/instance.js';
 import { confirmLoginAlert } from '../../public_components/Alert.jsx';
 export default function MovieContainer() {
-  localStorage.setItem('id', 1);
   const sortList = [
     { key: 'wishList', label: '찜한 영화' },
     { key: 'release', label: '개봉순' },
     { key: 'popularity', label: '인기순' },
     { key: 'title', label: '제목순' },
   ];
-
   const [checked, setChecked] = useState({ 0: 0, 1: 0, 2: 0, 3: 0 });
   const [data, setData] = useState([]);
   function sortChecked(id) {
