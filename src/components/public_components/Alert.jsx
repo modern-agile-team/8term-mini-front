@@ -87,6 +87,9 @@ export const loginSuccessAlert = (title, text) => {
       confirmButton.style.borderRadius = '10px';
       confirmButton.style.color = '#000000';
     },
+  });
+};
+
 export const confirmLoginAlert = (title, text, confirm, cancel) => {
   Swal.fire({
     title: title,
