@@ -12,31 +12,28 @@ export default function MovieContainer() {
   ];
   const [checked, setChecked] = useState({ 0: 0, 1: 0, 2: 0, 3: 0 });
   const [data, setData] = useState([]);
+  const [wishList, setWishList] = useState();
   function sortChecked(id) {
     setChecked(prev => ({
       ...{ 0: 0, 1: 0, 2: 0, 3: 0 },
       [id]: prev[id] === 0 ? 30 : 0,
     }));
   }
+
   useEffect(() => {
     basicAxios.get('/movies').then(data => setData(data.results));
   }, []);
+  useEffect(() => {
+    const userId = JSON.parse(localStorage.getItem('user')).user_id;
+    if (userId) {
+      authAxios.get(`/users/${userId}/wish-lists`).then(data => {
+        setWishList(data);
+      });
+    }
+  }, []);
 
   function sortQuery(sort) {
-    if (sort === 'wishList') {
-      authAxios
-        .get(`users/${localStorage.getItem('id')}/wish-lists`)
-        .catch(err => {
-          confirmLoginAlert(
-            '로그인 필요',
-            '로그인이 필요한 기능입니다.',
-            '로그인 페이지 이동',
-            '확인'
-          );
-        });
-    } else {
-      basicAxios.get(`/movies/?movie-id=${sort}`).then(data => setData(data));
-    }
+    basicAxios.get(`/movies/?movie-id=${sort}`).then(data => setData(data));
   }
   if (!data) return <div>Loading...</div>;
   return (
@@ -69,6 +66,7 @@ export default function MovieContainer() {
               release={val.release_date.slice(0, 4)}
               imgSrc={val.poster_path}
               originalTitle={val.original_title}
+              likeData={wishList.find(ele => ele.movie_id == val.id)}
             ></MovieItem>
           );
         })}
