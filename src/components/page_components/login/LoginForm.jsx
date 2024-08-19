@@ -43,7 +43,10 @@ export default function LoginForm() {
           console.log('User token', response.data.jwt);
           localStorage.setItem('token', response.data.jwt);
           localStorage.setItem('user', JSON.stringify(response.data.user));
-          loginSuccessAlert();
+          loginSuccessAlert.fire({
+            icon: 'success',
+            title: '로그인 성공!',
+          });
           navigate('/');
         })
         .catch(error => {
