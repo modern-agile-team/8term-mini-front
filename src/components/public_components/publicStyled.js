@@ -31,6 +31,7 @@ export const LoginSearchDiv = styled.div`
 `;
 export const HeaderTextDiv = styled.div`
   color: #f7f9f3;
+  cursor: pointer;
 `;
 export const HeaderColumnDiv = styled.div`
   display: flex;

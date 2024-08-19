@@ -9,10 +9,10 @@ import { confirmLoginAlert } from '../../public_components/Alert.jsx';
 import useToggle from '../../../hooks/useToggle.js';
 export default function ReviewContainer() {
   //이거있으면 로그인상태
-  localStorage.setItem(
-    'user',
-    JSON.stringify({ user_id: 1, id: 'rhehfl0101', nickName: 'doyoon' })
-  );
+  // localStorage.setItem(
+  //   'user',
+  //   JSON.stringify({ user_id: 1, id: 'rhehfl0101', nickName: 'doyoon' })
+  // );
   //로그인 해제
   // localStorage.removeItem('user');
   const { id } = useParams();

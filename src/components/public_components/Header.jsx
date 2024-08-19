@@ -1,9 +1,30 @@
 import { Link } from 'react-router-dom';
 import * as S from './publicStyled';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 /** @헤더 헤더 컴포넌트 */
 export default function Header() {
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
+  const [isLogin, setIsLogin] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+
+    if (token && user) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  }, []);
+
+  function handleLogout() {
+    localStorage.removeItem('token');
+    setIsLogin(false);
+    navigate('/');
+  }
 
   return (
     <>
@@ -13,12 +34,18 @@ export default function Header() {
         </Link>
         <S.LoginSearchDiv>
           <S.HeaderColumnDiv>
-            <Link to="/login">
-              <S.HeaderTextDiv>LOGIN / </S.HeaderTextDiv>
-            </Link>
-            <Link to="/register">
-              <S.HeaderTextDiv>SIGN UP</S.HeaderTextDiv>
-            </Link>
+            {isLogin ? (
+              <S.HeaderTextDiv onClick={handleLogout}>LOGOUT</S.HeaderTextDiv>
+            ) : (
+              <>
+                <Link to="/login">
+                  <S.HeaderTextDiv>LOGIN / </S.HeaderTextDiv>
+                </Link>
+                <Link to="/register">
+                  <S.HeaderTextDiv>SIGN UP</S.HeaderTextDiv>
+                </Link>
+              </>
+            )}
           </S.HeaderColumnDiv>
           <Link to="/mypage">
             <S.HeaderTextDiv>MYPAGE</S.HeaderTextDiv>
