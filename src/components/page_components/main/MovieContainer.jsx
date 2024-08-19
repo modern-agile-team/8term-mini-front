@@ -2,7 +2,6 @@ import * as S from './MainStyled';
 import MovieItem from './MovieItem';
 import { useEffect, useState } from 'react';
 import { basicAxios, authAxios } from '../../../axios/instance.js';
-import { confirmLoginAlert } from '../../public_components/Alert.jsx';
 export default function MovieContainer() {
   const sortList = [
     { key: 'wishList', label: '찜한 영화' },
@@ -11,9 +10,8 @@ export default function MovieContainer() {
     { key: 'title', label: '제목순' },
   ];
   const [checked, setChecked] = useState({ 0: 0, 1: 0, 2: 0, 3: 0 });
-  const [data, setData] = useState([]);
+  const [movieData, setMovieData] = useState([]);
   const [wishList, setWishList] = useState();
-  const user = JSON.parse(localStorage.getItem('user')) || null;
   function sortChecked(id) {
     setChecked(prev => ({
       ...{ 0: 0, 1: 0, 2: 0, 3: 0 },
@@ -22,23 +20,23 @@ export default function MovieContainer() {
   }
 
   useEffect(() => {
-    basicAxios.get('/movies').then(data => setData(data.results));
+    basicAxios.get('/movies').then(data => setMovieData(data.results));
   }, []);
   useEffect(() => {
-    if (user) {
-      const userId = user.user_id;
-      if (userId) {
-        authAxios.get(`/users/${userId}/wish-lists`).then(data => {
-          setWishList(data);
-        });
-      }
-    }
+    authAxios
+      .get(`/users/:userId/wish-lists`)
+      .then(data => {
+        setWishList(data);
+      })
+      .catch(err => {
+        console.error('찜 리스트 불러오기 실패', err);
+      });
   }, []);
 
   function sortQuery(sort) {
     basicAxios.get(`/movies/?movie-id=${sort}`).then(data => setData(data));
   }
-  if (!data) return <div>Loading...</div>;
+  if (!movieData) return <div>Loading...</div>;
   return (
     <>
       <S.SortifyDiv>
@@ -60,7 +58,7 @@ export default function MovieContainer() {
       </S.SortifyDiv>
 
       <S.MovieContainerDiv>
-        {data.map((val, idx) => {
+        {movieData.map((val, idx) => {
           return (
             <MovieItem
               key={idx}
@@ -69,7 +67,9 @@ export default function MovieContainer() {
               release={val.release_date.slice(0, 4)}
               imgSrc={val.poster_path}
               originalTitle={val.original_title}
-              likeData={user && wishList.find(ele => ele.movie_id == val.id)}
+              likeData={
+                wishList && wishList.find(ele => ele.movie_id == val.id)
+              }
             ></MovieItem>
           );
         })}
