@@ -219,14 +219,8 @@ export const handlers = [
   }),
   http.get('users/:id/wish-lists', ({ request, params }, res, ctx) => {
     const { id } = params;
-    if (request.headers.get('Authorization')) {
-      const userWishList = wishList.filter(val => {
-        val.user_id == id;
-      });
-
-      return HttpResponse.json(null, { status: 200 });
-    }
-    return HttpResponse.json(null, { status: 403 });
+    const filterWishListData = wishList.filter(val => val.user_id == id);
+    return HttpResponse.json(filterWishListData, { status: 201 });
   }),
   http.delete('/users/my/reveiws/:id', ({ request, params }, res, ctx) => {
     const { id } = params;
@@ -305,6 +299,26 @@ export const handlers = [
         return HttpResponse.json(null, { status: 200 });
       }
       return HttpResponse.json(null, { status: 403 });
+    }
+  ),
+  http.post('/users/:id/wish-lists', async ({ request, params }, res, ctx) => {
+    const { id } = params;
+    const { movie_id } = await request.json();
+    wishList.push({
+      wish_list_id: wishList.length + 1,
+      user_id: Number(id),
+      movie_id: Number(movie_id),
+    });
+    console.log(wishList);
+    return HttpResponse.json(null, { status: 201 });
+  }),
+  http.delete(
+    '/users/my/wish-lists/:id',
+    async ({ request, params }, res, ctx) => {
+      const { id } = params;
+
+      console.log(id, '삭제');
+      return HttpResponse.json(null, { status: 201 });
     }
   ),
 ];

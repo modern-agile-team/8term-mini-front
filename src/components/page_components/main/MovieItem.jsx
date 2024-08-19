@@ -23,7 +23,10 @@ export default function MovieItem(props) {
         <S.ItemInfoDiv>
           <S.ItemColumnDiv>
             <div>{props.movieName}</div>
-            <FavoriteButton></FavoriteButton>
+            <FavoriteButton
+              likeData={props.likeData}
+              movieName={props.movieName}
+            ></FavoriteButton>
           </S.ItemColumnDiv>
           <S.ItemColumnDiv>
             <S.ItemreleaseDiv>{props.release}</S.ItemreleaseDiv>

@@ -104,3 +104,14 @@ export const confirmLoginAlert = (title, text, confirm, cancel) => {
     }
   });
 };
+export const confirmWishListAlert = (title, like) => {
+  return Swal.fire({
+    title: `${title}`,
+    text: like
+      ? '찜 목록에서 제거하시겠습니까? '
+      : '찜 목록에 추가하시겠습니까?',
+    showCancelButton: true,
+    confirmButtonText: '확인',
+    cancelButtonText: '취소',
+  });
+};
