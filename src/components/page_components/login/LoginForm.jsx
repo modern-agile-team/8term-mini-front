@@ -1,6 +1,6 @@
 import * as S from './LoginStyled.js';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   loginSuccessAlert,
   errorAlert,
@@ -13,6 +13,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState({});
   const navigate = useNavigate();
+  const location = useLocation();
 
   function validateField() {
     const newError = {};
@@ -47,7 +48,15 @@ export default function LoginForm() {
             icon: 'success',
             title: '로그인 성공!',
           });
-          navigate(-1);
+
+          // 로그인 시 저장돼있는 이전 경로로 리다이렉트 (예외처리: 메인 이동)
+          const redirect = location.state?.from || '/';
+          console.log('Redirecting to:', redirect);
+          if (redirect) {
+            navigate(redirect);
+          } else {
+            console.log('No redirect location found');
+          }
         })
         .catch(error => {
           if (error.response && error.response.status === 401) {

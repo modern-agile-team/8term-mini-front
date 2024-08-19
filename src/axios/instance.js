@@ -25,13 +25,6 @@ authAxios.interceptors.request.use(
         } 로그인 후 다시 시도해 주세요.`
       );
 
-<<<<<<< HEAD
-authAxios.interceptors.request.use(config => {
-  const accessToken = localStorage.getItem('token');
-  config.headers['Authorization'] = `Bearer ${accessToken}`;
-  return config;
-});
-=======
       //엑세스 토큰이 있다면 실행
       if (accessToken) {
         //헤더에 엑세스토큰을 부착
@@ -46,7 +39,6 @@ authAxios.interceptors.request.use(config => {
     return Promise.reject(error);
   }
 );
->>>>>>> 83d5f193196d196374f715c0ce1fc6c255506548
 
 basicAxios.interceptors.response.use(publicResHandler);
 authAxios.interceptors.response.use(publicResHandler);
