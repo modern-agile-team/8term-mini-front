@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import * as S from './publicStyled';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { confirmLogoutAlert } from './Alert';
 
 /** @헤더 헤더 컴포넌트 */
 export default function Header() {
@@ -21,9 +22,14 @@ export default function Header() {
   }, []);
 
   function handleLogout() {
-    localStorage.removeItem('token');
-    setIsLogin(false);
-    navigate('/');
+    confirmLogoutAlert().then(res => {
+      if (res.isConfirmed) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setIsLogin(false);
+        navigate('/');
+      }
+    });
   }
 
   return (

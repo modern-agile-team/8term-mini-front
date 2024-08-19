@@ -90,6 +90,7 @@ export const loginSuccessAlert = (title, text) => {
   });
 };
 
+/**@로그인필요알림창 */
 export const confirmLoginAlert = (title, text, confirm, cancel) => {
   Swal.fire({
     title: title,
@@ -104,6 +105,8 @@ export const confirmLoginAlert = (title, text, confirm, cancel) => {
     }
   });
 };
+
+/**@찜확인알림창 */
 export const confirmWishListAlert = (title, like) => {
   return Swal.fire({
     title: `${title}`,
@@ -113,5 +116,32 @@ export const confirmWishListAlert = (title, like) => {
     showCancelButton: true,
     confirmButtonText: '확인',
     cancelButtonText: '취소',
+  });
+};
+
+/**@로그아웃확인알림창 */
+export const confirmLogoutAlert = () => {
+  return Swal.fire({
+    title: '로그아웃을 하시겠습니까?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: '확인',
+    confirmButtonColor: '#F7F9F3',
+    cancelButtonText: '취소',
+    cancelButtonColor: '#B5B5B5',
+    background: '#F7F9F3',
+    color: '#000000',
+    didOpen: () => {
+      const confirmButton = Swal.getConfirmButton();
+      confirmButton.style.border = '2px solid #000000';
+      confirmButton.style.padding = '5px 20px';
+      confirmButton.style.borderRadius = '10px';
+      confirmButton.style.color = '#000000';
+      const cancelButton = Swal.getCancelButton();
+      cancelButton.style.border = '2px solid #B5B5B5';
+      cancelButton.style.padding = '5px 20px';
+      cancelButton.style.borderRadius = '10px';
+      cancelButton.style.color = '#F7F9F3';
+    },
   });
 };

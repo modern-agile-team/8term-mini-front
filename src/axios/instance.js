@@ -14,11 +14,8 @@ const authAxios = axios.create({
 
 authAxios.interceptors.request.use(config => {
   const accessToken = localStorage.getItem('token');
-  if (accessToken) {
-    config.headers['Authorization'] = `Bearer ${accessToken}`;
-    return config;
-  }
-  return Promise.reject(new Error('No access token found'));
+  config.headers['Authorization'] = `Bearer ${accessToken}`;
+  return config;
 });
 
 basicAxios.interceptors.response.use(publicResHandler, publicErrorHandler);
