@@ -8,17 +8,25 @@ export default function FavoriteButton({ likeData, movieName }) {
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   const movieId = likeData ? likeData.movie_id : '';
   const likeId = likeData ? likeData.wish_list_id : '';
+  const userId = localStorage.getItem('user')
+    ? JSON.parse(localStorage.getItem('user')).user_id
+    : null;
 
   async function toggleLiked() {
-    const userId = JSON.parse(localStorage.getItem('user')).user_id;
     //찜상태가 아닐때 좋아요 요청 보내기
     if (!isLiked) {
       confirmWishListAlert(movieName, isLiked).then(res => {
         if (res.isConfirmed) {
-          authAxios.post(`users/${userId}/wish-lists`, {
-            movie_id: movieId,
-          });
-          setisLiked(!isLiked);
+          authAxios
+            .post(`users/${userId}/wish-lists`, {
+              movie_id: movieId,
+            })
+            .then(() => {
+              setisLiked(!isLiked);
+            })
+            .catch(err => {
+              console.error(err);
+            });
         }
       });
       return;

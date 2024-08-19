@@ -47,7 +47,7 @@ export default function LoginForm() {
             icon: 'success',
             title: '로그인 성공!',
           });
-          navigate('/');
+          navigate(-1);
         })
         .catch(error => {
           if (error.response && error.response.status === 401) {
