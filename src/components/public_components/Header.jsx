@@ -27,26 +27,6 @@ export default function Header() {
     navigate('/');
   }
 
-  if (isLogin) {
-    return (
-      <>
-        <S.HeaderDiv>
-          <Link to="/">
-            <S.HeaderImg src={`${baseUrl}logo3.png`}></S.HeaderImg>
-          </Link>
-          <S.LoginSearchDiv>
-            <S.HeaderColumnDiv>
-              <S.HeaderTextDiv onClick={handleLogout}>LOGOUT</S.HeaderTextDiv>
-            </S.HeaderColumnDiv>
-            <Link to="/mypage">
-              <S.HeaderTextDiv>MYPAGE</S.HeaderTextDiv>
-            </Link>
-          </S.LoginSearchDiv>
-        </S.HeaderDiv>
-      </>
-    );
-  }
-
   return (
     <>
       <S.HeaderDiv>
@@ -55,12 +35,18 @@ export default function Header() {
         </Link>
         <S.LoginSearchDiv>
           <S.HeaderColumnDiv>
-            <Link to="/login">
-              <S.HeaderTextDiv>LOGIN / </S.HeaderTextDiv>
-            </Link>
-            <Link to="/register">
-              <S.HeaderTextDiv>SIGN UP</S.HeaderTextDiv>
-            </Link>
+            {isLogin ? (
+              <S.HeaderTextDiv onClick={handleLogout}>LOGOUT</S.HeaderTextDiv>
+            ) : (
+              <>
+                <Link to="/login">
+                  <S.HeaderTextDiv>LOGIN / </S.HeaderTextDiv>
+                </Link>
+                <Link to="/register">
+                  <S.HeaderTextDiv>SIGN UP</S.HeaderTextDiv>
+                </Link>
+              </>
+            )}
           </S.HeaderColumnDiv>
           <Link to="/mypage">
             <S.HeaderTextDiv>MYPAGE</S.HeaderTextDiv>
