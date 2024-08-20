@@ -1,63 +1,30 @@
 import Comment from './Comment';
 import * as S from './ReviewStyled';
 import PagiNation from './../../public_components/PagiNation';
-import { useRef, useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Review from './Review';
 import { basicAxios } from '../../../axios/instance';
-import {
-  confirmLoginAlert,
-  warningAlert,
-} from '../../public_components/Alert.jsx';
+import AddComment from './AddComment.jsx';
+import { ReFetchContext } from './ReviewContext.js';
 
 export default function ReviewDetailModal({
-  reviews,
+  reviewData,
   toggleModal,
-  setReRequest,
-  reRequest,
   isLiked,
 }) {
-  const inputRef = useRef();
   const [comments, setCommnets] = useState();
   const [page, setPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const user = JSON.parse(localStorage.getItem('user'));
-
+  const { reRequest } = useContext(ReFetchContext);
   useEffect(() => {
     basicAxios
-      .get(`/reviews/${reviews.review_id}/comments?page=${page}`)
+      .get(`/reviews/${reviewData.review_id}/comments?page=${page}`)
       .then(data => {
         setTotalItems(data.totalCount);
         setCommnets(data.data);
       });
   }, [reRequest, page]);
 
-  function addCommnet() {
-    if (localStorage.getItem('user') === null) {
-      return confirmLoginAlert(
-        '로그인 필요',
-        '로그인이 필요한 기능입니다.',
-        '로그인 페이지 이동',
-        '확인'
-      );
-    }
-    if (!inputRef.current.value) {
-      warningAlert('입력값 없음', '텍스트를 입력해주세요');
-      return;
-    }
-
-    basicAxios
-      .post(`/reviews/${reviews.review_id}/comment`, {
-        text: inputRef.current.value,
-        review_id: reviews.review_id,
-        user_id: user.user_id,
-        nickName: user.nickName,
-        id: user.id,
-      })
-      .then(() => {
-        setReRequest(new Date());
-        inputRef.current.value = '';
-      });
-  }
   if (!comments) return <div>Loding...</div>;
   return (
     <>
@@ -72,18 +39,13 @@ export default function ReviewDetailModal({
         <S.ModalContent>
           <Review
             styled={{ $padding: '0px', $width: '100%', $marginBottom: '30px' }}
-            reviews={reviews}
+            reviewData={reviewData}
             isModal={false}
             isLiked={isLiked}
-            setReRequest={setReRequest}
           ></Review>
           <S.CommentContainerDiv>
             {comments.map(val => (
-              <Comment
-                key={val.comment_id}
-                comment={val}
-                setReRequest={setReRequest}
-              />
+              <Comment key={val.comment_id} commentData={val} />
             ))}
           </S.CommentContainerDiv>
           <PagiNation
@@ -91,21 +53,7 @@ export default function ReviewDetailModal({
             setPage={setPage}
             totalItems={totalItems || 1}
           />
-          <S.ReviewColumnDiv
-            $padding="30px 80px 0px 80px"
-            $justifyContent="center"
-          >
-            <S.CommentInput
-              type="text"
-              ref={inputRef}
-              onKeyPress={e => {
-                if (e.code === 'Enter') {
-                  addCommnet();
-                }
-              }}
-            ></S.CommentInput>
-            <S.AddBtn onClick={addCommnet}>+ 댓글 쓰기</S.AddBtn>
-          </S.ReviewColumnDiv>
+          <AddComment reviewId={reviewData.review_id}></AddComment>
         </S.ModalContent>
       </S.ModalContainer>
     </>

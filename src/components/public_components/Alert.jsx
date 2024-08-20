@@ -33,20 +33,12 @@ export const warningAlert = (title, text) => {
 
 /**@삭제확인알림창 */
 export const confirmDeleteAlert = (title, text) => {
-  Swal.fire({
+  return Swal.fire({
     title: title,
     text: text,
-    icon: 'warning',
     showCancelButton: true,
     confirmButtonText: '삭제',
-  }).then(result => {
-    if (result.isConfirmed) {
-      Swal.fire({
-        title: 'Deleted!',
-        text: '성공적으로 삭제되었습니다.',
-        icon: 'success',
-      });
-    }
+    cancelButtonText: '취소',
   });
 };
 

@@ -1,4 +1,5 @@
-import axios, { Axios } from 'axios';
+import axios from 'axios';
+import { warningAlert } from '../components/public_components/Alert';
 //토큰이 필요없는 요청 보낼때 사용
 const basicAxios = axios.create({
   baseURL: import.meta.env.VITE_BACK_BASE_URL,
@@ -17,15 +18,14 @@ const authAxios = axios.create({
 authAxios.interceptors.request.use(
   config => {
     {
-      console.log('인증이 필요한 요청:', config.url, config.method);
+      console.log('인증이 필요한 요청:', config.url, config.method, config);
+      //토큰 저장
       const accessToken = localStorage.getItem('token') || null;
-      const errorMsg = new Error(
-        `${
-          config.method === 'get'
-            ? '읽어올 수 없습니다.'
-            : '로그인이 필요한 기능입니다.'
-        } 로그인 후 다시 시도해 주세요.`
-      );
+      const errorMsg = new Error('로그인이 필요한 기능입니다.');
+      //멧소
+      if (!config.method === 'get' && !accessToken) {
+        return warningAlert('야!!!!!!!!');
+      }
 
       //엑세스 토큰이 있다면 실행
       if (accessToken) {
@@ -42,14 +42,14 @@ authAxios.interceptors.request.use(
   }
 );
 basicAxios.interceptors.request.use(config => {
-  console.log('베이직요청', config.url, config.method, config);
+  // console.log('베이직요청', config.url, config.method, config);
   return config;
 });
 basicAxios.interceptors.response.use(publicResHandler);
 authAxios.interceptors.response.use(publicResHandler);
 
 function publicResHandler(res) {
-  console.log('리스폰스값:', res.data, res.request.responseURL);
+  // console.log('리스폰스값:', res.data, res.request.responseURL);
   return res.data;
 }
 

@@ -1,13 +1,13 @@
-import { useRef } from 'react';
+import { useRef, useContext } from 'react';
 import * as S from './ReviewStyled';
 import { useParams } from 'react-router-dom';
 import { authAxios } from '../../../axios/instance';
 import { warningAlert } from '../../public_components/Alert';
 import { useState } from 'react';
-
-export default function AddReview({
+import getUserInfo from '../../../function/getUserInfo';
+import { ReFetchContext } from './ReviewContext';
+export default function ReviewModal({
   toggleaddReviewModal,
-  setReRequest,
   textValue,
   mod,
   reviewId,
@@ -15,12 +15,14 @@ export default function AddReview({
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   const { id } = useParams();
   const textRef = useRef();
+  const [userId] = getUserInfo();
   const user = JSON.parse(localStorage.getItem('user'));
   const [textLength, setTextLength] = useState(0);
-
+  const { setReRequest } = useContext(ReFetchContext);
   function charCount(e) {
     setTextLength(e.target.value.length);
   }
+  //add모드일때 쓰는 함수
   function AddReview() {
     if (!textRef.current.value) {
       warningAlert('입력값 없음', '텍스트를 입력해주세요');
@@ -28,16 +30,16 @@ export default function AddReview({
     }
     authAxios
       .post(`/movies/${id}/reviews`, {
-        user_id: user.user_id,
+        userId: userId,
+        movieId: id,
         text: textRef.current.value,
-        nickName: user.nickName,
-        id: user.id,
       })
       .then(() => {
         setReRequest(new Date());
         toggleaddReviewModal();
       });
   }
+  //edit모드일때 쓰는 함수
   function editReview() {
     if (!textRef.current.value) {
       warningAlert('입력값 없음', '텍스트를 입력해주세요');

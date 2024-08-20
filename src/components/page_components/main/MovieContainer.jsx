@@ -3,22 +3,21 @@ import MovieItem from './MovieItem';
 import { useEffect, useState } from 'react';
 import { basicAxios, authAxios } from '../../../axios/instance.js';
 import SearchBar from './SearchBar.jsx';
+import getUserInfo from '../../../function/getUserInfo.js';
 export default function MovieContainer() {
   //임시 로그인
-  localStorage.setItem('token', 'sadasdjkfhsadkjfhasieulf');
-  localStorage.setItem(
-    'user',
-    JSON.stringify({ user_id: 1, id: 'rhehfl', nickName: 'asdasd' })
-  );
+  // localStorage.setItem('token', 'sadasdjkfhsadkjfhasieulf');
+  // localStorage.setItem(
+  //   'user',
+  //   JSON.stringify({ user_id: 1, id: 'dg1418', nickName: '관리자' })
+  // );
   const sortList = [
     { key: 'wishList', label: '찜한 영화' },
     { key: 'release', label: '개봉순' },
     { key: 'popularity', label: '인기순' },
     { key: 'title', label: '제목순' },
   ];
-  const userId = localStorage.getItem('user')
-    ? JSON.parse(localStorage.getItem('user')).user_id
-    : null;
+  const [userId] = getUserInfo();
   const [checked, setChecked] = useState({ 0: 0, 1: 0, 2: 0, 3: 0 });
   const [movieData, setMovieData] = useState([]);
   const [wishList, setWishList] = useState();
@@ -33,8 +32,6 @@ export default function MovieContainer() {
     basicAxios.get('/movies').then(data => {
       setMovieData(data.data);
     });
-  }, []);
-  useEffect(() => {
     authAxios
       .get(`/users/${userId}/wish-lists`)
       .then(data => {
@@ -44,14 +41,13 @@ export default function MovieContainer() {
         console.error('찜 리스트 불러오기 실패', err);
       });
   }, []);
-
   function sortQuery(sort) {
     if (sort === 'wishList') {
       console.log(wishList);
       return;
     }
     basicAxios.get(`/movies/?sort=${sort}`).then(data => {
-      setMovieData(data);
+      setMovieData(data.data);
     });
   }
   if (!movieData) return <div>Loading...</div>;
