@@ -17,7 +17,6 @@ export default function Comment({ commentData }) {
       }
     });
   }
-  console.log(commentData);
   return (
     <>
       <S.ReviewColumnDiv>

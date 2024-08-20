@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { warningAlert } from '../components/public_components/Alert';
+import { confirmLoginAlert } from '../components/public_components/Alert';
 //토큰이 필요없는 요청 보낼때 사용
 const basicAxios = axios.create({
   baseURL: import.meta.env.VITE_BACK_BASE_URL,
@@ -19,12 +19,18 @@ authAxios.interceptors.request.use(
   config => {
     {
       console.log('인증이 필요한 요청:', config.url, config.method, config);
-      //토큰 저장
+      //토큰
       const accessToken = localStorage.getItem('token') || null;
       const errorMsg = new Error('로그인이 필요한 기능입니다.');
       //멧소
-      if (!config.method === 'get' && !accessToken) {
-        return warningAlert('야!!!!!!!!');
+      console.log();
+      if (!(config.method === 'get') && !accessToken) {
+        return confirmLoginAlert(
+          '로그인 필요',
+          '로그인이 필요한 기능입니다.',
+          '로그인 페이지 이동',
+          '확인'
+        );
       }
 
       //엑세스 토큰이 있다면 실행

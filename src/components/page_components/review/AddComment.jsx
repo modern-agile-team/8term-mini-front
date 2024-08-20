@@ -27,8 +27,7 @@ export default function AddComment({ reviewId }) {
       .then(() => {
         setReRequest(new Date());
         inputRef.current.value = '';
-      })
-      .catch(err => console.error(err));
+      });
   }
   return (
     <S.ReviewColumnDiv $padding="30px 80px 0px 80px" $justifyContent="center">
