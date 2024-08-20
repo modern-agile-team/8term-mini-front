@@ -36,7 +36,7 @@ export default function ReviewContainer() {
     authAxios
       .get(`/users/${userId}/review-likes`)
       .then(data => {
-        setdisplayReviewLike(data);
+        setdisplayReviewLike(data.data);
       })
       .catch(err => console.error('좋아요 불러오기 실패', err));
     //재요청 발생이나 페이지가 바뀌면 해당되는것들 다시 받아옴

@@ -14,6 +14,7 @@ export default function Review({
   setReRequest,
   isLiked,
 }) {
+  console.log(reviews);
   const [reviewModal, setReviewModal] = useState(false);
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   const [editModal, setEditModal] = useToggle();
@@ -81,6 +82,7 @@ export default function Review({
           >
             ({reviews.id}*****)
           </S.ReviewRowDiv>
+          {/*삭제버튼, 수정버튼 띄우는 로직 */}
           {reviews.user_id === userId && isModal && (
             <S.ReviewRowDiv>
               <S.AddBtn
@@ -106,9 +108,9 @@ export default function Review({
           onClick={toggleModal}
         >
           <S.ReviewRowDiv
-            $fontSize={reviews.comment.length >= 150 ? '15px' : '20px'}
+            $fontSize={reviews.text.length >= 150 ? '15px' : '20px'}
           >
-            {reviews.comment}
+            {reviews.text}
           </S.ReviewRowDiv>
         </S.ReviewColumnDiv>
         {/*리뷰 자세히보기 모달창 띄우는 로직*/}

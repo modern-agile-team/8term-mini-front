@@ -24,9 +24,9 @@ export default function ReviewDetailModal({
 
   useEffect(() => {
     basicAxios
-      .get(`/reviews/${reviews.review_id}/comment/?page=${page}`)
+      .get(`/reviews/${reviews.review_id}/comments?page=${page}`)
       .then(data => {
-        setTotalItems(data.totalPages);
+        setTotalItems(data.totalCount);
         setCommnets(data.data);
       });
   }, [reRequest, page]);
