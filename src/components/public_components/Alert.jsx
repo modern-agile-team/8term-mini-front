@@ -71,25 +71,19 @@ export const registerSuccessAlert = (title, text) => {
 };
 
 /**@로그인성공알림창 */
-export const loginSuccessAlert = (title, text) => {
-  Swal.fire({
-    title: title || '로그인 성공 !',
-    text: text || '로그인이 완료되었습니다.',
-    imageUrl: `${baseUrl}LoginSuccess.png`,
-    background: '#F7F9F3',
-    color: '#000000',
-    confirmButtonText: '확인',
-    confirmButtonColor: '#F7F9F3',
-    didOpen: () => {
-      const confirmButton = Swal.getConfirmButton();
-      confirmButton.style.border = '2px solid #000000';
-      confirmButton.style.padding = '5px 20px';
-      confirmButton.style.borderRadius = '10px';
-      confirmButton.style.color = '#000000';
-    },
-  });
-};
+export const loginSuccessAlert = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: toast => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  },
+});
 
+/**@로그인필요알림창 */
 export const confirmLoginAlert = (title, text, confirm, cancel) => {
   Swal.fire({
     title: title,
@@ -104,6 +98,8 @@ export const confirmLoginAlert = (title, text, confirm, cancel) => {
     }
   });
 };
+
+/**@찜확인알림창 */
 export const confirmWishListAlert = (title, like) => {
   return Swal.fire({
     title: `${title}`,
@@ -113,5 +109,32 @@ export const confirmWishListAlert = (title, like) => {
     showCancelButton: true,
     confirmButtonText: '확인',
     cancelButtonText: '취소',
+  });
+};
+
+/**@로그아웃확인알림창 */
+export const confirmLogoutAlert = () => {
+  return Swal.fire({
+    title: '로그아웃을 하시겠습니까?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: '확인',
+    confirmButtonColor: '#F7F9F3',
+    cancelButtonText: '취소',
+    cancelButtonColor: '#B5B5B5',
+    background: '#F7F9F3',
+    color: '#000000',
+    didOpen: () => {
+      const confirmButton = Swal.getConfirmButton();
+      confirmButton.style.border = '2px solid #000000';
+      confirmButton.style.padding = '5px 20px';
+      confirmButton.style.borderRadius = '10px';
+      confirmButton.style.color = '#000000';
+      const cancelButton = Swal.getCancelButton();
+      cancelButton.style.border = '2px solid #B5B5B5';
+      cancelButton.style.padding = '5px 20px';
+      cancelButton.style.borderRadius = '10px';
+      cancelButton.style.color = '#F7F9F3';
+    },
   });
 };
