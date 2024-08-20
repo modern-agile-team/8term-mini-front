@@ -44,6 +44,20 @@ export const handlers = [
     }
   }),
 
+  // 특정 영화의 정보 요청 핸들러
+  http.get('/movies/:id', ({ params }) => {
+    const movieId = params.id;
+    const movie = movieData.results.find(
+      movie => movie.id.toString() === movieId
+    );
+
+    if (movie) {
+      return HttpResponse.json(movie);
+    } else {
+      return HttpResponse.notFound({ error: 'Movie not found' });
+    }
+  }),
+
   // 중복 확인 검사 핸들러
   http.get('/users/check-id', ({ request }) => {
     const url = new URL(request.url);

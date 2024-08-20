@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import IntroForm from './IntroForm';
+import { basicAxios } from '../../../axios/instance';
 
 export default function MovieDetail() {
   /**URL에서 영화 ID 가져오기 */
@@ -8,9 +9,7 @@ export default function MovieDetail() {
   const [movie, setMovie] = useState();
 
   useEffect(() => {
-    fetch(`/movies?movie-id=${id}`)
-      .then(response => response.json())
-      .then(data => setMovie(data));
+    basicAxios.get(`/movies/${id}`).then(data => setMovie(data));
   }, [id]);
 
   if (!movie) return <div>Loading...</div>;
