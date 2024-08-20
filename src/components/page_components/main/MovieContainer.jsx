@@ -4,6 +4,12 @@ import { useEffect, useState } from 'react';
 import { basicAxios, authAxios } from '../../../axios/instance.js';
 import SearchBar from './SearchBar.jsx';
 export default function MovieContainer() {
+  //임시 로그인
+  localStorage.setItem('token', 'sadasdjkfhsadkjfhasieulf');
+  localStorage.setItem(
+    'user',
+    JSON.stringify({ user_id: 1, id: 'rhehfl', nickName: 'asdasd' })
+  );
   const sortList = [
     { key: 'wishList', label: '찜한 영화' },
     { key: 'release', label: '개봉순' },
@@ -25,15 +31,14 @@ export default function MovieContainer() {
 
   useEffect(() => {
     basicAxios.get('/movies').then(data => {
-      console.log(data);
-      setMovieData(data.results);
+      setMovieData(data.data);
     });
   }, []);
   useEffect(() => {
     authAxios
       .get(`/users/${userId}/wish-lists`)
       .then(data => {
-        setWishList(data);
+        setWishList(data.data);
       })
       .catch(err => {
         console.error('찜 리스트 불러오기 실패', err);
@@ -52,6 +57,7 @@ export default function MovieContainer() {
   if (!movieData) return <div>Loading...</div>;
   return (
     <>
+      {/*정렬 컴포넌트로 나중에 빼기 */}
       <S.SortifyDiv>
         {sortList.map((val, idx) => {
           return (
@@ -69,13 +75,13 @@ export default function MovieContainer() {
           );
         })}
       </S.SortifyDiv>
-
+      {/* 영화 리스트 반복*/}
       <S.MovieContainerDiv>
         {movieData.map((val, idx) => {
           return (
             <MovieItem
-              key={idx}
-              id={val.id}
+              key={val.movie_id}
+              id={val.movie_id}
               movieName={val.title}
               release={val.release_date.slice(0, 4)}
               imgSrc={val.poster_path}

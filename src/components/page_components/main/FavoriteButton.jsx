@@ -19,7 +19,7 @@ export default function FavoriteButton({ likeData, movieName }) {
         if (res.isConfirmed) {
           authAxios
             .post(`users/${userId}/wish-lists`, {
-              movie_id: movieId,
+              movieId: movieId,
             })
             .then(() => {
               setisLiked(!isLiked);

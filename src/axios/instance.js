@@ -17,6 +17,7 @@ const authAxios = axios.create({
 authAxios.interceptors.request.use(
   config => {
     {
+      console.log('인증이 필요한 요청:', config.url, config.method);
       const accessToken = localStorage.getItem('token') || null;
       const errorMsg = new Error(
         `${
@@ -40,11 +41,15 @@ authAxios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
+basicAxios.interceptors.request.use(config => {
+  console.log('베이직요청', config.url, config.method, config);
+  return config;
+});
 basicAxios.interceptors.response.use(publicResHandler);
 authAxios.interceptors.response.use(publicResHandler);
 
 function publicResHandler(res) {
+  console.log('리스폰스값:', res.data, res.request.responseURL);
   return res.data;
 }
 
