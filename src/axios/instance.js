@@ -1,14 +1,15 @@
 import axios, { Axios } from 'axios';
-import.meta.env.VITE_MODERN_AGILE_YOUTUBE;
 //토큰이 필요없는 요청 보낼때 사용
 const basicAxios = axios.create({
-  baseURL: 'http://localhost:5173',
+  baseURL: import.meta.env.VITE_BACK_BASE_URL,
+  //'http://localhost:5173'
   withCredentials: true,
   timeout: 3000,
 });
 //엑세스토큰이 필요한 요청을 보낼때 사용하는 인증용 요청
 const authAxios = axios.create({
-  baseURL: 'http://localhost:5173',
+  baseURL: import.meta.env.VITE_BACK_BASE_URL,
+  //  'http://localhost:5173'
   withCredentials: true,
   timeout: 3000,
 });

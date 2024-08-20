@@ -24,7 +24,10 @@ export default function MovieContainer() {
   }
 
   useEffect(() => {
-    basicAxios.get('/movies').then(data => setMovieData(data.results));
+    basicAxios.get('/movies').then(data => {
+      console.log(data);
+      setMovieData(data.results);
+    });
   }, []);
   useEffect(() => {
     authAxios
