@@ -2,6 +2,7 @@ import * as S from './MainStyled';
 import MovieItem from './MovieItem';
 import { useEffect, useState } from 'react';
 import { basicAxios, authAxios } from '../../../axios/instance.js';
+import SearchBar from './SearchBar.jsx';
 export default function MovieContainer() {
   const sortList = [
     { key: 'wishList', label: '찜한 영화' },
@@ -9,6 +10,9 @@ export default function MovieContainer() {
     { key: 'popularity', label: '인기순' },
     { key: 'title', label: '제목순' },
   ];
+  const userId = localStorage.getItem('user')
+    ? JSON.parse(localStorage.getItem('user')).user_id
+    : null;
   const [checked, setChecked] = useState({ 0: 0, 1: 0, 2: 0, 3: 0 });
   const [movieData, setMovieData] = useState([]);
   const [wishList, setWishList] = useState();
@@ -24,7 +28,7 @@ export default function MovieContainer() {
   }, []);
   useEffect(() => {
     authAxios
-      .get(`/users/:userId/wish-lists`)
+      .get(`/users/${userId}/wish-lists`)
       .then(data => {
         setWishList(data);
       })
@@ -34,7 +38,13 @@ export default function MovieContainer() {
   }, []);
 
   function sortQuery(sort) {
-    basicAxios.get(`/movies/?movie-id=${sort}`).then(data => setData(data));
+    if (sort === 'wishList') {
+      console.log(wishList);
+      return;
+    }
+    basicAxios.get(`/movies/?sort=${sort}`).then(data => {
+      setMovieData(data);
+    });
   }
   if (!movieData) return <div>Loading...</div>;
   return (
@@ -74,6 +84,7 @@ export default function MovieContainer() {
           );
         })}
       </S.MovieContainerDiv>
+      <SearchBar setMovieData={setMovieData}></SearchBar>
     </>
   );
 }

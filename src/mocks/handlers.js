@@ -13,13 +13,13 @@ export const handlers = [
   // Intercept "GET /movies" requests...
   http.get('/movies', ({ request }) => {
     const url = new URL(request.url);
-    const movieId = url.searchParams.get('movie-id');
+    const sort = url.searchParams.get('sort');
 
-    if (!movieId) {
+    if (!sort) {
       return HttpResponse.json(movieData);
     }
 
-    if (movieId === 'release') {
+    if (sort === 'release') {
       return HttpResponse.json(
         movieData.results.sort(
           (a, b) => new Date(b.release_date) - new Date(a.release_date)
@@ -27,15 +27,17 @@ export const handlers = [
       );
     }
 
-    if (movieId === 'title') {
+    if (sort === 'title') {
       return HttpResponse.json(
         movieData.results.sort((a, b) => a.title.localeCompare(b.title))
       );
     }
+    if (sort === 'popularity') {
+      console.log('아무튼 리뷰많은순 정렬');
+      return HttpResponse.json(movieData.results, { status: 201 });
+    }
 
-    const movie = movieData.results.find(
-      movie => movie.id.toString() === movieId
-    );
+    const movie = movieData.results.find(movie => movie.id.toString() === sort);
 
     if (movie) {
       return HttpResponse.json(movie);
@@ -321,4 +323,13 @@ export const handlers = [
       return HttpResponse.json(null, { status: 201 });
     }
   ),
+  http.get('movies/search/', ({ request, params }) => {
+    const { id } = params;
+    const url = new URL(request.url);
+    const title = url.searchParams.get('title');
+    const searchData = movieData.results.filter(ele =>
+      ele.title.includes(title)
+    );
+    return HttpResponse.json(searchData, { status: 201 });
+  }),
 ];
