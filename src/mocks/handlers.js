@@ -182,6 +182,7 @@ export const handlers = [
       totalPages: dataLen,
     });
   }),
+
   //특정 리뷰의 댓글 요청
   http.get('/reviews/:id/comment', ({ request, params }) => {
     const { id } = params;
@@ -201,6 +202,7 @@ export const handlers = [
       totalPages: dataLen,
     });
   }),
+
   //특정 영회의 리뷰 쓰기
   http.post('/movies/:movieId/reviews', async ({ request, params }) => {
     const { movieId } = params;
@@ -217,6 +219,7 @@ export const handlers = [
     reviewData.push(newReview);
     return HttpResponse.json(null, { status: 201 });
   }),
+
   http.post('/reviews/:reviewId/comment', async ({ request, params }) => {
     const { reviewId } = params;
     const { text, id, user_id, nickName } = await request.json();
@@ -233,11 +236,13 @@ export const handlers = [
     comment.push(newComment);
     return HttpResponse.json(newComment, { status: 201 });
   }),
+
   http.get('users/:id/wish-lists', ({ request, params }, res, ctx) => {
     const { id } = params;
     const filterWishListData = wishList.filter(val => val.user_id == id);
     return HttpResponse.json(filterWishListData, { status: 201 });
   }),
+
   http.delete('/users/my/reveiws/:id', ({ request, params }, res, ctx) => {
     const { id } = params;
 
@@ -248,6 +253,7 @@ export const handlers = [
     }
     return HttpResponse.json(null, { status: 403 });
   }),
+
   http.patch('/users/my/reviews/:id', async ({ request, params }, res, ctx) => {
     const { id } = params;
     const { text } = await request.json();
@@ -259,6 +265,7 @@ export const handlers = [
     }
     return HttpResponse.json(null, { status: 403 });
   }),
+
   http.post(
     '/users/:id/review-likes',
     async ({ request, params }, res, ctx) => {
@@ -276,6 +283,7 @@ export const handlers = [
       return HttpResponse.json(null, { status: 403 });
     }
   ),
+
   http.delete(
     '/users/my/review-likes',
     async ({ request, params }, res, ctx) => {
@@ -292,6 +300,7 @@ export const handlers = [
       return HttpResponse.json(null, { status: 403 });
     }
   ),
+
   //특정 유저의 좋아요 데이터 요청
   http.get('/users/:id/review-likes', async ({ request, params }, res, ctx) => {
     const { id } = params;
@@ -304,6 +313,7 @@ export const handlers = [
     }
     return HttpResponse.json(null, { status: 403 });
   }),
+
   http.delete(
     '/users/my/comments/:id',
     async ({ request, params }, res, ctx) => {
@@ -317,6 +327,7 @@ export const handlers = [
       return HttpResponse.json(null, { status: 403 });
     }
   ),
+
   http.post('/users/:id/wish-lists', async ({ request, params }, res, ctx) => {
     const { id } = params;
     const { movie_id } = await request.json();
@@ -328,6 +339,7 @@ export const handlers = [
     console.log(wishList);
     return HttpResponse.json(null, { status: 201 });
   }),
+
   http.delete(
     '/users/my/wish-lists/:id',
     async ({ request, params }, res, ctx) => {
@@ -337,6 +349,7 @@ export const handlers = [
       return HttpResponse.json(null, { status: 201 });
     }
   ),
+
   http.get('movies/search/', ({ request, params }) => {
     const { id } = params;
     const url = new URL(request.url);
@@ -345,5 +358,36 @@ export const handlers = [
       ele.title.includes(title)
     );
     return HttpResponse.json(searchData, { status: 201 });
+  }),
+
+  // 특정 유저의 정보 요청 핸들러
+  http.get('/users/:id', ({ params }) => {
+    const { id } = params;
+
+    const user = userData.find(user => user.user_id === Number(id));
+
+    if (user) {
+      return HttpResponse.json(user, { status: 200 });
+    } else {
+      return { error: 'User not found' };
+    }
+  }),
+
+  // 특정 유저의 정보 수정 핸들러
+  http.put('/users/:id', async ({ params, request }) => {
+    const { id } = params;
+    const { password1, passwordConfirm1 } = await request.json(); // await 제거
+
+    if (password1 !== passwordConfirm1) {
+      return HttpResponse.json(null, { status: 400 });
+    }
+
+    const userIndex = userData.find(user => user.user_id === Number(id));
+    console.log(userIndex);
+    if (!userIndex) {
+      return HttpResponse.json(null, { status: 400 });
+    }
+    userIndex.password = password1; // 패스워드 수정
+    return HttpResponse.json({ userIndex }, { status: 201 });
   }),
 ];
