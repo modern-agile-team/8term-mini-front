@@ -129,6 +129,7 @@ export const handlers = [
         user_id: user.user_id,
         id: user.id,
         nickname: user.nickname,
+        profile: user.profile,
       })
         .setProtectedHeader({ alg: 'HS256', typ: 'JWT' }) // Set the header with algorithm and type
         .setExpirationTime('1h')
@@ -136,7 +137,12 @@ export const handlers = [
         .sign(new TextEncoder().encode(SECRET_KEY));
 
       return HttpResponse.json({
-        user: { user_id: user.user_id, id: user.id, nickName: user.nickname },
+        user: {
+          user_id: user.user_id,
+          id: user.id,
+          nickName: user.nickname,
+          profile: user.profile,
+        },
         jwt: token,
       });
     } catch (error) {
@@ -376,7 +382,8 @@ export const handlers = [
   // 특정 유저의 정보 수정 핸들러
   http.put('/users/:id', async ({ params, request }) => {
     const { id } = params;
-    const { password, passwordConfirm } = await request.json();
+    const { password, passwordConfirm, nickname, profile } =
+      await request.json();
 
     if (password !== passwordConfirm) {
       return HttpResponse.json(null, { status: 400 });
@@ -386,8 +393,11 @@ export const handlers = [
     if (!userInfo) {
       return HttpResponse.json(null, { status: 400 });
     }
-     // 패스워드 수정
+    // 패스워드 및 닉네임 수정
     userInfo.password = password;
+    userInfo.nickname = nickname;
+    userInfo.profile = profile;
+
     return HttpResponse.json({ userInfo }, { status: 201 });
   }),
 ];

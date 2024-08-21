@@ -148,3 +148,75 @@ export const ToggleIconDiv = styled.div`
   margin-top: 3px;
   right: 10px;
 `;
+
+export const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 999;
+`;
+
+export const ModalContainer = styled.div`
+  font-family: Countach;
+  font-size: 30px;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  border-radius: 15px;
+  border: 2px solid rgba(255, 255, 255);
+  height: 550px;
+  max-width: 800px;
+  width: 100%;
+`;
+
+export const ModalProfileDiv = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, auto);
+  margin-top: 20px;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  place-items: center;
+`;
+
+export const ModalProfileImg = styled.img`
+  height: 180px;
+  width: 180px;
+  cursor: pointer;
+  border: ${({ props }) => (props ? '4px solid #808080' : '4px solid #000000')};
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+export const HorizontalLine = styled.hr`
+  width: 100%;
+  border: none;
+  border-top: 3px solid #f7f9f3;
+  margin-top: 20px;
+`;
+
+export const ModalButton = styled.button`
+  font-family: 'Pretendard-Regular';
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+  padding: 5px 25px;
+  margin-top: 20px;
+`;
