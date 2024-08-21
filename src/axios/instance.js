@@ -46,7 +46,7 @@ authAxios.interceptors.request.use(
     }
   },
   error => {
-    console.error('요청 인터셉터 에러:', error); // 진짜에러
+    console.error('요청 인터셉터 리퀘스트에러:', error);
     return Promise.reject(error);
   }
 );

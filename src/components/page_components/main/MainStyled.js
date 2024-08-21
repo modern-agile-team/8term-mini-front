@@ -3,7 +3,7 @@ import styled from 'styled-components';
 /** MainScreen 스타일 컴포넌트 */
 export const mainScreenDiv = styled.div`
   display: flex;
-  width: 200vw;
+  width: ${props => props.$width || '100vw'};
   height: 100vh;
 `;
 

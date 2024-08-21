@@ -4,16 +4,15 @@ import getUserInfo from '../../../function/getUserInfo';
 import * as S from './ReviewStyled';
 import { ReFetchContext } from './ReviewContext';
 import { confirmDeleteAlert } from '../../public_components/Alert';
-export default function Comment({ commentData }) {
+export default function Comment({ commentData, setcommentRerequest }) {
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   const [userId] = getUserInfo();
-  const { setReRequest } = useContext(ReFetchContext);
   function deleteComment() {
     confirmDeleteAlert('댓글을 삭제하시겠습니까?').then(confirm => {
       if (confirm.isConfirmed) {
         authAxios
           .delete(`/users/my/comments/${commentData.comment_id}`)
-          .then(() => setReRequest(new Date()));
+          .then(() => setcommentRerequest(new Date()));
       }
     });
   }
