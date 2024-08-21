@@ -86,8 +86,24 @@ export const UserInfoInput = styled.input`
   background-color: transparent;
   border: none;
   color: #8d8d8d;
+  padding-left: 10px;
+  padding-right: 10px;
 `;
-export const IDwordInput = styled(UserInfoInput)`
+export const NickNameContainerDiv = styled.div`
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+export const IdContainerDiv = styled.div`
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+export const NickNameInput = styled(UserInfoInput)`
   font-size: 20px;
   font-family: 'Pretendard-Regular';
   font-weight: 600;
@@ -96,11 +112,22 @@ export const IDwordInput = styled(UserInfoInput)`
   color: ${props => (props.$isEditing ? '#000000' : '#8d8d8d')};
   width: 50%;
   height: 35px;
+  padding-left: 10px;
+  padding-right: 10px;
+`;
+
+export const PasswordContainerDiv = styled.div`
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: flex-end;
 `;
 
 export const PasswordInput = styled(UserInfoInput)`
   border-radius: 5px;
   background: #bababa;
+  padding-left: 10px;
+  padding-right: 10px;
   color: ${props => (props.$isEditing ? '#000000' : '#8d8d8d')};
 `;
 export const UserProfileRowDiv = styled.div`
@@ -131,13 +158,6 @@ export const Button = styled.button`
   margin-right: ${props => props.$marginRight || '0px'};
   background-color: ${props => props.$bgColor || '#000000'};
   color: ${props => props.$fontColor || '#000000'};
-`;
-
-export const PasswordContainerDiv = styled.div`
-  display: flex;
-  position: relative;
-  align-items: center;
-  justify-content: flex-end;
 `;
 
 export const ToggleIconDiv = styled.div`

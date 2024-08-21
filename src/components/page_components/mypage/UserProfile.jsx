@@ -114,18 +114,23 @@ export default function UserProfile() {
         <S.UserProfileInfoDiv>
           <S.UserProfileColumnDiv $marginBottom={'70px'} $marginTop={'20px'}>
             <S.UserProfileRowDiv>
+              <S.NickNameContainerDiv>
               <S.labelDiv>닉네임</S.labelDiv>
-              <S.IDwordInput
+              <S.NickNameInput
                 name="nickname"
                 value={userData.nickname || ''}
                 onChange={handleInputChange}
                 disabled={!isEditing}
                 $isEditing={isEditing}
               />
+              </S.NickNameContainerDiv>
+              
             </S.UserProfileRowDiv>
             <S.UserProfileRowDiv>
+              <S.IdContainerDiv>
               <S.labelDiv>아이디</S.labelDiv>
               <S.UserInfoInput value={userData.id || ''} disabled={true} />
+              </S.IdContainerDiv>
             </S.UserProfileRowDiv>
           </S.UserProfileColumnDiv>
           <S.UserProfileColumnDiv $marginBottom={'70px'}>
