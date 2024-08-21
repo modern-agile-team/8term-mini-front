@@ -376,18 +376,18 @@ export const handlers = [
   // 특정 유저의 정보 수정 핸들러
   http.put('/users/:id', async ({ params, request }) => {
     const { id } = params;
-    const { password1, passwordConfirm1 } = await request.json(); // await 제거
+    const { password, passwordConfirm } = await request.json();
 
-    if (password1 !== passwordConfirm1) {
+    if (password !== passwordConfirm) {
       return HttpResponse.json(null, { status: 400 });
     }
 
-    const userIndex = userData.find(user => user.user_id === Number(id));
-    console.log(userIndex);
-    if (!userIndex) {
+    const userInfo = userData.find(user => user.user_id === Number(id));
+    if (!userInfo) {
       return HttpResponse.json(null, { status: 400 });
     }
-    userIndex.password = password1; // 패스워드 수정
-    return HttpResponse.json({ userIndex }, { status: 201 });
+     // 패스워드 수정
+    userInfo.password = password;
+    return HttpResponse.json({ userInfo }, { status: 201 });
   }),
 ];

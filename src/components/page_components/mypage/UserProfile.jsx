@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { authAxios } from '../../../axios/instance';
 import * as S from './MyPageStyled';
 import { Navigate } from 'react-router-dom';
-import { errorAlert } from '../../public_components/Alert';
+import { successAlert ,errorAlert } from '../../public_components/Alert';
 
 export default function UserProfile() {
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
@@ -18,7 +18,7 @@ export default function UserProfile() {
     authAxios
       .get(`/users/${userId}`)
       .then(response => {
-        console.log(response);
+        console.log('Current User Information:', response);
         setUserData(response);
       })
       .catch(error => {
@@ -43,14 +43,14 @@ export default function UserProfile() {
       errorAlert('수정 실패!', '비밀번호와 비밀번호 확인이 일치하지 않습니다.');
       return;
     }
-
     authAxios
       .put(`/users/${userId}`, {
-        password1: userData.password,
-        passwordConfirm1: passwordConfirm,
+        password: userData.password,
+        passwordConfirm: passwordConfirm,
       })
       .then(response => {
-        console.log('User updated successfully:', response);
+        console.log('Modified User Information:', response.userInfo);
+        successAlert('수정 성공!', '사용자 님의 정보 수정이 완료되었습니다.');
         setIsEditing(false);
       })
       .catch(error => {
