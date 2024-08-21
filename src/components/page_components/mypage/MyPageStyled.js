@@ -75,7 +75,7 @@ export const UserProfileColumnDiv = styled.div`
 `;
 export const labelDiv = styled.div`
   line-height: 35px;
-  width: 30%;
+  width: 130px;
 `;
 export const UserInfoInput = styled.input`
   font-size: 20px;
@@ -87,15 +87,26 @@ export const UserInfoInput = styled.input`
   border: none;
   color: #8d8d8d;
 `;
+export const IDwordInput = styled(UserInfoInput)`
+  font-size: 20px;
+  font-family: 'Pretendard-Regular';
+  font-weight: 600;
+  border-radius: 5px;
+  background: #bababa;
+  color: ${props => (props.$isEditing ? '#000000' : '#8d8d8d')};
+  width: 50%;
+  height: 35px;
+`;
+
 export const PasswordInput = styled(UserInfoInput)`
   border-radius: 5px;
   background: #bababa;
+  color: ${props => (props.$isEditing ? '#000000' : '#8d8d8d')};
 `;
 export const UserProfileRowDiv = styled.div`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  text-transform: uppercase;
   display: flex;
   justify-content: flex-end;
   width: 50%;
@@ -120,4 +131,20 @@ export const Button = styled.button`
   margin-right: ${props => props.$marginRight || '0px'};
   background-color: ${props => props.$bgColor || '#000000'};
   color: ${props => props.$fontColor || '#000000'};
+`;
+
+export const PasswordContainerDiv = styled.div`
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+export const ToggleIconDiv = styled.div`
+  cursor: pointer;
+  font-size: 1.2em;
+  color: #000000;
+  position: absolute;
+  margin-top: 3px;
+  right: 10px;
 `;

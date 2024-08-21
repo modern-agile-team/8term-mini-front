@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { authAxios } from '../../../axios/instance';
 import * as S from './MyPageStyled';
 import { Navigate } from 'react-router-dom';
-import { successAlert ,errorAlert } from '../../public_components/Alert';
+import { successAlert, errorAlert } from '../../public_components/Alert';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export default function UserProfile() {
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState(null);
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const token = localStorage.getItem('token');
   const userId = localStorage.getItem('user')
     ? JSON.parse(localStorage.getItem('user')).user_id
@@ -82,11 +85,12 @@ export default function UserProfile() {
           <S.UserProfileColumnDiv $marginBottom={'70px'} $marginTop={'20px'}>
             <S.UserProfileRowDiv>
               <S.labelDiv>닉네임</S.labelDiv>
-              <S.UserInfoInput
+              <S.IDwordInput
                 name="nickname"
                 value={userData.nickname || ''}
                 onChange={handleInputChange}
                 disabled={!isEditing}
+                $isEditing={isEditing}
               />
             </S.UserProfileRowDiv>
             <S.UserProfileRowDiv>
@@ -94,27 +98,40 @@ export default function UserProfile() {
               <S.UserInfoInput value={userData.id || ''} disabled={true} />
             </S.UserProfileRowDiv>
           </S.UserProfileColumnDiv>
-
           <S.UserProfileColumnDiv $marginBottom={'70px'}>
             <S.UserProfileRowDiv>
-              <S.labelDiv>비밀번호 수정</S.labelDiv>
-              <S.PasswordInput
-                name="password"
-                type="password"
-                value={userData.password || ''}
-                onChange={handleInputChange}
-                disabled={!isEditing}
-              />
+              <S.PasswordContainerDiv>
+                <S.labelDiv>비밀번호 수정</S.labelDiv>
+                <S.PasswordInput
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={userData.password || ''}
+                  onChange={handleInputChange}
+                  disabled={!isEditing}
+                  $isEditing={isEditing}
+                />
+                <S.ToggleIconDiv onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </S.ToggleIconDiv>
+              </S.PasswordContainerDiv>
             </S.UserProfileRowDiv>
             <S.UserProfileRowDiv>
-              <S.labelDiv>비밀번호 확인</S.labelDiv>
-              <S.PasswordInput
-                name="passwordConfirm"
-                type="password"
-                value={passwordConfirm}
-                onChange={handlePasswordConfirmChange}
-                disabled={!isEditing}
-              />
+              <S.PasswordContainerDiv>
+                <S.labelDiv>비밀번호 확인</S.labelDiv>
+                <S.PasswordInput
+                  name="passwordConfirm"
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  value={passwordConfirm}
+                  onChange={handlePasswordConfirmChange}
+                  disabled={!isEditing}
+                  $isEditing={isEditing}
+                />
+                <S.ToggleIconDiv
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                </S.ToggleIconDiv>
+              </S.PasswordContainerDiv>
             </S.UserProfileRowDiv>
           </S.UserProfileColumnDiv>
 
