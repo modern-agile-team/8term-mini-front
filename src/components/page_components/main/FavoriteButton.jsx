@@ -3,11 +3,10 @@ import * as S from './MainStyled';
 import { useState } from 'react';
 import { confirmWishListAlert } from '../../public_components/Alert';
 import getUserInfo from '../../../function/getUserInfo';
-export default function FavoriteButton({ likeData, movieName }) {
+export default function FavoriteButton({ likeData, movieName, movieId }) {
   //true면 찜상태 false면 안좋아요상태
   const [isLiked, setisLiked] = useState(likeData || false);
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
-  const movieId = likeData ? likeData.movie_id : '';
   const likeId = likeData ? likeData.wish_list_id : '';
   const [userId] = getUserInfo();
   async function toggleLiked() {
@@ -19,7 +18,8 @@ export default function FavoriteButton({ likeData, movieName }) {
             .post(`users/${userId}/wish-lists`, {
               movieId: movieId,
             })
-            .then(() => {
+            .then(data => {
+              console.log(data);
               setisLiked(!isLiked);
             });
         }

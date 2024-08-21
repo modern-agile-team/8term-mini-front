@@ -3,7 +3,7 @@ import PagiNation from '../../public_components/PagiNation.jsx';
 import Review from './Review.jsx';
 import * as S from './ReviewStyled.js';
 import { useParams } from 'react-router-dom';
-import AddReview from './AddReview.jsx';
+import ReviewHader from './ReviewHeader.jsx';
 import { basicAxios, authAxios } from '../../../axios/instance.js';
 import { ReFetchContext } from './ReviewContext.js';
 import getUserInfo from '../../../function/getUserInfo.js';
@@ -25,9 +25,9 @@ export default function ReviewContainer() {
   const [intId] = getUserInfo();
   useEffect(() => {
     //n페이지에 대한 요청을 보냄 n페이지에 대한 정보와 총 데이터 수를 받음
-    basicAxios.get(`/movies/${id}/reviews/?page=${page}`).then(data => {
+    basicAxios.get(`/movies/${id}/reviews/?page=${page}&size=2`).then(data => {
       //데이터 총 수
-      setTotalItems(data.totalPages);
+      setTotalItems(data.totalCount);
       //리뷰데이터
       setReviews(data.data);
     });
@@ -38,31 +38,33 @@ export default function ReviewContainer() {
         //유저가 어디에 좋아요 했는지
         setReviewLikeList(data.data);
       })
-      .catch(err => console.error('좋아요 불러오기 실패', err));
+      .catch(err => console.error('좋아요 불러오기 실패\n', err.message));
     //재요청 발생이나 페이지가 바뀌면 해당되는것들 다시 받아옴
   }, [reRequest, page]);
   return (
     <>
+      {/* 컨텍스트 api로 재요청 함수는 전역적으로 관리*/}
       <ReFetchContext.Provider value={{ reRequest, setReRequest }}>
-        <AddReview setReRequest={setReRequest}></AddReview>
+        <ReviewHader setReRequest={setReRequest}></ReviewHader>
         <S.ReviewContainer>
           <S.Hr></S.Hr>
-          {/* 리뷰 값, 모달창인지 아닌지, 다시 요청보내는 setreRequest함수 자기가 좋아요한 리뷰 정보 보냄 */}
+          {/* 리뷰 정보 띄우기*/}
           {reviews &&
             reviews.map(val => (
               <Review
                 key={val.review_id}
                 reviewData={val}
-                isModal={true}
                 isLiked={ReviewLikeList.find(
                   ele => ele.review_id === Number(val.review_id)
                 )}
               />
             ))}
+          {/* 리뷰 페이지네이션 */}
           <PagiNation
             styled={{ $color: '#f7f9f3' }}
             totalItems={totalItems || 1}
             setPage={setPage}
+            size={2}
           ></PagiNation>
         </S.ReviewContainer>
       </ReFetchContext.Provider>

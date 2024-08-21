@@ -1,12 +1,10 @@
 import * as S from './ReviewStyled.js';
-import {
-  confirmLoginAlert,
-  warningAlert,
-} from '../../public_components/Alert.jsx';
+import { warningAlert } from '../../public_components/Alert.jsx';
 import { authAxios } from '../../../axios/instance';
 import { useContext, useRef } from 'react';
 import getUserInfo from '../../../function/getUserInfo.js';
 import { ReFetchContext } from './ReviewContext.js';
+/** @댓글추가컴포넌트 특정 리뷰 아이디를 받아서 리뷰의 댓글을 쓸 수 있음 */
 export default function AddComment({ reviewId }) {
   const { setReRequest } = useContext(ReFetchContext);
   const inputRef = useRef();
@@ -27,7 +25,8 @@ export default function AddComment({ reviewId }) {
       .then(() => {
         setReRequest(new Date());
         inputRef.current.value = '';
-      });
+      })
+      .catch(err => console.error(err.message));
   }
   return (
     <S.ReviewColumnDiv $padding="30px 80px 0px 80px" $justifyContent="center">

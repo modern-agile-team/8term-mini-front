@@ -1,10 +1,12 @@
 import * as S from './ReviewStyled.js';
 import ReviewModal from './ReviewModal';
-import { useState } from 'react';
+import useToggle from '../../../hooks/useToggle.js';
 import { confirmLoginAlert } from '../../public_components/Alert.jsx';
-export default function AddReview({ setReRequest }) {
-  const [toggleModal, setToggleModal] = useState(false);
+/** @리뷰창의 헤더부분  */
+export default function ReviewHeader() {
+  const [toggleModal, setToggleModal] = useToggle();
   function toggleaddReviewModal() {
+    //쓰기 모달창 띄우기 전에 유저가 있는지 검사
     if (localStorage.getItem('user') === null) {
       confirmLoginAlert(
         '로그인 필요',
@@ -14,7 +16,7 @@ export default function AddReview({ setReRequest }) {
       );
       return;
     }
-    setToggleModal(!toggleModal);
+    setToggleModal();
   }
   return (
     <>
@@ -27,11 +29,7 @@ export default function AddReview({ setReRequest }) {
 
       {/*쓰기모드로 리뷰 모달창 띄움 */}
       {toggleModal && (
-        <ReviewModal
-          toggleaddReviewModal={toggleaddReviewModal}
-          setReRequest={setReRequest}
-          mod="add"
-        />
+        <ReviewModal toggleReviewModal={setToggleModal} mod="add" />
       )}
     </>
   );

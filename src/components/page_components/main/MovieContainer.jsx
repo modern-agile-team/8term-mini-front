@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { basicAxios, authAxios } from '../../../axios/instance.js';
 import SearchBar from './SearchBar.jsx';
 import getUserInfo from '../../../function/getUserInfo.js';
+import MovieSortBar from './MovieSortBar.jsx';
 export default function MovieContainer() {
   //임시 로그인
   // localStorage.setItem('token', 'sadasdjkfhsadkjfhasieulf');
@@ -11,22 +12,9 @@ export default function MovieContainer() {
   //   'user',
   //   JSON.stringify({ user_id: 1, id: 'dg1418', nickName: '관리자' })
   // );
-  const sortList = [
-    { key: 'wishList', label: '찜한 영화' },
-    { key: 'release', label: '개봉순' },
-    { key: 'popularity', label: '인기순' },
-    { key: 'title', label: '제목순' },
-  ];
   const [userId] = getUserInfo();
-  const [checked, setChecked] = useState({ 0: 0, 1: 0, 2: 0, 3: 0 });
   const [movieData, setMovieData] = useState([]);
   const [wishList, setWishList] = useState();
-  function sortChecked(id) {
-    setChecked(prev => ({
-      ...{ 0: 0, 1: 0, 2: 0, 3: 0 },
-      [id]: prev[id] === 0 ? 30 : 0,
-    }));
-  }
 
   useEffect(() => {
     basicAxios.get('/movies').then(data => {
@@ -38,39 +26,17 @@ export default function MovieContainer() {
         setWishList(data.data);
       })
       .catch(err => {
-        console.error('찜 리스트 불러오기 실패', err);
+        console.error('찜 리스트 불러오기 실패 \n', err.message);
       });
   }, []);
-  function sortQuery(sort) {
-    if (sort === 'wishList') {
-      console.log(wishList);
-      return;
-    }
-    basicAxios.get(`/movies/?sort=${sort}`).then(data => {
-      setMovieData(data.data);
-    });
-  }
+
   if (!movieData) return <div>Loading...</div>;
   return (
     <>
-      {/*정렬 컴포넌트로 나중에 빼기 */}
-      <S.SortifyDiv>
-        {sortList.map((val, idx) => {
-          return (
-            <S.SortListDiv
-              key={idx}
-              id={val.key}
-              onClick={e => {
-                sortQuery(e.target.id);
-                sortChecked(idx);
-              }}
-              $translate={checked[idx]}
-            >
-              {val.label}
-            </S.SortListDiv>
-          );
-        })}
-      </S.SortifyDiv>
+      {/*검색창 */}
+      <SearchBar setMovieData={setMovieData}></SearchBar>
+      {/*영화 정렬 리스트*/}
+      <MovieSortBar setMovieData={setMovieData}></MovieSortBar>
       {/* 영화 리스트 반복*/}
       <S.MovieContainerDiv>
         {movieData.map((val, idx) => {
@@ -83,13 +49,12 @@ export default function MovieContainer() {
               imgSrc={val.poster_path}
               originalTitle={val.original_title}
               likeData={
-                wishList && wishList.find(ele => ele.movie_id == val.id)
+                wishList && wishList.find(ele => ele.movie_id === val.movie_id)
               }
             ></MovieItem>
           );
         })}
       </S.MovieContainerDiv>
-      <SearchBar setMovieData={setMovieData}></SearchBar>
     </>
   );
 }

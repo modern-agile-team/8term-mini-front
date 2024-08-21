@@ -1,4 +1,4 @@
-import { useRef, useContext } from 'react';
+import { useRef, useContext, useEffect } from 'react';
 import * as S from './ReviewStyled';
 import { useParams } from 'react-router-dom';
 import { authAxios } from '../../../axios/instance';
@@ -7,7 +7,7 @@ import { useState } from 'react';
 import getUserInfo from '../../../function/getUserInfo';
 import { ReFetchContext } from './ReviewContext';
 export default function ReviewModal({
-  toggleaddReviewModal,
+  toggleReviewModal,
   textValue,
   mod,
   reviewId,
@@ -15,13 +15,18 @@ export default function ReviewModal({
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   const { id } = useParams();
   const textRef = useRef();
-  const [userId] = getUserInfo();
-  const user = JSON.parse(localStorage.getItem('user'));
+  const [userId, userStrId, nickName] = getUserInfo();
   const [textLength, setTextLength] = useState(0);
   const { setReRequest } = useContext(ReFetchContext);
   function charCount(e) {
     setTextLength(e.target.value.length);
   }
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
   //add모드일때 쓰는 함수
   function AddReview() {
     if (!textRef.current.value) {
@@ -36,7 +41,7 @@ export default function ReviewModal({
       })
       .then(() => {
         setReRequest(new Date());
-        toggleaddReviewModal();
+        toggleReviewModal();
       });
   }
   //edit모드일때 쓰는 함수
@@ -51,7 +56,7 @@ export default function ReviewModal({
       })
       .then(() => {
         setReRequest(new Date());
-        toggleaddReviewModal();
+        toggleReviewModal();
       });
   }
   return (
@@ -60,7 +65,7 @@ export default function ReviewModal({
         id="rootModal"
         onClick={e => {
           if (e.target.id === 'rootModal') {
-            toggleaddReviewModal();
+            toggleReviewModal();
           }
         }}
       >
@@ -70,14 +75,14 @@ export default function ReviewModal({
               <S.ReviewImg src={`${baseUrl}profileimg.png`}></S.ReviewImg>
             </S.ReviewRowDiv>
             <S.ReviewRowDiv $fontSize="20px" $marginRight="7px">
-              {user.nickName}
+              {nickName}
             </S.ReviewRowDiv>
             <S.ReviewRowDiv
               $color="#8D8D8D"
               $fontWeight="400"
               $marginRight="auto"
             >
-              ({user.id.slice(0, 3)}*****)
+              ({userStrId.slice(0, 3)}*****)
             </S.ReviewRowDiv>
             <S.AddBtn
               $height="35px"
@@ -92,7 +97,7 @@ export default function ReviewModal({
           <S.InputTextArea
             ref={textRef}
             onKeyDown={charCount}
-            maxLength={255}
+            maxLength={254}
             defaultValue={textValue}
           ></S.InputTextArea>
         </S.ModalContent>

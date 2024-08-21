@@ -5,7 +5,6 @@ export default function MovieItem(props) {
   const navigate = useNavigate();
   const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500/';
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
-
   return (
     <>
       <S.MovieItemDiv>
@@ -26,6 +25,7 @@ export default function MovieItem(props) {
             <FavoriteButton
               likeData={props.likeData}
               movieName={props.movieName}
+              movieId={props.id}
             ></FavoriteButton>
           </S.ItemColumnDiv>
           <S.ItemColumnDiv>

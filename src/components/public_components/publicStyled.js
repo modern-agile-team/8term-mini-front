@@ -39,24 +39,24 @@ export const HeaderColumnDiv = styled.div`
 /*페이지네이션 컴포넌트 스타일*/
 export const PaginationDiv = styled.div`
   display: flex;
-  color: ${props => props.$color || '#f7f9f3'};
+  color: ${({ $color }) => $color || '#f7f9f3'};
   align-items: center;
   justify-content: space-around;
-  font-size: ${props => props.$fontSize || '18px'};
-  width: ${props => props.$width || '1000px'};
+  font-size: 100%;
+  width: 1000px;
 `;
 export const PageSpan = styled.div`
   text-align: center;
   font-family: 'Asterone DEMO', sans-serif;
-  padding: 10px 20px 10px 20px;
+  padding: 2%;
   cursor: pointer;
   transform: scale(${props => props.$scale || '1'});
 `;
 export const BraceImg = styled.img`
-  width: 1%;
-  height: 50%;
+  width: 1.2%;
+  height: 20%;
   cursor: pointer;
-  padding-right: 10px;
+  padding: 1%;
   transform: rotate(${props => props.$rotate || '0deg'});
 `;
 export const FooterDiv = styled.div`
