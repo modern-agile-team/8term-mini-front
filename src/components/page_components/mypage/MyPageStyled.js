@@ -195,7 +195,7 @@ export const ModalProfileImg = styled.img`
   height: 180px;
   width: 180px;
   cursor: pointer;
-  border: ${({ props }) => (props ? '4px solid #808080' : '4px solid #000000')};
+  border: ${({ $selected }) => ($selected ? '4px solid #808080' : '4px solid #000000')};
   &:hover {
     transform: scale(1.1);
   }

@@ -43,7 +43,7 @@ export default function UserModal({ onClose, onSelectImage }) {
               key={img}
               src={`${baseUrl}${img}`}
               onClick={() => handleImageClick(img)}
-              props={selectedImage === img}
+              $selected={selectedImage === img}
             />
           ))}
         </S.ModalProfileDiv>
