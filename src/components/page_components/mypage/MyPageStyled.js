@@ -216,10 +216,14 @@ export const ModalProfileImg = styled.img`
   width: 180px;
   cursor: pointer;
   border: ${({ $selected }) => ($selected ? '4px solid #808080' : '4px solid #000000')};
+  transition: all 0.4s;
+  transform: ${({ $selected }) => ($selected ? 'scale(1.1)' : 'scale(1)')};
+
   &:hover {
-    transform: scale(1.1);
+    transform: ${({ $selected }) => ($selected ? 'scale(1.1)' : 'scale(1.1)')};
   }
 `;
+
 
 export const HorizontalLine = styled.hr`
   width: 100%;
@@ -239,4 +243,9 @@ export const ModalButton = styled.button`
   border-radius: 8px;
   padding: 5px 25px;
   margin-top: 20px;
+  transition: all 0.3s;
+  &:hover {
+    background-color: #ffffff;
+    color: #000000;
+  };
 `;

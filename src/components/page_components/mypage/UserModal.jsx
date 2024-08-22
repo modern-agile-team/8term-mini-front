@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
 import * as S from './MyPageStyled';
 
-export default function UserModal({ onClose, onSelectImage }) {
+export default function UserModal({ onClose, onSelectImage, initialImage }) {
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   const modalRef = useRef(null);
-  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedImage, setSelectedImage] = useState(initialImage || '');
 
   // 모달창 외부를 클릭했을 때만 닫기
   function handleOverlayClick(e) {
@@ -20,7 +20,7 @@ export default function UserModal({ onClose, onSelectImage }) {
 
   // 선택한 이미지를 UserProfile(부모) 컴포넌트로 전달 후 모달창 닫기
   function handleConfirmClick() {
-    onSelectImage(selectedImage);
+    onSelectImage(selectedImage || initialImage);
     onClose();
   }
 
@@ -43,7 +43,7 @@ export default function UserModal({ onClose, onSelectImage }) {
               key={img}
               src={`${baseUrl}${img}`}
               onClick={() => handleImageClick(img)}
-              $selected={selectedImage === img}
+              $selected={selectedImage === img} 
             />
           ))}
         </S.ModalProfileDiv>

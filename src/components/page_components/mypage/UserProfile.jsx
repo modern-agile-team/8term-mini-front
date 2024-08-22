@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { authAxios } from '../../../axios/instance';
 import * as S from './MyPageStyled';
-import { Navigate } from 'react-router-dom';
 import UserModal from './UserModal';
+import { validation } from './Validation';
+import { authAxios } from '../../../axios/instance';
+import { Navigate } from 'react-router-dom';
 import { successAlert, errorAlert } from '../../public_components/Alert';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
@@ -30,7 +31,7 @@ export default function UserProfile() {
         setSelectedImage(response.profile || '');
       })
       .catch(error => {
-        console.error('Error fetching user data:', error);
+        console.error('사용자 정보 불러오기 실패:', error);
       });
   }, [token, userId]);
 
@@ -42,6 +43,14 @@ export default function UserProfile() {
     return <div>Loading...</div>;
   }
 
+  // 엔터키 눌렀을 때 완료 버튼 실행
+  function handleKeyDown(e) {
+    if (e.key === 'Enter' && isEditing) {
+      e.preventDefault();
+      handleCompleteClick();
+    }
+  }
+
   // '수정' 버튼을 클릭 시 편집 모드 활성화
   function handleEditClick() {
     setIsEditing(true);
@@ -49,10 +58,29 @@ export default function UserProfile() {
 
   // '완료' 버튼을 클릭 시 유저 정보 업데이트
   function handleCompleteClick() {
-    if (userData.password !== passwordConfirm) {
-      errorAlert('수정 실패!', '비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+    const validationErrors = validation(userData, passwordConfirm);
+
+    if (!userData.nickname || !userData.password || !passwordConfirm) {
+      errorAlert('수정 실패', '모든 필드를 입력해주세요.');
       return;
     }
+  
+    if (validationErrors.nickname) {
+      errorAlert('수정 실패', validationErrors.nickname);
+    }
+  
+    if (validationErrors.password) {
+      errorAlert('수정 실패', validationErrors.password);
+    }
+  
+    if (validationErrors.passwordConfirm) {
+      errorAlert('수정 실패', validationErrors.passwordConfirm);
+    }
+  
+    if (Object.keys(validationErrors).length > 0) {
+      return;
+    }
+    
     authAxios
       .put(`/users/${userId}`, {
         password: userData.password,
@@ -60,12 +88,12 @@ export default function UserProfile() {
         nickname: userData.nickname,
         profile: selectedImage,
       })
-      .then(function (response) {
+      .then(response => {
         console.log('Modified User Information:', response.userInfo);
         successAlert('수정 성공!', '사용자 님의 정보 수정이 완료되었습니다.');
         setIsEditing(false);
       })
-      .catch(function (error) {
+      .catch(error => {
         console.error('Error updating user data:', error);
       });
   }
@@ -101,7 +129,7 @@ export default function UserProfile() {
 
   return (
     <>
-      <S.UserProfileDiv>
+      <S.UserProfileDiv onKeyDown={handleKeyDown}>
         <S.UserProfileImgDiv>
           <S.UserProfileImg src={`${baseUrl}${selectedImage}`} />{' '}
           {isEditing && (
@@ -115,21 +143,20 @@ export default function UserProfile() {
           <S.UserProfileColumnDiv $marginBottom={'70px'} $marginTop={'20px'}>
             <S.UserProfileRowDiv>
               <S.NickNameContainerDiv>
-              <S.labelDiv>닉네임</S.labelDiv>
-              <S.NickNameInput
-                name="nickname"
-                value={userData.nickname || ''}
-                onChange={handleInputChange}
-                disabled={!isEditing}
-                $isEditing={isEditing}
-              />
+                <S.labelDiv>닉네임</S.labelDiv>
+                <S.NickNameInput
+                  name="nickname"
+                  value={userData.nickname || ''}
+                  onChange={handleInputChange}
+                  disabled={!isEditing}
+                  $isEditing={isEditing}
+                />
               </S.NickNameContainerDiv>
-              
             </S.UserProfileRowDiv>
             <S.UserProfileRowDiv>
               <S.IdContainerDiv>
-              <S.labelDiv>아이디</S.labelDiv>
-              <S.UserInfoInput value={userData.id || ''} disabled={true} />
+                <S.labelDiv>아이디</S.labelDiv>
+                <S.UserInfoInput value={userData.id || ''} disabled={true} />
               </S.IdContainerDiv>
             </S.UserProfileRowDiv>
           </S.UserProfileColumnDiv>
@@ -169,7 +196,6 @@ export default function UserProfile() {
               </S.PasswordContainerDiv>
             </S.UserProfileRowDiv>
           </S.UserProfileColumnDiv>
-
           <S.ButtonDiv>
             {!isEditing && (
               <S.Button $bgColor="#F7F9F3" onClick={handleEditClick}>
@@ -188,6 +214,7 @@ export default function UserProfile() {
         <UserModal
           onClose={handleCloseModal}
           onSelectImage={handleSelectImage}
+          initialImage={selectedImage}
         />
       )}
     </>
