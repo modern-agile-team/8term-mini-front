@@ -10,7 +10,8 @@ export default function MainScreen() {
   useEffect(() => {
     const interval = setInterval(() => {
       //이미지 인덱스를 하나씩 증가를 시킨다
-      setImgIndex(prev => (prev === imageArrLen - 1 ? 0 : prev + 1));
+
+      setImgIndex(prev => (prev === imageArrLen - 1 ? 1 : prev + 1));
     }, 4000);
     return () => clearInterval(interval);
   }, []);
@@ -20,6 +21,7 @@ export default function MainScreen() {
       //비동기적 처리를 위해 setTimeOut 사용
       //1초에 시간에 걸쳐 변화 => 1초 후에 노딜레이로 바로 0으로 이동시키게 설정해놓음
       //마지막 인덱스일때만 설정시켜놓음 1초에 걸처 다음으로 변화하고 1초 후에 바로 0으로 이동시키기
+
       setTimeout(() => {
         slideRef.current.style.transition = '';
         slideRef.current.style.transform = `translateX(0)`;

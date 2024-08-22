@@ -77,7 +77,7 @@ export const loginSuccessAlert = Swal.mixin({
 
 /**@로그인필요알림창 */
 export const confirmLoginAlert = (title, text, confirm, cancel) => {
-  Swal.fire({
+  return Swal.fire({
     title: title,
     text: text,
     icon: 'warning',

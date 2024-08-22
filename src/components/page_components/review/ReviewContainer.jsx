@@ -1,4 +1,4 @@
-import { useEffect, useState, createContext } from 'react';
+import { useEffect, useState } from 'react';
 import PagiNation from '../../public_components/PagiNation.jsx';
 import Review from './Review.jsx';
 import * as S from './ReviewStyled.js';
@@ -29,16 +29,16 @@ export default function ReviewContainer() {
       //데이터 총 수
       setTotalItems(data.totalCount);
       //리뷰데이터
-      setReviews(data.data);
+      setReviews(data.reveiws);
     });
     //로그인되어있으면 좋아요한 리뷰 가져옴 토큰없으면 에러발생
     authAxios
       .get(`/users/${intId}/review-likes`)
       .then(data => {
         //유저가 어디에 좋아요 했는지
-        setReviewLikeList(data.data);
+        setReviewLikeList(data);
       })
-      .catch(err => console.error('좋아요 불러오기 실패\n', err.message));
+      .catch(err => console.error(err.name, err.message));
     //재요청 발생이나 페이지가 바뀌면 해당되는것들 다시 받아옴
   }, [reRequest, page]);
   return (
@@ -52,10 +52,10 @@ export default function ReviewContainer() {
           {reviews &&
             reviews.map(val => (
               <Review
-                key={val.review_id}
+                key={val.reviewId}
                 reviewData={val}
                 isLiked={ReviewLikeList.find(
-                  ele => ele.review_id === Number(val.review_id)
+                  ele => ele.reviewId === Number(val.reviewId)
                 )}
               />
             ))}

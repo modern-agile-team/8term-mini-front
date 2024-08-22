@@ -21,7 +21,7 @@ export default function MovieSortBar({ setMovieData }) {
       return;
     }
     basicAxios.get(`/movies/?sort=${sort}`).then(data => {
-      setMovieData(data.data);
+      setMovieData(data);
     });
   }
   return (

@@ -1,7 +1,7 @@
 import * as S from './ReviewStyled.js';
 import { warningAlert } from '../../public_components/Alert.jsx';
 import { authAxios } from '../../../axios/instance';
-import { useContext, useRef } from 'react';
+import { useRef } from 'react';
 import getUserInfo from '../../../function/getUserInfo.js';
 /** @댓글추가컴포넌트 특정 리뷰 아이디를 받아서 리뷰의 댓글을 쓸 수 있음 */
 export default function AddComment({ reviewId, setcommentRerequest }) {
@@ -36,6 +36,7 @@ export default function AddComment({ reviewId, setcommentRerequest }) {
             postComment();
           }
         }}
+        maxLength={20}
       ></S.CommentInput>
       <S.AddBtn onClick={postComment}>+ 댓글 쓰기</S.AddBtn>
     </S.ReviewColumnDiv>

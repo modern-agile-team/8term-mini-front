@@ -21,10 +21,10 @@ export default function ReviewDetailModal({
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     basicAxios
-      .get(`/reviews/${reviewData.review_id}/comments?page=${page}`)
+      .get(`/reviews/${reviewData.reviewId}/comments?page=${page}`)
       .then(data => {
         setTotalCount(data.totalCount);
-        setCommnets(data.data);
+        setCommnets(data.comments);
       });
     return () => {
       setReRequest(new Date());
@@ -86,13 +86,13 @@ export default function ReviewDetailModal({
                   />
                 </S.ReviewRowDiv>
                 <S.ReviewRowDiv $marginRight="20px">
-                  <div>{reviewData.like_count}</div>
+                  <div>{reviewData.likeCount}</div>
                 </S.ReviewRowDiv>
                 <S.ReviewRowDiv $marginRight="20px" onClick={toggleModal}>
                   <div>댓글</div>
                 </S.ReviewRowDiv>
                 <S.ReviewRowDiv onClick={toggleModal}>
-                  <div>{reviewData.comment_count}</div>
+                  <div>{reviewData.commentCount}</div>
                 </S.ReviewRowDiv>
               </S.ReviewColumnDiv>
             </S.ReviewDiv>
@@ -103,7 +103,7 @@ export default function ReviewDetailModal({
             <S.CommentContainerDiv>
               {comments.map(val => (
                 <Comment
-                  key={val.comment_id}
+                  key={val.commentId}
                   commentData={val}
                   setcommentRerequest={setcommentRerequest}
                 />
@@ -116,7 +116,7 @@ export default function ReviewDetailModal({
               size={5}
             />
             <AddComment
-              reviewId={reviewData.review_id}
+              reviewId={reviewData.reviewId}
               setcommentRerequest={setcommentRerequest}
             ></AddComment>
           </S.ModalContent>

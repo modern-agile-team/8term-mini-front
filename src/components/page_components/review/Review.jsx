@@ -19,7 +19,7 @@ export default function Review({ reviewData, isLiked }) {
     confirmDeleteAlert('리뷰를 삭제하시겠습니까?').then(confirm => {
       if (confirm.isConfirmed) {
         authAxios
-          .delete(`/users/my/reviews/${reviewData.review_id}`)
+          .delete(`/users/my/reviews/${reviewData.reviewId}`)
           .then(() => {
             setReRequest(new Date());
           });
@@ -31,7 +31,7 @@ export default function Review({ reviewData, isLiked }) {
     if (!isLiked) {
       authAxios
         .post(`/users/${userId}/review-likes`, {
-          reviewId: reviewData.review_id,
+          reviewId: reviewData.reviewId,
         })
         .then(() => {
           setReRequest(new Date());
@@ -39,7 +39,7 @@ export default function Review({ reviewData, isLiked }) {
     } else {
       authAxios
         .delete(
-          `/users/my/review-likes/?userId=${userId}&reviewId=${reviewData.review_id}`
+          `/users/my/review-likes/?userId=${userId}&reviewId=${reviewData.reviewId}`
         )
         .then(() => {
           setReRequest(new Date());
@@ -111,7 +111,7 @@ export default function Review({ reviewData, isLiked }) {
             toggleReviewModal={setEditModal}
             textValue={reviewData.text}
             mod="edit"
-            reviewId={reviewData.review_id}
+            reviewId={reviewData.reviewId}
           ></ReviewModal>
         )}
         {/* 컬럼3 날짜 */}
@@ -130,13 +130,13 @@ export default function Review({ reviewData, isLiked }) {
             />
           </S.ReviewRowDiv>
           <S.ReviewRowDiv $marginRight="20px">
-            <div>{reviewData.like_count}</div>
+            <div>{reviewData.likeCount}</div>
           </S.ReviewRowDiv>
           <S.ReviewRowDiv $marginRight="20px">
             <div>댓글</div>
           </S.ReviewRowDiv>
           <S.ReviewRowDiv>
-            <div>{reviewData.comment_count}</div>
+            <div>{reviewData.commentCount}</div>
           </S.ReviewRowDiv>
         </S.ReviewColumnDiv>
       </S.ReviewDiv>

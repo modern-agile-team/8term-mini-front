@@ -1,17 +1,16 @@
-import { useContext } from 'react';
 import { authAxios } from '../../../axios/instance';
 import getUserInfo from '../../../function/getUserInfo';
 import * as S from './ReviewStyled';
-import { ReFetchContext } from './ReviewContext';
 import { confirmDeleteAlert } from '../../public_components/Alert';
 export default function Comment({ commentData, setcommentRerequest }) {
+  console.log(commentData);
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   const [userId] = getUserInfo();
   function deleteComment() {
     confirmDeleteAlert('댓글을 삭제하시겠습니까?').then(confirm => {
       if (confirm.isConfirmed) {
         authAxios
-          .delete(`/users/my/comments/${commentData.comment_id}`)
+          .delete(`/users/my/comments/${commentData.commentId}`)
           .then(() => setcommentRerequest(new Date()));
       }
     });
@@ -20,10 +19,10 @@ export default function Comment({ commentData, setcommentRerequest }) {
     <>
       <S.ReviewColumnDiv>
         <S.ReviewRowDiv $fontSize="16px" $marginRight="7px">
-          {commentData.nickName}
+          {commentData.nickname}
         </S.ReviewRowDiv>
         <S.ReviewRowDiv $color="#8D8D8D" $fontWeight="400" $marginRight="100px">
-          ({commentData.id}*****)
+          ({commentData.id.slice(0, 3)}*****)
         </S.ReviewRowDiv>
         <S.ReviewRowDiv
           $aliginSelf="center"

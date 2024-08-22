@@ -36,7 +36,6 @@ export default function ReviewModal({
     authAxios
       .post(`/movies/${id}/reviews`, {
         userId: userId,
-        movieId: id,
         text: textRef.current.value,
       })
       .then(() => {

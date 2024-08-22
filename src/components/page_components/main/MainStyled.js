@@ -61,7 +61,7 @@ export const MovieContainerDiv = styled.div`
 /*MovieItem 스타일 컴포넌트 */
 export const ItemImg = styled.img`
   height: 85%;
-  object-fit: cover;
+  object-fit: fill;
   max-width: 100%;
 `;
 export const MovieItemDiv = styled.div`
