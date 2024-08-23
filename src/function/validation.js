@@ -1,5 +1,4 @@
-import { errorAlert } from '../../public_components/Alert';
-
+import { errorAlert } from '../components/public_components/Alert';
 export function validation(userData, passwordConfirm) {
   const regex_nickname = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
   const regex_password =
