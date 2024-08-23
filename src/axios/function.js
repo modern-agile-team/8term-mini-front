@@ -2,11 +2,11 @@ import { confirmLoginAlert } from '../components/public_components/Alert';
 import { HTTP_STATUS } from './statusCode';
 //응답 에러핸들러
 export function resErrorHandler(err) {
-  if ('ERR_BAD_RESPONSE' === err.code) {
-    console.error('서버 에러');
+  if (err.response && err.response.status) {
+    HTTP_STATUS[err.response.status];
+  } else {
+    console.log('에러 상태 코드가 없습니다.');
   }
-  console.log(err);
-
   return Promise.reject(err);
 }
 //authAxios 요청 핸들러
@@ -15,7 +15,6 @@ export function authReqHandler(config) {
 
   const accessToken = localStorage.getItem('token') || null;
   //엑세스 토큰 검증 로직
-  console.log(config);
   if (accessToken) {
     config.headers['Authorization'] = `Bearer ${accessToken}`;
     return config;
@@ -38,5 +37,10 @@ export function authReqHandler(config) {
 }
 //response값 핸들러
 export function publicResHandler(res) {
+  HTTP_STATUS[res.status]();
   return res.data;
+}
+export function publicReqErrorHandler(err) {
+  console.error('요청 에러:', err);
+  return Promise.reject(err);
 }

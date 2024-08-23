@@ -22,16 +22,21 @@ export default function MovieContainer() {
   const [wishList, setWishList] = useState();
 
   useEffect(() => {
-    basicAxios.get('/movies').then(data => {
-      setMovieData(data);
-    });
+    basicAxios
+      .get('/movies')
+      .then(data => {
+        setMovieData(data);
+      })
+      .catch(err => {
+        console.error(err);
+      });
     authAxios
       .get(`/users/${userId}/wish-lists`)
       .then(data => {
         setWishList(data);
       })
       .catch(err => {
-        console.error(err.name, err.message);
+        console.error(err);
       });
   }, []);
 

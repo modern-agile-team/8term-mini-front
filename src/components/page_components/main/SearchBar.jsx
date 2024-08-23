@@ -9,9 +9,8 @@ export default function SearchBar({ setMovieData }) {
   function getSearchData() {
     if (prevInputData !== textRef.current.value) {
       basicAxios.get(`/movies?title=${textRef.current.value}`).then(data => {
-        console.log(data.length);
         if (data.length < 1) {
-          warningAlert();
+          warningAlert('검색 결과가 없습니다');
           return;
         }
         if (data.length >= 1) {

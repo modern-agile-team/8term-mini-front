@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { resErrorHandler, publicResHandler, authReqHandler } from './function';
+import {
+  resErrorHandler,
+  publicResHandler,
+  authReqHandler,
+  publicReqErrorHandler,
+} from './function';
 //베이스  instance
 const basicAxios = axios.create({
   baseURL: import.meta.env.VITE_BACK_BASE_URL,
@@ -13,10 +18,7 @@ const authAxios = axios.create({
   timeout: 3000,
 });
 //authAxios 요청, 응답 인터셉터
-authAxios.interceptors.request.use(authReqHandler, error => {
-  console.error('요청 에러:', error);
-  return Promise.reject(error);
-});
+authAxios.interceptors.request.use(authReqHandler, publicReqErrorHandler);
 authAxios.interceptors.response.use(publicResHandler, resErrorHandler);
 
 //basicAxios 요청,응답 인터셉터

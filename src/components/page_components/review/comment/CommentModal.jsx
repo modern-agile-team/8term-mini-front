@@ -1,12 +1,12 @@
 import Comment from './Comment';
-import * as S from './ReviewStyled';
-import PagiNation from './../../public_components/PagiNation';
+import * as S from '../ReviewStyled';
+import PagiNation from '../../../public_components/PagiNation.jsx';
 import { useState, useEffect, useContext } from 'react';
-import { basicAxios } from '../../../axios/instance';
+import { basicAxios } from '../../../../axios/instance';
 import AddComment from './AddComment.jsx';
-import { ReFetchContext } from './ReviewContext.js';
+import { ReFetchContext } from '../contextAPI/ReviewContext.js';
 
-export default function ReviewDetailModal({
+export default function CommentModal({
   reviewData,
   toggleModal,
   isLiked,

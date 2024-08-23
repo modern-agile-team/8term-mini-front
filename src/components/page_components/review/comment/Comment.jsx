@@ -1,11 +1,11 @@
-import { authAxios } from '../../../axios/instance';
-import getUserInfo from '../../../function/getUserInfo';
-import * as S from './ReviewStyled';
-import { confirmDeleteAlert } from '../../public_components/Alert';
+import { authAxios } from '../../../../axios/instance';
+import getUserInfo from '../../../../function/getUserInfo';
+import * as S from '../ReviewStyled';
+import { confirmDeleteAlert } from '../../../public_components/Alert';
 export default function Comment({ commentData, setcommentRerequest }) {
   console.log(commentData);
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
-  const [userId] = getUserInfo();
+  const [userId, userStrId] = getUserInfo();
   function deleteComment() {
     confirmDeleteAlert('댓글을 삭제하시겠습니까?').then(confirm => {
       if (confirm.isConfirmed) {
@@ -31,7 +31,7 @@ export default function Comment({ commentData, setcommentRerequest }) {
         >
           {commentData.text}
         </S.ReviewRowDiv>
-        {commentData.user_id === userId && (
+        {commentData.id === userStrId && (
           <S.DeleteImg
             src={`${baseUrl}delete.png`}
             $marginRight="25px"
