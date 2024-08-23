@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as S from './MyPageStyled';
 import UserModal from './UserModal';
-import { validation } from './Validation';
+import { validation } from '../../../function/validation';
 import { authAxios } from '../../../axios/instance';
 import { Navigate } from 'react-router-dom';
 import { successAlert, errorAlert } from '../../public_components/Alert';
@@ -40,7 +40,7 @@ export default function UserProfile() {
   }
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return <div style={{ color: 'white' }}>Loading...</div>;
   }
 
   // 엔터키 눌렀을 때 완료 버튼 실행
@@ -64,23 +64,23 @@ export default function UserProfile() {
       errorAlert('수정 실패', '모든 필드를 입력해주세요.');
       return;
     }
-  
+
     if (validationErrors.nickname) {
       errorAlert('수정 실패', validationErrors.nickname);
     }
-  
+
     if (validationErrors.password) {
       errorAlert('수정 실패', validationErrors.password);
     }
-  
+
     if (validationErrors.passwordConfirm) {
       errorAlert('수정 실패', validationErrors.passwordConfirm);
     }
-  
+
     if (Object.keys(validationErrors).length > 0) {
       return;
     }
-    
+
     authAxios
       .put(`/users/${userId}`, {
         password: userData.password,
