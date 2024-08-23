@@ -28,6 +28,7 @@ export default function Comment({ commentData, setcommentRerequest }) {
           $aliginSelf="center"
           $marginRight="auto"
           $fontWeight="400"
+          $width="width:60%;"
         >
           {commentData.text}
         </S.ReviewRowDiv>

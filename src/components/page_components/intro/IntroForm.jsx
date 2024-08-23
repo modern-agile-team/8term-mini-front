@@ -15,7 +15,6 @@ export default function IntroForm({ movie }) {
     overview,
     releaseDate,
   } = movie[0];
-  console.log(movie);
 
   const adultText = adult === 1 ? '청소년관람불가' : '전체관람가';
 

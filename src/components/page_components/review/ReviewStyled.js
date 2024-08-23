@@ -67,6 +67,8 @@ export const ReviewRowDiv = styled.div`
   color: ${props => props.$color || '#000000'};
   font-weight: ${props => props.$fontWeight || '600'};
   margin-right: ${props => props.$marginRight || '0px'};
+  cursor: ${props => props.$cursor || 'default'};
+  ${props => props.$width || ''}
 `;
 export const ReviewImg = styled.img`
   width: 25px;
