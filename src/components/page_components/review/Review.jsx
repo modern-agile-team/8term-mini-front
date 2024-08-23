@@ -1,62 +1,46 @@
 import { authAxios } from '../../../axios/instance.js';
-import ReviewDetailModal from './ReviewDetailModal.jsx';
+import CommentModal from './comment/CommentModal.jsx';
 import * as S from './ReviewStyled.js';
-import { useState, useEffect, createContext } from 'react';
+import { useContext } from 'react';
 import useToggle from '../../../hooks/useToggle.js';
 import ReviewModal from './ReviewModal.jsx';
-import { confirmLoginAlert } from '../../public_components/Alert.jsx';
+import getUserInfo from '../../../function/getUserInfo.js';
+import { ReFetchContext } from './contextAPI/ReviewContext.js';
+import { confirmDeleteAlert } from '../../public_components/Alert.jsx';
 
-export default function Review({
-  styled,
-  reviews,
-  isModal,
-  reRequest,
-  setReRequest,
-  isLiked,
-}) {
-  const [reviewModal, setReviewModal] = useState(false);
+export default function Review({ reviewData, isLiked }) {
+  //리뷰 자세히 보기 모달창 띄우는
+  const [reviewModal, setReviewModal] = useToggle();
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   const [editModal, setEditModal] = useToggle();
-  const userId = JSON.parse(localStorage.getItem('user'))
-    ? JSON.parse(localStorage.getItem('user')).user_id
-    : undefined;
-
-  function toggleModal() {
-    setReviewModal(!reviewModal);
-  }
+  const [userId, strId] = getUserInfo();
+  const { setReRequest } = useContext(ReFetchContext);
   function deleteReview() {
-    authAxios.delete(`/users/my/reveiws/${reviews.review_id}`).then(() => {
-      setReRequest(new Date());
+    confirmDeleteAlert('리뷰를 삭제하시겠습니까?').then(confirm => {
+      if (confirm.isConfirmed) {
+        authAxios
+          .delete(`/users/my/reviews/${reviewData.reviewId}`)
+          .then(() => {
+            setReRequest(new Date());
+          });
+      }
     });
   }
+  //리뷰에 좋아요를 누르거나 삭제하는 함수
   function reviewLike() {
-    if (userId === undefined) {
-      return confirmLoginAlert(
-        '로그인 필요',
-        '로그인이 필요한 기능입니다.',
-        '로그인 페이지 이동',
-        '확인'
-      );
-    }
     if (!isLiked) {
       authAxios
-        .post(
-          `/users/${
-            JSON.parse(localStorage.getItem('user')).user_id
-          }/review-likes`,
-          {
-            review_id: reviews.review_id,
-          }
-        )
+        .post(`/users/${userId}/review-likes`, {
+          reviewId: reviewData.reviewId,
+        })
         .then(() => {
           setReRequest(new Date());
         });
     } else {
+      console.log(isLiked.reviewLikeId);
       authAxios
         .delete(
-          `/users/my/review-likes/?user-id=${
-            JSON.parse(localStorage.getItem('user')).user_id
-          }&review-id=${reviews.review_id}`
+          `/users/my/review-likes/?userId=${userId}&reviewId=${reviewData.reviewId}`
         )
         .then(() => {
           setReRequest(new Date());
@@ -66,22 +50,24 @@ export default function Review({
 
   return (
     <>
-      <S.ReviewDiv {...styled}>
+      <S.ReviewDiv>
+        {/* 컬럼1 유저 프사, 이름, 닉네임 삭제버튼, 수정버튼 등이 들어감 */}
         <S.ReviewColumnDiv>
           <S.ReviewRowDiv $marginRight="7px">
             <S.ReviewImg src={`${baseUrl}profileimg.png`}></S.ReviewImg>
           </S.ReviewRowDiv>
           <S.ReviewRowDiv $fontSize="20px" $marginRight="7px">
-            {reviews.nickname}
+            {reviewData.nickname}
           </S.ReviewRowDiv>
           <S.ReviewRowDiv
             $color="#8D8D8D"
             $fontWeight="400"
             $marginRight="auto"
           >
-            ({reviews.id}*****)
+            ({reviewData.id.slice(0, 3)}*****)
           </S.ReviewRowDiv>
-          {reviews.user_id === userId && isModal && (
+          {/*삭제버튼, 수정버튼 띄우는 로직 */}
+          {reviewData.id === strId && (
             <S.ReviewRowDiv>
               <S.AddBtn
                 $width="35px"
@@ -99,67 +85,59 @@ export default function Review({
             </S.ReviewRowDiv>
           )}
         </S.ReviewColumnDiv>
-
+        {/* 컬럼 2 유저가 쓴 글이 들어감 */}
         <S.ReviewColumnDiv
           $height="100px"
-          $cursor={isModal ? 'pointer' : ''}
-          onClick={toggleModal}
+          onClick={setReviewModal}
+          $cursor="pointer"
         >
           <S.ReviewRowDiv
-            $fontSize={reviews.comment.length >= 150 ? '15px' : '20px'}
+            $fontSize={reviewData.text.length >= 150 ? '15px' : '20px'}
           >
-            {reviews.comment}
+            {reviewData.text}
           </S.ReviewRowDiv>
         </S.ReviewColumnDiv>
         {/*리뷰 자세히보기 모달창 띄우는 로직*/}
-        {isModal && reviewModal && (
-          <ReviewDetailModal
-            toggleModal={toggleModal}
-            reviews={reviews}
-            setReRequest={setReRequest}
-            reRequest={reRequest}
+        {reviewModal && (
+          <CommentModal
+            toggleModal={setReviewModal}
+            reviewData={reviewData}
             isLiked={isLiked}
-          ></ReviewDetailModal>
+            reviewLike={reviewLike}
+          ></CommentModal>
         )}
         {/*수정버튼 눌렀을때 모달창 띄우는 로직 */}
-        {isModal && editModal && (
+        {editModal && (
           <ReviewModal
-            toggleaddReviewModal={setEditModal}
-            setReRequest={setReRequest}
-            textValue={reviews.comment}
+            toggleReviewModal={setEditModal}
+            textValue={reviewData.text}
             mod="edit"
-            reviewId={reviews.review_id}
+            reviewId={reviewData.reviewId}
           ></ReviewModal>
         )}
-
+        {/* 컬럼3 날짜 */}
         <S.ReviewColumnDiv $justifyContent="flex-end">
-          <S.ReviewRowDiv>({reviews.date})</S.ReviewRowDiv>
+          <S.ReviewRowDiv>({reviewData.date.slice(0, 10)})</S.ReviewRowDiv>
         </S.ReviewColumnDiv>
-
+        {/* 컬럼4 밑줄 */}
         <S.Hr $bgColor="#000" $width="100%" $margin="10px 0px 10px 0px"></S.Hr>
         {/* 좋아요버튼 로직 */}
+        {/* 컬럼5 좋아요버튼, 댓글 수 */}
         <S.ReviewColumnDiv>
           <S.ReviewRowDiv $marginRight="20px">
-            {!isLiked ? (
-              <S.ReviewImg
-                src={`${baseUrl}favoriteOff.png`}
-                onClick={reviewLike}
-              />
-            ) : (
-              <S.ReviewImg
-                src={`${baseUrl}favoriteOn.png`}
-                onClick={reviewLike}
-              />
-            )}
+            <S.ReviewImg
+              src={`${baseUrl}favorite${isLiked ? 'On' : 'Off'}.png`}
+              onClick={reviewLike}
+            />
           </S.ReviewRowDiv>
           <S.ReviewRowDiv $marginRight="20px">
-            <div>{reviews.likeLen}</div>
+            <div>{reviewData.likeCount}</div>
           </S.ReviewRowDiv>
-          <S.ReviewRowDiv $marginRight="20px" onClick={toggleModal}>
+          <S.ReviewRowDiv $marginRight="20px">
             <div>댓글</div>
           </S.ReviewRowDiv>
-          <S.ReviewRowDiv onClick={toggleModal}>
-            <div>{reviews.commentLen}</div>
+          <S.ReviewRowDiv>
+            <div>{reviewData.commentCount}</div>
           </S.ReviewRowDiv>
         </S.ReviewColumnDiv>
       </S.ReviewDiv>

@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import * as S from './publicStyled.js';
 import { warningAlert } from './Alert.jsx';
 export default function PagiNation({
-  styled,
+  color,
   totalItems, //총 데이터 수
   setPage,
+  size, //몇개씩 나눌건지
 }) {
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   function slicePage(sliceArr, sliceLen) {
@@ -35,7 +36,7 @@ export default function PagiNation({
   const [currentPage, setCurrentPage] = useState(0);
   const [clickedIndex, setClickedIndex] = useState(0);
   const totalPage = Array.from(
-    Array(Math.ceil(totalItems / 5)),
+    Array(Math.ceil(totalItems / size)),
     (_, index) => index + 1
   );
   useEffect(() => {
@@ -44,15 +45,11 @@ export default function PagiNation({
   //페이지를 n개씩 나누기
   if (!slicedPageArray) return <div>Loding...</div>;
   return (
-    <S.PaginationDiv {...styled}>
-      {styled.$color === '#000' ? (
-        <S.BraceImg
-          src={`${baseUrl}braceBlack.png`}
-          onClick={prevPage}
-        ></S.BraceImg>
-      ) : (
-        <S.BraceImg src={`${baseUrl}brace.png`} onClick={prevPage}></S.BraceImg>
-      )}
+    <S.PaginationDiv $color={color}>
+      <S.BraceImg
+        src={`${baseUrl}brace${color ? 'Black' : ''}.png`}
+        onClick={prevPage}
+      ></S.BraceImg>
 
       {slicedPageArray[currentPage] &&
         slicedPageArray[currentPage].map((val, idx) => (
@@ -68,19 +65,11 @@ export default function PagiNation({
           </S.PageSpan>
         ))}
 
-      {styled.$color === '#000' ? (
-        <S.BraceImg
-          src={`${baseUrl}braceBlack.png`}
-          $rotate="180deg"
-          onClick={nextPage}
-        ></S.BraceImg>
-      ) : (
-        <S.BraceImg
-          src={`${baseUrl}brace.png`}
-          $rotate="180deg"
-          onClick={nextPage}
-        ></S.BraceImg>
-      )}
+      <S.BraceImg
+        src={`${baseUrl}brace${color ? 'Black' : ''}.png`}
+        $rotate="180deg"
+        onClick={nextPage}
+      ></S.BraceImg>
     </S.PaginationDiv>
   );
 }
