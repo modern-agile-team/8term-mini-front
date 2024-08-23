@@ -1,17 +1,18 @@
+//상태코드별 에러핸들링 여기에 함수 작성
 export const HTTP_STATUS = {
   200: () => {
-    return 0;
+    console.log('Success');
   },
-  CREATED: 201,
-  ACCEPTED: 202,
-  NO_CONTENT: 204,
-  BAD_REQUEST: 400,
-  UNAUTHORIZED: 401,
-  FORBIDDEN: 403,
-  NOT_FOUND: 404,
-  METHOD_NOT_ALLOWED: 405,
-  CONFLICT: 409,
-  INTERNAL_SERVER_ERROR: 500,
-  NOT_IMPLEMENTED: 501,
-  BAD_GATEWAY: 502,
+  201: () => {
+    console.log('Success Created');
+  },
+  204: () => {
+    console.log('Success No Content');
+  },
+  404: () => {
+    console.log('	지정한 리소스에 대한 액세스가 금지되었다.');
+  },
+  500: () => {
+    console.log('서버가 터졌다네요');
+  },
 };

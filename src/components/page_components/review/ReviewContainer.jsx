@@ -5,7 +5,7 @@ import * as S from './ReviewStyled.js';
 import { useParams } from 'react-router-dom';
 import ReviewHader from './ReviewHeader.jsx';
 import { basicAxios, authAxios } from '../../../axios/instance.js';
-import { ReFetchContext } from './ReviewContext.js';
+import { ReFetchContext } from './contextAPI/ReviewContext.js';
 import getUserInfo from '../../../function/getUserInfo.js';
 export default function ReviewContainer() {
   //영화 아이디 가져오기

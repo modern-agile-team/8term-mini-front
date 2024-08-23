@@ -9,13 +9,8 @@ export default function MovieSortBar({ setMovieData }) {
     { key: 'popularity', label: '인기순' },
     { key: 'title', label: '제목순' },
   ];
-  const [checked, setChecked] = useState({ 0: 0, 1: 0, 2: 0, 3: 0 });
-  function sortChecked(id) {
-    setChecked(prev => ({
-      ...{ 0: 0, 1: 0, 2: 0, 3: 0 },
-      [id]: prev[id] === 0 ? 30 : 0,
-    }));
-  }
+  const [selectIdx, setSelectIdx] = useState(3);
+
   const [userId] = getUserInfo();
   function sortQuery(sort) {
     if (sort === 'wishList') {
@@ -37,9 +32,9 @@ export default function MovieSortBar({ setMovieData }) {
               id={val.key}
               onClick={e => {
                 sortQuery(e.target.id);
-                sortChecked(idx);
+                setSelectIdx(idx);
               }}
-              $translate={checked[idx]}
+              $translate={selectIdx === idx ? '30' : '0'}
             >
               {val.label}
             </S.SortListDiv>

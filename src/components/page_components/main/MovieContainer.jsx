@@ -7,26 +7,31 @@ import getUserInfo from '../../../function/getUserInfo.js';
 import MovieSortBar from './MovieSortBar.jsx';
 export default function MovieContainer() {
   //임시 로그인
-  localStorage.setItem('token', 'sadasdjkfhsadkjfhasieulf');
-  localStorage.setItem(
-    'user',
-    JSON.stringify({ user_id: 1, id: 'dg1418', nickName: '관리자' })
-  );
+  // localStorage.setItem('token', 'sadasdjkfhsadkjfhasieulf');
+  // localStorage.setItem(
+  //   'user',
+  //   JSON.stringify({ user_id: 1, id: 'dg1418', nickName: '관리자' })
+  // );
   const [userId] = getUserInfo();
   const [movieData, setMovieData] = useState([]);
   const [wishList, setWishList] = useState();
 
   useEffect(() => {
-    basicAxios.get('/movies').then(data => {
-      setMovieData(data);
-    });
+    basicAxios
+      .get('/movies')
+      .then(data => {
+        setMovieData(data);
+      })
+      .catch(err => {
+        console.error(err);
+      });
     authAxios
       .get(`/users/${userId}/wish-lists`)
       .then(data => {
         setWishList(data);
       })
       .catch(err => {
-        console.error(err.name, err.message);
+        console.error(err);
       });
   }, []);
 

@@ -5,7 +5,7 @@ import { authAxios } from '../../../axios/instance';
 import { warningAlert } from '../../public_components/Alert';
 import { useState } from 'react';
 import getUserInfo from '../../../function/getUserInfo';
-import { ReFetchContext } from './ReviewContext';
+import { ReFetchContext } from './contextAPI/ReviewContext';
 export default function ReviewModal({
   toggleReviewModal,
   textValue,

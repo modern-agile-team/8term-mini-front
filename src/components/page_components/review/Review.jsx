@@ -1,11 +1,11 @@
 import { authAxios } from '../../../axios/instance.js';
-import ReviewDetailModal from './ReviewDetailModal.jsx';
+import CommentModal from './comment/CommentModal.jsx';
 import * as S from './ReviewStyled.js';
 import { useContext } from 'react';
 import useToggle from '../../../hooks/useToggle.js';
 import ReviewModal from './ReviewModal.jsx';
 import getUserInfo from '../../../function/getUserInfo.js';
-import { ReFetchContext } from './ReviewContext.js';
+import { ReFetchContext } from './contextAPI/ReviewContext.js';
 import { confirmDeleteAlert } from '../../public_components/Alert.jsx';
 
 export default function Review({ reviewData, isLiked }) {
@@ -37,6 +37,7 @@ export default function Review({ reviewData, isLiked }) {
           setReRequest(new Date());
         });
     } else {
+      console.log(isLiked.reviewLikeId);
       authAxios
         .delete(
           `/users/my/review-likes/?userId=${userId}&reviewId=${reviewData.reviewId}`
@@ -98,12 +99,12 @@ export default function Review({ reviewData, isLiked }) {
         </S.ReviewColumnDiv>
         {/*리뷰 자세히보기 모달창 띄우는 로직*/}
         {reviewModal && (
-          <ReviewDetailModal
+          <CommentModal
             toggleModal={setReviewModal}
             reviewData={reviewData}
             isLiked={isLiked}
             reviewLike={reviewLike}
-          ></ReviewDetailModal>
+          ></CommentModal>
         )}
         {/*수정버튼 눌렀을때 모달창 띄우는 로직 */}
         {editModal && (
