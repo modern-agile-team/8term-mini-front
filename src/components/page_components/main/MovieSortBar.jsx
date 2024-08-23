@@ -1,6 +1,7 @@
 import * as S from './MainStyled';
 import { basicAxios, authAxios } from '../../../axios/instance.js';
 import { useState } from 'react';
+import getUserInfo from '../../../function/getUserInfo.js';
 export default function MovieSortBar({ setMovieData }) {
   const sortList = [
     { key: 'wishList', label: '찜한 영화' },
@@ -15,10 +16,12 @@ export default function MovieSortBar({ setMovieData }) {
       [id]: prev[id] === 0 ? 30 : 0,
     }));
   }
+  const [userId] = getUserInfo();
   function sortQuery(sort) {
     if (sort === 'wishList') {
-      console.log('찜한영화보기');
-      return;
+      authAxios.get(`/users/${userId}/wish-lists/movies`).then(res => {
+        setMovieData(res);
+      });
     }
     basicAxios.get(`/movies/?sort=${sort}`).then(data => {
       setMovieData(data);
