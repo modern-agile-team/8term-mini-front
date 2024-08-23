@@ -3,13 +3,11 @@ import * as S from './MainStyled';
 import { useNavigate } from 'react-router-dom';
 export default function MovieItem(props) {
   const navigate = useNavigate();
-  const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500/';
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
-
   return (
     <>
       <S.MovieItemDiv>
-        <S.ItemImg src={IMG_BASE_URL + props.imgSrc}></S.ItemImg>
+        <S.ItemImg src={baseUrl + props.imgSrc}></S.ItemImg>
         <S.HoverItemDiv
           onClick={() => {
             navigate(`/intro/${props.id}`, {
@@ -26,6 +24,7 @@ export default function MovieItem(props) {
             <FavoriteButton
               likeData={props.likeData}
               movieName={props.movieName}
+              movieId={props.id}
             ></FavoriteButton>
           </S.ItemColumnDiv>
           <S.ItemColumnDiv>

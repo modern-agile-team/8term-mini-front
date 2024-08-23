@@ -1,19 +1,23 @@
 import * as S from './MainStyled';
 import { basicAxios } from '../../../axios/instance';
 import { useRef, useState } from 'react';
+import { warningAlert } from '../../public_components/Alert';
 export default function SearchBar({ setMovieData }) {
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   const textRef = useRef();
   const [prevInputData, setPrevInputData] = useState();
   function getSearchData() {
     if (prevInputData !== textRef.current.value) {
-      basicAxios
-        .get(`movies/search/?title=${textRef.current.value}`)
-        .then(data => {
-          if (data.length >= 1) {
-            setMovieData(data);
-          }
-        });
+      basicAxios.get(`/movies?title=${textRef.current.value}`).then(data => {
+        console.log(data.length);
+        if (data.length < 1) {
+          warningAlert();
+          return;
+        }
+        if (data.length >= 1) {
+          setMovieData(data);
+        }
+      });
       setPrevInputData(textRef.current.value);
       window.scrollTo(0, 900);
     }

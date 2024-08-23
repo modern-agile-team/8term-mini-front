@@ -2,16 +2,12 @@ import { authAxios } from '../../../axios/instance';
 import * as S from './MainStyled';
 import { useState } from 'react';
 import { confirmWishListAlert } from '../../public_components/Alert';
-export default function FavoriteButton({ likeData, movieName }) {
+import getUserInfo from '../../../function/getUserInfo';
+export default function FavoriteButton({ likeData, movieName, movieId }) {
   //true면 찜상태 false면 안좋아요상태
   const [isLiked, setisLiked] = useState(likeData || false);
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
-  const movieId = likeData ? likeData.movie_id : '';
-  const likeId = likeData ? likeData.wish_list_id : '';
-  const userId = localStorage.getItem('user')
-    ? JSON.parse(localStorage.getItem('user')).user_id
-    : null;
-
+  const [userId] = getUserInfo();
   async function toggleLiked() {
     //찜상태가 아닐때 좋아요 요청 보내기
     if (!isLiked) {
@@ -19,9 +15,9 @@ export default function FavoriteButton({ likeData, movieName }) {
         if (res.isConfirmed) {
           authAxios
             .post(`users/${userId}/wish-lists`, {
-              movie_id: movieId,
+              movieId: movieId,
             })
-            .then(() => {
+            .then(res => {
               setisLiked(!isLiked);
             })
             .catch(err => {
@@ -33,9 +29,19 @@ export default function FavoriteButton({ likeData, movieName }) {
     }
     //특정 찜 삭제하기
     confirmWishListAlert(movieName, isLiked).then(res => {
+      //찜 삭제 확인 버튼을 눌렀을때 실행
       if (res.isConfirmed) {
-        authAxios.delete(`/users/my/wish-lists/${likeId}`);
-        setisLiked(!isLiked);
+        //wishlist데이터를 받아옴
+        authAxios.get(`/users/${userId}/wish-lists`).then(res => {
+          //filet로 이 유저가 누른 영화의 wishlist ID를 구함
+          const wishListId = res.filter(
+            val => val.userId === userId && val.movieId === movieId
+          )[0].wishListId;
+          // 그 아이디로 삭제요청을 보냄
+          authAxios.delete(`/users/my/wish-lists/${wishListId}`).then(() => {
+            setisLiked(!isLiked);
+          });
+        });
       }
     });
   }

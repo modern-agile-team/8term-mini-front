@@ -1,31 +1,37 @@
 import { authAxios } from '../../../axios/instance';
+import getUserInfo from '../../../function/getUserInfo';
 import * as S from './ReviewStyled';
-
-export default function Comment({ comment, setReRequest }) {
+import { confirmDeleteAlert } from '../../public_components/Alert';
+export default function Comment({ commentData, setcommentRerequest }) {
+  console.log(commentData);
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
-  const userId = JSON.parse(localStorage.getItem('user')).user_id || undefined;
+  const [userId] = getUserInfo();
   function deleteComment() {
-    authAxios
-      .delete(`/users/my/comments/${comment.comment_id}`)
-      .then(() => setReRequest(new Date()));
+    confirmDeleteAlert('댓글을 삭제하시겠습니까?').then(confirm => {
+      if (confirm.isConfirmed) {
+        authAxios
+          .delete(`/users/my/comments/${commentData.commentId}`)
+          .then(() => setcommentRerequest(new Date()));
+      }
+    });
   }
   return (
     <>
       <S.ReviewColumnDiv>
         <S.ReviewRowDiv $fontSize="16px" $marginRight="7px">
-          {comment.nickName}
+          {commentData.nickname}
         </S.ReviewRowDiv>
         <S.ReviewRowDiv $color="#8D8D8D" $fontWeight="400" $marginRight="100px">
-          ({comment.id}*****)
+          ({commentData.id.slice(0, 3)}*****)
         </S.ReviewRowDiv>
         <S.ReviewRowDiv
           $aliginSelf="center"
           $marginRight="auto"
           $fontWeight="400"
         >
-          {comment.text}
+          {commentData.text}
         </S.ReviewRowDiv>
-        {comment.user_id === userId && (
+        {commentData.user_id === userId && (
           <S.DeleteImg
             src={`${baseUrl}delete.png`}
             $marginRight="25px"
@@ -34,7 +40,7 @@ export default function Comment({ comment, setReRequest }) {
         )}
 
         <S.ReviewRowDiv $color="#8D8D8D" $fontWeight="400" $fontSize="10px">
-          ({comment.date})
+          ({commentData.date.slice(0, 10)})
         </S.ReviewRowDiv>
       </S.ReviewColumnDiv>
       <S.Hr $bgColor="#000" $margin="15px 0px 10px 0px" $width="100%"></S.Hr>

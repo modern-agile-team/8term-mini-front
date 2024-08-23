@@ -93,6 +93,7 @@ export const ModalContainer = styled.div`
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
 `;
 export const ModalContent = styled.div`
   cursor: default;
