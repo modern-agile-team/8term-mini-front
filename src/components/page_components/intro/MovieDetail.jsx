@@ -10,8 +10,7 @@ export default function MovieDetail() {
 
   useEffect(() => {
     basicAxios.get(`/movies/${id}`).then(data => {
-      console.log(data);
-      setMovie(data);
+      setMovie(data[0]);
     });
   }, []);
 

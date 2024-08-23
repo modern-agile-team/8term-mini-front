@@ -6,7 +6,7 @@ import {
   errorAlert,
 } from '../../public_components/Alert.jsx';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import axios from 'axios';
+import { basicAxios } from '../../../axios/instance.js';
 
 export default function RegisterForm() {
   const [nickname, setNickname] = useState('');
@@ -95,31 +95,33 @@ export default function RegisterForm() {
   }
 
   function handleRegister() {
-  if (validateField()) {
-    axios
-      .post('/users', {
-        nickname: nickname,
-        id: id,
-        password: password,
-        confirmPassword: confirmPassword,
-      })
-      .then(response => {
-        console.log('User profile', response.data.user);
-        console.log('User registration :', response.data.message);
-        registerSuccessAlert();
-        navigate('/login');
-      })
-      .catch(error => {
-        console.log('An error occurred:', error);
-        errorAlert('회원가입 실패', '서버 오류가 발생했습니다. 다시 시도해주세요.');
-      });
+    if (validateField()) {
+      basicAxios
+        .post('/users', {
+          nickname: nickname,
+          id: id,
+          password: password,
+          confirmPassword: confirmPassword,
+        })
+        .then(response => {
+          console.log('User profile', response.user);
+          console.log('User registration :', response.message);
+          registerSuccessAlert();
+          navigate('/login');
+        })
+        .catch(error => {
+          console.log('An error occurred:', error);
+          errorAlert(
+            '회원가입 실패',
+            '서버 오류가 발생했습니다. 다시 시도해주세요.'
+          );
+        });
+    }
   }
-}
-
 
   function handleCheckId() {
     if (regex_id.test(id)) {
-      axios
+      basicAxios
         .get(`/users/check-id?id=${id}`)
         .then(response => {
           setIsIdChecked(true);
@@ -163,7 +165,7 @@ export default function RegisterForm() {
         ) : (
           <S.ErrorText>{error.nickname}</S.ErrorText>
         ))}
-  
+
       <S.IdContainerDiv>
         <S.InputDiv
           type="text"
@@ -185,7 +187,7 @@ export default function RegisterForm() {
         ) : (
           <S.ErrorText>{error.id}</S.ErrorText>
         ))}
-  
+
       <S.PasswordContainerDiv>
         <S.InputDiv
           type={showPassword ? 'text' : 'password'}
@@ -204,7 +206,7 @@ export default function RegisterForm() {
         ) : (
           <S.ErrorText>{error.password}</S.ErrorText>
         ))}
-  
+
       <S.PasswordContainerDiv>
         <S.InputDiv
           type={showConfirmPassword ? 'text' : 'password'}
@@ -213,7 +215,9 @@ export default function RegisterForm() {
           maxLength={16}
           onChange={e => setConfirmPassword(e.target.value)}
         />
-        <S.ToggleIconDiv onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+        <S.ToggleIconDiv
+          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+        >
           {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
         </S.ToggleIconDiv>
       </S.PasswordContainerDiv>
@@ -223,7 +227,7 @@ export default function RegisterForm() {
         ) : (
           <S.ErrorText>{error.confirmPassword}</S.ErrorText>
         ))}
-  
+
       <S.RegisterButton onClick={handleRegister}>회원가입</S.RegisterButton>
     </S.LootDiv>
   );
