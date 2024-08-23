@@ -29,8 +29,8 @@ export const TextWrapperDiv = styled.div`
   width: 100%;
 `;
 
-/**Dummy image */
-export const DummyPhotoImg = styled.img`
+/**영화 image */
+export const MovieImg = styled.img`
   width: 430px;
   height: 250px;
   overflow: hidden;

@@ -10,7 +10,12 @@ export default function MovieContainer() {
   localStorage.setItem('token', 'sadasdjkfhsadkjfhasieulf');
   localStorage.setItem(
     'user',
-    JSON.stringify({ user_id: 1, id: 'dg1418', nickName: '관리자' })
+    JSON.stringify({
+      user_id: 1,
+      id: 'dg1418',
+      nickName: '관리자',
+      profile: 'profileimg1.png',
+    })
   );
   const [userId] = getUserInfo();
   const [movieData, setMovieData] = useState([]);

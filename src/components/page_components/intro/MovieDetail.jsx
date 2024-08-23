@@ -9,8 +9,11 @@ export default function MovieDetail() {
   const [movie, setMovie] = useState();
 
   useEffect(() => {
-    basicAxios.get(`/movies/${id}`).then(data => setMovie(data));
-  }, [id]);
+    basicAxios.get(`/movies/${id}`).then(data => {
+      console.log(data);
+      setMovie(data);
+    });
+  }, []);
 
   if (!movie) return <div>Loading...</div>;
 
