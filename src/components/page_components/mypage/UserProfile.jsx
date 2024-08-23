@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import * as S from './MyPageStyled';
 import UserModal from './UserModal';
-import { validation } from '../../../function/validation';
+import { userValidation } from '../../../function/userValidation';
 import { authAxios } from '../../../axios/instance';
 import { Navigate } from 'react-router-dom';
-import { successAlert, errorAlert } from '../../public_components/Alert';
+import { successAlert } from '../../public_components/Alert';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export default function UserProfile() {
@@ -58,26 +58,9 @@ export default function UserProfile() {
 
   // '완료' 버튼을 클릭 시 유저 정보 업데이트
   function handleCompleteClick() {
-    const validationErrors = validation(userData, passwordConfirm);
+    const isValid = userValidation(userData, passwordConfirm);
 
-    if (!userData.nickname || !userData.password || !passwordConfirm) {
-      errorAlert('수정 실패', '모든 필드를 입력해주세요.');
-      return;
-    }
-
-    if (validationErrors.nickname) {
-      errorAlert('수정 실패', validationErrors.nickname);
-    }
-
-    if (validationErrors.password) {
-      errorAlert('수정 실패', validationErrors.password);
-    }
-
-    if (validationErrors.passwordConfirm) {
-      errorAlert('수정 실패', validationErrors.passwordConfirm);
-    }
-
-    if (Object.keys(validationErrors).length > 0) {
+    if (!isValid) {
       return;
     }
 

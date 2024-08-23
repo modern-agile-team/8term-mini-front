@@ -14,7 +14,7 @@ export default function IntroForm({ movie }) {
     runningTime,
     overview,
     releaseDate,
-  } = movie[0];
+  } = movie;
 
   const adultText = adult === 1 ? '청소년관람불가' : '전체관람가';
 
