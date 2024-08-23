@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as S from './MyPageStyled';
 import UserModal from './UserModal';
-import { validation } from '../../../function/validation';
+import { userValidation } from '../../../function/userValidation';
 import { authAxios } from '../../../axios/instance';
 import { Navigate } from 'react-router-dom';
 import { successAlert } from '../../public_components/Alert';
@@ -58,7 +58,7 @@ export default function UserProfile() {
 
   // '완료' 버튼을 클릭 시 유저 정보 업데이트
   function handleCompleteClick() {
-    const isValid = validation(userData, passwordConfirm);
+    const isValid = userValidation(userData, passwordConfirm);
 
     if (!isValid) {
       return;

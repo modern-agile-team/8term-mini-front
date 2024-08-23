@@ -1,12 +1,19 @@
 import * as S from './RegisterStyled.js';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { basicAxios } from '../../../axios/instance.js';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import {
+  validateNickname,
+  validateId,
+  validatePassword,
+  validateConfirmPassword,
+  validateField,
+} from '../../../function/registerValidation.js';
 import {
   registerSuccessAlert,
   errorAlert,
 } from '../../public_components/Alert.jsx';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { basicAxios } from '../../../axios/instance.js';
 
 export default function RegisterForm() {
   const [nickname, setNickname] = useState('');
@@ -19,83 +26,41 @@ export default function RegisterForm() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
-  const regex_nickname = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
-  const regex_id = /^(?=.*[a-z0-9])[a-z0-9]{6,16}$/;
-  const regex_password =
-    /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/;
-
   useEffect(() => {
     const newError = {};
 
-    if (nickname && !regex_nickname.test(nickname)) {
-      newError.nickname =
-        '닉네임은 2자 이상 10자 이하, 영어 또는 숫자 또는 한글로 구성되어 있어야 합니다. (초성 금지)';
-    } else if (nickname) {
-      newError.nickname = '사용 가능한 닉네임입니다.';
-    }
+    // 닉네임 실시간 유효성 검사
+    const nicknameError = validateNickname(nickname);
+    if (nicknameError) newError.nickname = nicknameError;
 
-    if (id && !regex_id.test(id)) {
-      newError.id =
-        '아이디는 6자 이상 16자 이하, 영어 또는 숫자로 구성되어 있어야 합니다.';
-    } else if (id && !isIdChecked) {
-      newError.id = '조건을 충족하는 아이디 입니다. 중복을 확인해주세요.';
-    }
+    // ID 실시간 유효성 검사
+    const idError = validateId(id, isIdChecked);
+    if (idError) newError.id = idError;
 
-    if (password && !regex_password.test(password)) {
-      newError.password =
-        '비밀번호는 6자 이상 16자 이하, 영어와 숫자의 조합으로 구성되어 있어야 합니다.';
-    } else if (password) {
-      newError.password = '사용 가능한 비밀번호입니다.';
-    }
+    // 비밀번호 실시간 유효성 검사
+    const passwordError = validatePassword(password);
+    if (passwordError) newError.password = passwordError;
 
-    if (confirmPassword && password !== confirmPassword) {
-      newError.confirmPassword =
-        '비밀번호와 비밀번호 확인이 일치하지 않습니다.';
-    } else if (confirmPassword && password === confirmPassword) {
-      newError.confirmPassword = '비밀번호가 일치합니다.';
-    }
+    // 비밀번호 확인 실시간 유효성 검사
+    const confirmPasswordError = validateConfirmPassword(
+      password,
+      confirmPassword
+    );
+    if (confirmPasswordError) newError.confirmPassword = confirmPasswordError;
 
     setError(newError);
   }, [nickname, id, password, confirmPassword, isIdChecked]);
 
-  function validateField() {
-    const newError = {};
-
-    if (!regex_nickname.test(nickname)) {
-      newError.nickname =
-        '닉네임은 2자 이상 10자 이하, 영어 또는 숫자 또는 한글로 구성되어 있어야 합니다. (초성 금지)';
-    }
-
-    if (!regex_id.test(id)) {
-      newError.id =
-        '아이디는 6자 이상 16자 이하, 영어 또는 숫자로 구성되어 있어야 합니다.';
-    }
-
-    if (!isIdChecked) {
-      newError.id = '아이디 중복 확인을 해주세요.';
-    }
-
-    if (!regex_password.test(password)) {
-      newError.password =
-        '비밀번호는 6자 이상 16자 이하, 영어와 숫자의 조합으로 구성되어 있어야 합니다.';
-    }
-
-    if (password !== confirmPassword) {
-      newError.confirmPassword =
-        '비밀번호와 비밀번호 확인이 일치하지 않습니다.';
-    }
-
-    if (!nickname || !id || !password || !confirmPassword) {
-      errorAlert('회원가입 실패', '모든 필드를 입력해주세요.');
-    }
-
-    setError(newError);
-
-    return Object.keys(newError).length === 0;
-  }
-
   function handleRegister() {
-    if (validateField()) {
+    const validationErrors = validateField(
+      nickname,
+      id,
+      password,
+      confirmPassword,
+      isIdChecked
+    );
+
+    if (Object.keys(validationErrors).length === 0) {
       basicAxios
         .post('/users', {
           nickname: nickname,
@@ -116,11 +81,14 @@ export default function RegisterForm() {
             '서버 오류가 발생했습니다. 다시 시도해주세요.'
           );
         });
+    } else {
+      setError(validationErrors);
+      errorAlert('회원가입 실패', '모든 필드를 올바르게 입력해주세요.');
     }
   }
 
   function handleCheckId() {
-    if (regex_id.test(id)) {
+    if (validateId(id, false) === '') {
       basicAxios
         .get(`/users/check-id?id=${id}`)
         .then(response => {
@@ -144,9 +112,7 @@ export default function RegisterForm() {
 
   function handleKeyPress(e) {
     if (e.key === 'Enter') {
-      if (validateField()) {
-        handleRegister();
-      }
+      handleRegister();
     }
   }
 
