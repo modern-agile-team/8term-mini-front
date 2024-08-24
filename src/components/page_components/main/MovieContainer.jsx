@@ -18,18 +18,22 @@ export default function MovieContainer() {
     })
   );
   const [userId] = getUserInfo();
-  const [movieData, setMovieData] = useState([]);
+  const [movies, setMovies] = useState([]);
   const [wishList, setWishList] = useState();
-
+  const [reRequest, setReRequest] = useState();
+  //영화 데이터 불러오기
   useEffect(() => {
     basicAxios
       .get('/movies')
       .then(data => {
-        setMovieData(data);
+        setMovies(data);
       })
       .catch(err => {
         console.error(err);
       });
+  }, []);
+  //찜 목록 불러오기
+  useEffect(() => {
     authAxios
       .get(`/users/${userId}/wish-lists`)
       .then(data => {
@@ -38,33 +42,31 @@ export default function MovieContainer() {
       .catch(err => {
         console.error(err);
       });
-  }, []);
+  }, [reRequest]);
 
-  if (!movieData) return <div>Loading...</div>;
   return (
-    <>
-      {/*검색창 */}
-      <SearchBar setMovieData={setMovieData}></SearchBar>
-      {/*영화 정렬 리스트*/}
-      <MovieSortBar setMovieData={setMovieData}></MovieSortBar>
-      {/* 영화 리스트 반복*/}
-      <S.MovieContainerDiv>
-        {movieData.map(val => {
-          return (
-            <MovieItem
-              key={val.movieId}
-              id={val.movieId}
-              movieName={val.title}
-              release={val.releaseDate.slice(0, 4)}
-              imgSrc={val.posterPath}
-              originalTitle={val.originalTitle}
-              likeData={
-                wishList && wishList.find(ele => ele.movieId === val.movieId)
-              }
-            ></MovieItem>
-          );
-        })}
-      </S.MovieContainerDiv>
-    </>
+    movies && (
+      <>
+        {/*검색창 */}
+        <SearchBar setMovies={setMovies}></SearchBar>
+        {/*영화 정렬 리스트*/}
+        <MovieSortBar setMovies={setMovies}></MovieSortBar>
+        {/* 영화 리스트 반복*/}
+        <S.MovieContainerDiv>
+          {movies.map(val => {
+            return (
+              <MovieItem
+                key={val.movieId}
+                movieData={val}
+                wishData={
+                  wishList && wishList.find(ele => ele.movieId === val.movieId)
+                }
+                setReRequest={setReRequest}
+              ></MovieItem>
+            );
+          })}
+        </S.MovieContainerDiv>
+      </>
+    )
   );
 }

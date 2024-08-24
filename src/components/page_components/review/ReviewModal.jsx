@@ -23,10 +23,17 @@ export default function ReviewModal({
   function charCount(e) {
     setTextLength(e.target.value.length);
   }
+  function handleKeyDown(e) {
+    if (e.key === 'Escape') {
+      toggleReviewModal();
+    }
+  }
   useEffect(() => {
     document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
     return () => {
       document.body.style.overflow = 'auto';
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
   //add모드일때 쓰는 함수

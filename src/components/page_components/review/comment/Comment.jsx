@@ -3,7 +3,6 @@ import getUserInfo from '../../../../function/getUserInfo';
 import * as S from '../ReviewStyled';
 import { confirmDeleteAlert } from '../../../public_components/Alert';
 export default function Comment({ commentData, setcommentRerequest }) {
-  console.log(commentData);
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   const [userId, userStrId] = getUserInfo();
   function deleteComment() {

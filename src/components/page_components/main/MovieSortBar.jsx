@@ -2,24 +2,27 @@ import * as S from './MainStyled';
 import { basicAxios, authAxios } from '../../../axios/instance.js';
 import { useState } from 'react';
 import getUserInfo from '../../../function/getUserInfo.js';
-export default function MovieSortBar({ setMovieData }) {
+export default function MovieSortBar({ setMovies }) {
   const sortList = [
     { key: 'wishList', label: '찜한 영화' },
     { key: 'release', label: '개봉순' },
     { key: 'popularity', label: '인기순' },
     { key: 'title', label: '제목순' },
   ];
-  const [selectIdx, setSelectIdx] = useState(3);
+  const [selectIdx, setSelectIdx] = useState();
 
   const [userId] = getUserInfo();
   function sortQuery(sort) {
     if (sort === 'wishList') {
-      authAxios.get(`/users/${userId}/wish-lists/movies`).then(res => {
-        setMovieData(res);
+      authAxios.get(`/users/${userId}/wish-lists/movies`).then(data => {
+        console.log(data);
+        setMovies(data);
       });
+      return;
     }
     basicAxios.get(`/movies/?sort=${sort}`).then(data => {
-      setMovieData(data);
+      console.log(data);
+      setMovies(data);
     });
   }
   return (
