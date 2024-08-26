@@ -10,20 +10,23 @@ export default function MovieSortBar({ setMovies }) {
     { key: 'title', label: '제목순' },
   ];
   const [selectIdx, setSelectIdx] = useState();
-
+  const [prevSort, setPrevSort] = useState('title');
   const [userId] = getUserInfo();
   function sortQuery(sort) {
-    if (sort === 'wishList') {
-      authAxios.get(`/users/${userId}/wish-lists/movies`).then(data => {
-        console.log(data);
+    //전 정렬과 다를때 실행
+    if (sort !== prevSort) {
+      if (sort === 'wishList') {
+        authAxios.get(`/users/${userId}/wish-lists/movies`).then(data => {
+          setMovies(data);
+          setPrevSort(sort);
+        });
+        return;
+      }
+      basicAxios.get(`/movies/?sort=${sort}`).then(data => {
+        setPrevSort(sort);
         setMovies(data);
       });
-      return;
     }
-    basicAxios.get(`/movies/?sort=${sort}`).then(data => {
-      console.log(data);
-      setMovies(data);
-    });
   }
   return (
     <>
