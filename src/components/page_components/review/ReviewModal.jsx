@@ -6,6 +6,8 @@ import { warningAlert } from '../../public_components/Alert';
 import { useState } from 'react';
 import getUserInfo from '../../../function/getUserInfo';
 import { ReFetchContext } from './contextAPI/ReviewContext';
+import textValidation from '../../../function/textValidation';
+
 export default function ReviewModal({
   toggleReviewModal,
   textValue,
@@ -21,18 +23,22 @@ export default function ReviewModal({
   function charCount(e) {
     setTextLength(e.target.value.length);
   }
+  function handleKeyDown(e) {
+    if (e.key === 'Escape') {
+      toggleReviewModal();
+    }
+  }
   useEffect(() => {
     document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
     return () => {
       document.body.style.overflow = 'auto';
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
   //add모드일때 쓰는 함수
   function AddReview() {
-    if (!textRef.current.value) {
-      warningAlert('입력값 없음', '텍스트를 입력해주세요');
-      return;
-    }
+    textValidation(textRef.current.value, 255);
     authAxios
       .post(`/movies/${id}/reviews`, {
         userId: userId,
@@ -41,14 +47,12 @@ export default function ReviewModal({
       .then(() => {
         setReRequest(new Date());
         toggleReviewModal();
-      });
+      })
+      .catch(err => console.error(err));
   }
   //edit모드일때 쓰는 함수
   function editReview() {
-    if (!textRef.current.value) {
-      warningAlert('입력값 없음', '텍스트를 입력해주세요');
-      return;
-    }
+    textValidation(textRef.current.value, 255);
     authAxios
       .patch(`/users/my/reviews/${reviewId}`, {
         text: textRef.current.value,

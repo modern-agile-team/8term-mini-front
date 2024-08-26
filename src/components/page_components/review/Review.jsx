@@ -93,6 +93,7 @@ export default function Review({ reviewData, isLiked }) {
         >
           <S.ReviewRowDiv
             $fontSize={reviewData.text.length >= 150 ? '15px' : '20px'}
+            $cursor="pointer"
           >
             {reviewData.text}
           </S.ReviewRowDiv>
@@ -133,11 +134,14 @@ export default function Review({ reviewData, isLiked }) {
           <S.ReviewRowDiv $marginRight="20px">
             <div>{reviewData.likeCount}</div>
           </S.ReviewRowDiv>
-          <S.ReviewRowDiv $marginRight="20px">
-            <div>댓글</div>
-          </S.ReviewRowDiv>
-          <S.ReviewRowDiv>
-            <div>{reviewData.commentCount}</div>
+          <S.ReviewRowDiv
+            $marginRight="20px"
+            $cursor="pointer"
+            onClick={setReviewModal}
+          >
+            <div>댓글 </div>
+            &nbsp; &nbsp;
+            <div> {reviewData.commentCount}</div>
           </S.ReviewRowDiv>
         </S.ReviewColumnDiv>
       </S.ReviewDiv>

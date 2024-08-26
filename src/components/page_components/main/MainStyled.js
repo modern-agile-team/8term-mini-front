@@ -57,6 +57,9 @@ export const MovieContainerDiv = styled.div`
   grid-column-gap: 15px;
   grid-row-gap: 140px;
   padding-top: 0px;
+  @media (max-width: 1800px) {
+    grid-auto-rows: 600px;
+  }
 `;
 /*MovieItem 스타일 컴포넌트 */
 export const ItemImg = styled.img`

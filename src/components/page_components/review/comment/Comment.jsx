@@ -3,7 +3,6 @@ import getUserInfo from '../../../../function/getUserInfo';
 import * as S from '../ReviewStyled';
 import { confirmDeleteAlert } from '../../../public_components/Alert';
 export default function Comment({ commentData, setcommentRerequest }) {
-  console.log(commentData);
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   const [userId, userStrId] = getUserInfo();
   function deleteComment() {
@@ -28,6 +27,7 @@ export default function Comment({ commentData, setcommentRerequest }) {
           $aliginSelf="center"
           $marginRight="auto"
           $fontWeight="400"
+          $width="width:60%;"
         >
           {commentData.text}
         </S.ReviewRowDiv>

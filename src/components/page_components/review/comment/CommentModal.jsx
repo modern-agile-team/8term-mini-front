@@ -18,8 +18,14 @@ export default function CommentModal({
   const { setReRequest } = useContext(ReFetchContext);
   const [commentRerequest, setcommentRerequest] = useState(0);
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
+  function handleKeyDown(e) {
+    if (e.key === 'Escape') {
+      toggleModal();
+    }
+  }
   useEffect(() => {
     document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
     basicAxios
       .get(`/reviews/${reviewData.reviewId}/comments?page=${page}`)
       .then(data => {
@@ -29,6 +35,7 @@ export default function CommentModal({
     return () => {
       setReRequest(new Date());
       document.body.style.overflow = 'auto';
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, [commentRerequest, page]);
 
