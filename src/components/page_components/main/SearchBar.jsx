@@ -31,11 +31,9 @@ export default function SearchBar({ setMovies }) {
             getSearchData();
           }
         }}
-      ></S.SearchBarInput>
-      <S.SearchBarImg
-        src={`${baseUrl}search.png`}
-        onClick={getSearchData}
-      ></S.SearchBarImg>
+        list="movieName"
+      />
+      <S.SearchBarImg src={`${baseUrl}search.png`} onClick={getSearchData} />
     </S.SearchBarDiv>
   );
 }

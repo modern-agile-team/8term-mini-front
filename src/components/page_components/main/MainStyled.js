@@ -152,10 +152,10 @@ export const SortListDiv = styled.div`
   line-height: normal;
   text-transform: uppercase;
   transform: translateY(-${props => props.$translate}px);
-  transition: all 500ms ease-in;
+  transition: all 250ms ease-in;
   &:hover {
     transform: translateY(-30px);
-    transition: all 500ms ease-in;
+    transition: all 250ms ease-in;
   }
 `;
 /*검색박스 컴포넌트 */
