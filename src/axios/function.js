@@ -37,7 +37,7 @@ export function authReqHandler(config) {
 //response값 핸들러
 export function publicResHandler(res) {
   HTTP_STATUS[res.status]();
-  return res.data;
+  return res;
 }
 export function publicReqErrorHandler(err) {
   console.error('요청 에러:', err);

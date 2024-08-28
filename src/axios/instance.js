@@ -22,6 +22,9 @@ authAxios.interceptors.request.use(authReqHandler, publicReqErrorHandler);
 authAxios.interceptors.response.use(publicResHandler, resErrorHandler);
 
 //basicAxios 요청,응답 인터셉터
+basicAxios.interceptors.request.use(co => {
+  return co;
+});
 basicAxios.interceptors.response.use(publicResHandler, resErrorHandler);
 
 export { basicAxios, authAxios };

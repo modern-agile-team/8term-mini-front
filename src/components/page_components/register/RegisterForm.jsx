@@ -88,7 +88,8 @@ export default function RegisterForm() {
   }
 
   function handleCheckId() {
-    if (validateId(id, false) === '') {
+    const idError = validateId(id, false);
+    if (idError === '') {
       basicAxios
         .get(`/users/check-id?id=${id}`)
         .then(response => {
@@ -106,7 +107,7 @@ export default function RegisterForm() {
           setIsIdChecked(false);
         });
     } else {
-      setError({ ...error, id: '사용할 수 없는 아이디입니다.' });
+      setError({ ...error, id: idError });
     }
   }
 
