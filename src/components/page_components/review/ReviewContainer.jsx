@@ -29,7 +29,7 @@ export default function ReviewContainer() {
       //데이터 총 수
       setTotalItems(data.totalCount);
       //리뷰데이터
-      setReviews(data.reveiws);
+      setReviews(data.reviews);
     });
     //로그인되어있으면 좋아요한 리뷰 가져옴 토큰없으면 에러발생
     authAxios
@@ -38,7 +38,7 @@ export default function ReviewContainer() {
         //유저가 어디에 좋아요 했는지
         setReviewLikeList(data);
       })
-      .catch(err => console.error(err.name, err.message));
+      .catch(err => console.error(err));
     //재요청 발생이나 페이지가 바뀌면 해당되는것들 다시 받아옴
   }, [reRequest, page]);
   return (
