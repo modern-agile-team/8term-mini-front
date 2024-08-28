@@ -4,8 +4,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import {
   loginSuccessAlert,
   errorAlert,
+  warningAlert,
 } from '../../public_components/Alert.jsx';
 import { basicAxios } from '../../../axios/instance.js';
+import { parseJwt } from '../../../function/parseJwt.js';
 
 /**@로그인폼 */
 export default function LoginForm() {
@@ -41,10 +43,14 @@ export default function LoginForm() {
         .post('/users/login', { id: id, password: password })
         .then(response => {
           console.log(response);
-          console.log('User profile', response.data.user);
-          console.log('User token', response.data.jwt);
-          localStorage.setItem('token', response.data.jwt);
-          localStorage.setItem('user', JSON.stringify(response.data.user));
+          // console.log('User profile', response.data.user);
+          console.log('User token', response.data.token);
+          localStorage.setItem('token', response.data.token);
+          console.log(parseJwt(response.data.token));
+          localStorage.setItem(
+            'user',
+            JSON.stringify(parseJwt(response.data.token))
+          );
           loginSuccessAlert.fire({
             icon: 'success',
             title: '로그인 성공!',
@@ -60,18 +66,19 @@ export default function LoginForm() {
           }
         })
         .catch(error => {
-          if (error.response && error.response.status === 401) {
-            setError({
-              ...error,
-              password: '아이디 또는 비밀번호가 잘못되었습니다.',
-            });
-          } else {
-            console.log('An error occurred:', error);
-            errorAlert(
-              '로그인 실패',
-              '서버 오류가 발생했습니다. 다시 시도해주세요.'
-            );
-          }
+          warningAlert(error);
+          // if (error.response && error.response.status === 401) {
+          //   setError({
+          //     ...error,
+          //     password: '아이디 또는 비밀번호가 잘못되었습니다.',
+          //   });
+          // } else {
+          //   console.log('An error occurred:', error);
+          //   errorAlert(
+          //     '로그인 실패',
+          //     '서버 오류가 발생했습니다. 다시 시도해주세요.'
+          //   );
+          // }
         });
     }
   }
