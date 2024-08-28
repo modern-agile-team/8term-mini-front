@@ -65,7 +65,7 @@ export const registerSuccessAlert = (title, text) => {
 /**@로그인성공알림창 */
 export const loginSuccessAlert = Swal.mixin({
   toast: true,
-  position: 'top-end',
+  position: 'bottom-end',
   showConfirmButton: false,
   timer: 3000,
   timerProgressBar: true,
@@ -108,7 +108,9 @@ export const confirmWishListAlert = (title, like) => {
 export const confirmLogoutAlert = () => {
   return Swal.fire({
     title: '로그아웃을 하시겠습니까?',
-    icon: 'warning',
+    imageUrl: `${baseUrl}confirmLogout.png`,
+    imageWidth: 273,
+    imageHeight: 98,
     showCancelButton: true,
     confirmButtonText: '확인',
     confirmButtonColor: '#F7F9F3',

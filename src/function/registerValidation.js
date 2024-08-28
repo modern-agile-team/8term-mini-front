@@ -14,13 +14,10 @@ export function validateNickname(nickname) {
 }
 
 // 아이디 유효성 검사
-export function validateId(id, isIdChecked) {
+export function validateId(id) {
   if (!id) return '';
   if (!regex_id.test(id)) {
     return '아이디는 6자 이상 16자 이하, 영어 또는 숫자로 구성되어 있어야 합니다.';
-  }
-  if (!isIdChecked) {
-    return '조건을 충족하는 아이디 입니다. 중복을 확인해주세요.';
   }
   return '';
 }

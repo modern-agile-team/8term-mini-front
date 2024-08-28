@@ -5,7 +5,7 @@ import {
   loginSuccessAlert,
   errorAlert,
 } from '../../public_components/Alert.jsx';
-import axios from 'axios';
+import { basicAxios } from '../../../axios/instance.js';
 
 /**@로그인폼 */
 export default function LoginForm() {
@@ -37,9 +37,10 @@ export default function LoginForm() {
 
   function handleLogin() {
     if (validateField()) {
-      axios
-        .post(`/users/${id}`, { password })
+      basicAxios
+        .post('/users/login', { password })
         .then(response => {
+          console.log(response);
           console.log('User profile', response.data.user);
           console.log('User token', response.data.jwt);
           localStorage.setItem('token', response.data.jwt);
