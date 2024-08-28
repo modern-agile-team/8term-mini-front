@@ -4,7 +4,7 @@ import { HTTP_STATUS } from './statusCode';
 export function resErrorHandler(err) {
   if (err.response && err.response.status) {
     console.log(err.response.status);
-    return HTTP_STATUS[err.response.status]();
+    return HTTP_STATUS[err.response.status](err.response.data);
   }
 
   return Promise.reject(err);
@@ -36,6 +36,7 @@ export function authReqHandler(config) {
 }
 //response값 핸들러
 export function publicResHandler(res) {
+  console.log(res);
   HTTP_STATUS[res.status]();
   return res;
 }
