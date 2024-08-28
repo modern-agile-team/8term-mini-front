@@ -42,11 +42,7 @@ export default function LoginForm() {
       basicAxios
         .post('/users/login', { id: id, password: password })
         .then(response => {
-          console.log(response);
-          // console.log('User profile', response.data.user);
-          console.log('User token', response.data.token);
           localStorage.setItem('token', response.data.token);
-          console.log(parseJwt(response.data.token));
           localStorage.setItem(
             'user',
             JSON.stringify(parseJwt(response.data.token))
