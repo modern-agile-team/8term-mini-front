@@ -7,13 +7,13 @@ import {
 } from './function';
 //베이스  instance
 const basicAxios = axios.create({
-  baseURL: `/api/${import.meta.env.VITE_BACK_BASE_URL}`,
+  baseURL: `/api/`,
   withCredentials: true,
   timeout: 3000,
 });
 //인증용 instance
 const authAxios = axios.create({
-  baseURL: `/api/${import.meta.env.VITE_BACK_BASE_URL}`,
+  baseURL: `/api/`,
   withCredentials: true,
   timeout: 3000,
 });
