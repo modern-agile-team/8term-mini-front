@@ -11,8 +11,8 @@ export const HTTP_STATUS = {
     console.log('Success No Content');
   },
   400: msg => {
-    console.error(msg.error);
-    return Promise.reject(msg.error);
+    console.error(msg);
+    return Promise.reject(msg);
   },
   403: msg => {
     console.error(msg);
