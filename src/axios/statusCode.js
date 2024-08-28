@@ -2,7 +2,10 @@
 import { warningAlert } from '../components/public_components/Alert';
 export const HTTP_STATUS = {
   200: () => {
-    console.log('%cSuccess', 'color:white; background-color:green ');
+    console.log(
+      '%cSuccess',
+      'color:white; background-color:green; font-weight:bold '
+    );
   },
   201: () => {
     console.log('Success Created');
@@ -11,22 +14,21 @@ export const HTTP_STATUS = {
     console.log('Success No Content');
   },
   400: msg => {
-    console.error(msg.error);
-    return Promise.reject(msg.error);
+    return Promise.reject(msg);
   },
   403: msg => {
     console.error(msg);
     warningAlert('요청 권한이 없습니다');
-    return Promise.reject(new Error('권한이 없습니다'));
+    return Promise.reject(msg);
   },
   404: msg => {
     console.error(msg);
     warningAlert('존재하지 않는 요청입니다.');
-    return Promise.reject(new Error('존재하지 않는 요청입니다.'));
+    return Promise.reject(msg);
   },
   409: msg => {
     console.error(msg);
-    return Promise.reject(new Error('요청중복'));
+    return Promise.reject(msg);
   },
   500: msg => {
     console.error(msg);
@@ -35,6 +37,6 @@ export const HTTP_STATUS = {
         window.location = '/';
       }
     });
-    return Promise.reject(new Error('서버 에러 발생'));
+    return Promise.reject(msg);
   },
 };

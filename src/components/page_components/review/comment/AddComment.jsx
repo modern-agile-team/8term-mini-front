@@ -22,7 +22,9 @@ export default function AddComment({ reviewId, setcommentRerequest }) {
           setcommentRerequest(new Date());
           inputRef.current.value = '';
         })
-        .catch(err => console.error(err.message));
+        .catch(err => {
+          warningAlert(err.data);
+        });
     },
     5000,
     s => {
