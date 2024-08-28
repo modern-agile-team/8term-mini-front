@@ -28,7 +28,7 @@ export default function CommentModal({
     document.body.style.overflowY = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
     basicAxios
-      .get(`/reviews/${reviewData.reviewId}/comments?page=${page}`)
+      .get(`/reviews/${reviewData.reviewId}/comments?page=${page}&size=4`)
       .then(res => {
         setTotalCount(res.data.totalCount);
         setCommnets(res.data.comments);
