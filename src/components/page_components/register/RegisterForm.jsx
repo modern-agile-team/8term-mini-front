@@ -69,8 +69,6 @@ export default function RegisterForm() {
           confirmPassword: confirmPassword,
         })
         .then(response => {
-          console.log('User profile', response.user);
-          console.log('User registration :', response.message);
           registerSuccessAlert();
           navigate('/login');
         })
@@ -89,7 +87,7 @@ export default function RegisterForm() {
 
   function handleCheckId() {
     const idError = validateId(id, false);
-    if (idError === '') {
+    if (idError === '조건을 충족하는 아이디 입니다. 중복을 확인해주세요.') {
       basicAxios
         .get(`/users/check-id?id=${id}`)
         .then(response => {
@@ -99,11 +97,8 @@ export default function RegisterForm() {
           }, 50);
         })
         .catch(error => {
-          if (error.response && error.response.status === 409) {
-            setError({ ...error, id: '이미 사용중인 아이디입니다.' });
-          } else {
-            console.log('An error occurred:', error);
-          }
+          setError({ ...error, id: '이미 사용중인 아이디입니다.' });
+          console.log('An error occurred:', error);
           setIsIdChecked(false);
         });
     } else {
