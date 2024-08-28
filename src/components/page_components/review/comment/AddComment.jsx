@@ -17,7 +17,6 @@ export default function AddComment({ reviewId, setcommentRerequest }) {
         .post(`/reviews/${reviewId}/comments`, {
           userId: userId,
           text: inputRef.current.value,
-          reviewId: reviewId,
         })
         .then(() => {
           setcommentRerequest(new Date());
@@ -27,7 +26,10 @@ export default function AddComment({ reviewId, setcommentRerequest }) {
     },
     5000,
     s => {
-      warningAlert('도배하지마라', `${s}초 뒤에 작성가능합니다.`);
+      warningAlert(
+        '연속으로 작성할 수 없습니다.',
+        `${s}초 뒤에 작성가능합니다.`
+      );
     }
   );
   //댓글추가 함수

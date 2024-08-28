@@ -25,20 +25,20 @@ export default function ReviewContainer() {
   const [intId] = getUserInfo();
   useEffect(() => {
     //n페이지에 대한 요청을 보냄 n페이지에 대한 정보와 총 데이터 수를 받음
-    basicAxios.get(`/movies/${id}/reviews/?page=${page}&size=2`).then(data => {
+    basicAxios.get(`/movies/${id}/reviews/?page=${page}&size=2`).then(res => {
       //데이터 총 수
-      setTotalItems(data.totalCount);
+      setTotalItems(res.data.totalCount);
       //리뷰데이터
-      setReviews(data.reveiws);
+      setReviews(res.data.reviews);
     });
     //로그인되어있으면 좋아요한 리뷰 가져옴 토큰없으면 에러발생
     authAxios
       .get(`/users/${intId}/review-likes`)
-      .then(data => {
+      .then(res => {
         //유저가 어디에 좋아요 했는지
-        setReviewLikeList(data);
+        setReviewLikeList(res.data);
       })
-      .catch(err => console.error(err.name, err.message));
+      .catch(err => console.error(err));
     //재요청 발생이나 페이지가 바뀌면 해당되는것들 다시 받아옴
   }, [reRequest, page]);
   return (

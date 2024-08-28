@@ -26,9 +26,9 @@ export default function UserProfile() {
     authAxios
       .get(`/users/${userId}`)
       .then(response => {
-        console.log('Current User Information:', response);
-        setUserData(response);
-        setSelectedImage(response.profile || '');
+        console.log('Current User Information:', response.data);
+        setUserData(response.data);
+        setSelectedImage(response.data.profile || '');
       })
       .catch(error => {
         console.error('사용자 정보 불러오기 실패:', error);

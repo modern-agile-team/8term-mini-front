@@ -8,13 +8,13 @@ export default function SearchBar({ setMovies }) {
   const [prevInputData, setPrevInputData] = useState();
   function getSearchData() {
     if (prevInputData !== textRef.current.value) {
-      basicAxios.get(`/movies?title=${textRef.current.value}`).then(data => {
-        if (data.length < 1) {
+      basicAxios.get(`/movies?title=${textRef.current.value}`).then(res => {
+        if (res.data.length < 1) {
           warningAlert('검색 결과가 없습니다');
           return;
         }
-        if (data.length >= 1) {
-          setMovies(data);
+        if (res.data.length >= 1) {
+          setMovies(res.data);
         }
       });
       setPrevInputData(textRef.current.value);
