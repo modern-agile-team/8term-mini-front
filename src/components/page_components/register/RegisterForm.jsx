@@ -69,8 +69,6 @@ export default function RegisterForm() {
           confirmPassword: confirmPassword,
         })
         .then(response => {
-          console.log('User profile', response.user);
-          console.log('User registration :', response.message);
           registerSuccessAlert();
           navigate('/login');
         })

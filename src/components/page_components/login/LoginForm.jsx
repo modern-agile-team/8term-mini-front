@@ -38,7 +38,7 @@ export default function LoginForm() {
   function handleLogin() {
     if (validateField()) {
       basicAxios
-        .post('/users/login', { password })
+        .post('/users/login', { id: id, password: password })
         .then(response => {
           console.log(response);
           console.log('User profile', response.data.user);
