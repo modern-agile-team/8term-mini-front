@@ -24,9 +24,9 @@ export function authReqHandler(config) {
         '토큰이 만료되었습니다. 새로고침 후 다시 로그인을 시도해주세요.'
       );
       localStorage.removeItem('token');
-      return config;
     }
     config.headers['Authorization'] = `Bearer ${accessToken}`;
+    return config;
   }
 
   // 토큰 만료 여부 확인 함수
