@@ -11,11 +11,12 @@ export default function MovieContainer() {
   const [wishList, setWishList] = useState();
   const [reRequest, setReRequest] = useState();
   //영화 데이터 불러오기
+
   useEffect(() => {
     basicAxios
       .get('/movies')
-      .then(data => {
-        setMovies(data);
+      .then(res => {
+        setMovies(res.data);
       })
       .catch(err => {
         console.error(err);
@@ -25,8 +26,8 @@ export default function MovieContainer() {
   useEffect(() => {
     authAxios
       .get(`/users/${userId}/wish-lists`)
-      .then(data => {
-        setWishList(data);
+      .then(res => {
+        setWishList(res.data);
       })
       .catch(err => {
         console.error(err);

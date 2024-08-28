@@ -10,12 +10,18 @@ export const HTTP_STATUS = {
   204: () => {
     console.log('Success No Content');
   },
+  400: () => {
+    return Promise.reject(new Error('클라이언트 에러'));
+  },
+  403: () => {
+    warningAlert('요청 권한이 없습니다');
+    return Promise.reject(new Error('권한이 없습니다'));
+  },
   404: () => {
     warningAlert('존재하지 않는 요청입니다.');
     return Promise.reject(new Error('존재하지 않는 요청입니다.'));
   },
   409: () => {
-    warningAlert('중복된 요청입니다');
     return Promise.reject(new Error('요청중복'));
   },
   500: () => {

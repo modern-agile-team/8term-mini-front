@@ -7,7 +7,7 @@ export function resErrorHandler(err) {
     return HTTP_STATUS[err.response.status]();
   }
 
-  return Promise.reject(err.response);
+  return Promise.reject(err);
 }
 //authAxios 요청 핸들러
 export function authReqHandler(config) {

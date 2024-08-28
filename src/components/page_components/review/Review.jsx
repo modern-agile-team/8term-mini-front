@@ -37,11 +37,8 @@ export default function Review({ reviewData, isLiked }) {
           setReRequest(new Date());
         });
     } else {
-      console.log(isLiked.reviewLikeId);
       authAxios
-        .delete(
-          `/users/my/review-likes/?userId=${userId}&reviewId=${reviewData.reviewId}`
-        )
+        .delete(`/users/my/review-likes/${isLiked.reviewLikeId}`)
         .then(() => {
           setReRequest(new Date());
         });

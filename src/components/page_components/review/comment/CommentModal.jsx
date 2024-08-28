@@ -28,9 +28,9 @@ export default function CommentModal({
     window.addEventListener('keydown', handleKeyDown);
     basicAxios
       .get(`/reviews/${reviewData.reviewId}/comments?page=${page}`)
-      .then(data => {
-        setTotalCount(data.totalCount);
-        setCommnets(data.comments);
+      .then(res => {
+        setTotalCount(res.data.totalCount);
+        setCommnets(res.data.comments);
       });
     return () => {
       setReRequest(new Date());
