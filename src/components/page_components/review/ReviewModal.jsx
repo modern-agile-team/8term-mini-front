@@ -7,6 +7,7 @@ import getUserInfo from '../../../function/getUserInfo';
 import { ReFetchContext } from './contextAPI/ReviewContext';
 import textValidation from '../../../function/textValidation';
 import { useThrottle } from '../../../hooks/useThrottle';
+import { warningAlert } from '../../public_components/Alert';
 
 export default function ReviewModal({
   toggleReviewModal,
@@ -17,7 +18,7 @@ export default function ReviewModal({
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   const { id } = useParams();
   const textRef = useRef();
-  const [userId, userStrId, nickName] = getUserInfo();
+  const [userId, userStrId, nickName, profile] = getUserInfo();
   const [textLength, setTextLength] = useState(0);
   const { setReRequest } = useContext(ReFetchContext);
   const AddReview = useThrottle(
@@ -32,11 +33,11 @@ export default function ReviewModal({
           setReRequest(new Date());
           toggleReviewModal();
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error(err.data));
     },
     10000,
     nextRunTime => {
-      console.log(nextRunTime);
+      warningAlert('아직 리뷰를 쓸 수 없습니다.', `${nextRunTime}초 뒤에 가능`);
     }
   );
   function charCount(e) {
@@ -48,10 +49,10 @@ export default function ReviewModal({
     }
   }
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflowY = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflowY = 'auto';
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
@@ -66,6 +67,9 @@ export default function ReviewModal({
       .then(() => {
         setReRequest(new Date());
         toggleReviewModal();
+      })
+      .catch(err => {
+        console.error(err.data);
       });
   }
   return (
