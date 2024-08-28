@@ -23,7 +23,7 @@ export const errorAlert = (title, text) => {
 
 /**@경고알림창 */
 export const warningAlert = (title, text) => {
-  Swal.fire({
+  return Swal.fire({
     title: title,
     text: text,
     icon: 'warning',

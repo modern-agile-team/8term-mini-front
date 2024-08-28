@@ -3,16 +3,15 @@ import { HTTP_STATUS } from './statusCode';
 //응답 에러핸들러
 export function resErrorHandler(err) {
   if (err.response && err.response.status) {
-    HTTP_STATUS[err.response.status];
-  } else {
-    console.log('에러 상태 코드가 없습니다.');
+    console.log(err.response.status);
+    return HTTP_STATUS[err.response.status]();
   }
-  return Promise.reject(err);
+
+  return Promise.reject(err.response);
 }
 //authAxios 요청 핸들러
 export function authReqHandler(config) {
   //토큰 가져오기
-
   const accessToken = localStorage.getItem('token') || null;
   //엑세스 토큰 검증 로직
   if (accessToken) {

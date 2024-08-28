@@ -2,10 +2,12 @@ import { useRef, useContext, useEffect } from 'react';
 import * as S from './ReviewStyled';
 import { useParams } from 'react-router-dom';
 import { authAxios } from '../../../axios/instance';
-import { warningAlert } from '../../public_components/Alert';
 import { useState } from 'react';
 import getUserInfo from '../../../function/getUserInfo';
 import { ReFetchContext } from './contextAPI/ReviewContext';
+import textValidation from '../../../function/textValidation';
+import { useThrottle } from '../../../hooks/useThrottle';
+
 export default function ReviewModal({
   toggleReviewModal,
   textValue,
@@ -18,37 +20,45 @@ export default function ReviewModal({
   const [userId, userStrId, nickName] = getUserInfo();
   const [textLength, setTextLength] = useState(0);
   const { setReRequest } = useContext(ReFetchContext);
+  const AddReview = useThrottle(
+    () => {
+      textValidation(textRef.current.value, 255);
+      authAxios
+        .post(`/movies/${id}/reviews`, {
+          userId: userId,
+          text: textRef.current.value,
+        })
+        .then(() => {
+          setReRequest(new Date());
+          toggleReviewModal();
+        })
+        .catch(err => console.error(err));
+    },
+    10000,
+    nextRunTime => {
+      console.log(nextRunTime);
+    }
+  );
   function charCount(e) {
     setTextLength(e.target.value.length);
   }
+  function handleKeyDown(e) {
+    if (e.key === 'Escape') {
+      toggleReviewModal();
+    }
+  }
   useEffect(() => {
     document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
     return () => {
       document.body.style.overflow = 'auto';
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
   //add모드일때 쓰는 함수
-  function AddReview() {
-    if (!textRef.current.value) {
-      warningAlert('입력값 없음', '텍스트를 입력해주세요');
-      return;
-    }
-    authAxios
-      .post(`/movies/${id}/reviews`, {
-        userId: userId,
-        text: textRef.current.value,
-      })
-      .then(() => {
-        setReRequest(new Date());
-        toggleReviewModal();
-      });
-  }
   //edit모드일때 쓰는 함수
   function editReview() {
-    if (!textRef.current.value) {
-      warningAlert('입력값 없음', '텍스트를 입력해주세요');
-      return;
-    }
+    textValidation(textRef.current.value, 255);
     authAxios
       .patch(`/users/my/reviews/${reviewId}`, {
         text: textRef.current.value,

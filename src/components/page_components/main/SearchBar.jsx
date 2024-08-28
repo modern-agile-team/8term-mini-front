@@ -2,7 +2,7 @@ import * as S from './MainStyled';
 import { basicAxios } from '../../../axios/instance';
 import { useRef, useState } from 'react';
 import { warningAlert } from '../../public_components/Alert';
-export default function SearchBar({ setMovieData }) {
+export default function SearchBar({ setMovies }) {
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
   const textRef = useRef();
   const [prevInputData, setPrevInputData] = useState();
@@ -14,7 +14,7 @@ export default function SearchBar({ setMovieData }) {
           return;
         }
         if (data.length >= 1) {
-          setMovieData(data);
+          setMovies(data);
         }
       });
       setPrevInputData(textRef.current.value);
@@ -31,11 +31,9 @@ export default function SearchBar({ setMovieData }) {
             getSearchData();
           }
         }}
-      ></S.SearchBarInput>
-      <S.SearchBarImg
-        src={`${baseUrl}search.png`}
-        onClick={getSearchData}
-      ></S.SearchBarImg>
+        list="movieName"
+      />
+      <S.SearchBarImg src={`${baseUrl}search.png`} onClick={getSearchData} />
     </S.SearchBarDiv>
   );
 }
