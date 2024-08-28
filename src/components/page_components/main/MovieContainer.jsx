@@ -6,17 +6,7 @@ import SearchBar from './SearchBar.jsx';
 import getUserInfo from '../../../function/getUserInfo.js';
 import MovieSortBar from './MovieSortBar.jsx';
 export default function MovieContainer() {
-  //임시 로그인
-  localStorage.setItem('token', 'sadasdjkfhsadkjfhasieulf');
-  localStorage.setItem(
-    'user',
-    JSON.stringify({
-      user_id: 1,
-      id: 'dg1418',
-      nickName: '관리자',
-      profile: 'profileimg1.png',
-    })
-  );
+ 
   const [userId] = getUserInfo();
   const [movies, setMovies] = useState([]);
   const [wishList, setWishList] = useState();
