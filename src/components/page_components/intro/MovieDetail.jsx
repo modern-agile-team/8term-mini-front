@@ -9,13 +9,8 @@ export default function MovieDetail() {
   const [movie, setMovie] = useState();
 
   useEffect(() => {
-<<<<<<< HEAD
-    basicAxios.get(`/movies/${id}`).then(data => {
-      setMovie(data);
-=======
     basicAxios.get(`/movies/${id}`).then(res => {
       setMovie(res.data);
->>>>>>> da9d3386a83c658fe2c272bb7698e852d36ce606
     });
   }, []);
 
