@@ -17,17 +17,16 @@ export default function Comment({ commentData, setcommentRerequest }) {
   return (
     <>
       <S.ReviewColumnDiv>
-        <S.ReviewRowDiv $fontSize="16px" $marginRight="7px">
+        <S.ReviewRowDiv $fontSize="16px" $width="width:160px">
           {commentData.nickname}
         </S.ReviewRowDiv>
-        <S.ReviewRowDiv $color="#8D8D8D" $fontWeight="400" $marginRight="100px">
+        <S.ReviewRowDiv $color="#8D8D8D" $fontWeight="400" $width="width:160px">
           ({commentData.id.slice(0, 3)}*****)
         </S.ReviewRowDiv>
         <S.ReviewRowDiv
           $aliginSelf="center"
-          $marginRight="auto"
           $fontWeight="400"
-          $width="width:60%;"
+          $marginRight="auto"
         >
           {commentData.text}
         </S.ReviewRowDiv>
