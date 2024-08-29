@@ -59,7 +59,9 @@ export default function CommentModal({
               {/*컬럼1 유저 프사, 닉네임, 아이디 일부가 들어가는 행*/}
               <S.ReviewColumnDiv>
                 <S.ReviewRowDiv $marginRight="7px">
-                  <S.ReviewImg src={`${baseUrl}profileimg.png`}></S.ReviewImg>
+                  <S.ReviewImg
+                    src={`${baseUrl}${reviewData.profile}`}
+                  ></S.ReviewImg>
                 </S.ReviewRowDiv>
                 <S.ReviewRowDiv $fontSize="20px" $marginRight="7px">
                   {reviewData.nickname}
