@@ -56,6 +56,7 @@ export function authReqHandler(config) {
 
 //response값 핸들러
 export function publicResHandler(res) {
+  console.log(res);
   HTTP_STATUS[res.status]();
   return res;
 }
