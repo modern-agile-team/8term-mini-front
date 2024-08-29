@@ -17,7 +17,7 @@
 
 ## 사용 라이브러리,프레임워크
 
-- React(Vite), Styled-Component, Axios, React-Route-Dom
+- React(Vite), Styled-Component, Axios, React-Route-Dom, React-icons, Sweetalert2
 
 ## 브랜치 전략
 

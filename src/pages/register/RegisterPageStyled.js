@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 /**회원가입 페이지 div 요소 정렬 */
-export const ResisterPageDiv = styled.div`
+export const RegisterPageDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,7 +23,7 @@ export const LogoImg = styled.img`
 `;
 
 /**SIGN UP 텍스트 */
-export const ResisterFont = styled.div`
+export const RegisterFont = styled.div`
   font-family: countach, sans-serif;
   font-size: 30px;
   color: #ffffff;

@@ -2,8 +2,11 @@ a {
   text-decoration: none;
 }
 body {
-  margin: 0;
+  margin: auto;
+  padding: auto;
   background-color: #000000;
+  size: 100%;
+  overflow-x: hidden;
 }
 /**프리텐다드 폰트입니다.*/
 @font-face {
