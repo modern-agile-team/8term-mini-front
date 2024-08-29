@@ -3,9 +3,11 @@ import * as S from './MyPageStyled';
 import UserModal from './UserModal';
 import { userValidation } from '../../../function/userValidation';
 import { authAxios } from '../../../axios/instance';
-import { Navigate } from 'react-router-dom';
 import { successAlert } from '../../public_components/Alert';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { mypageConfirmLoginAlert } from '../../public_components/Alert';
+
+import { useNavigate } from 'react-router-dom';
 
 export default function UserProfile() {
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
@@ -21,23 +23,37 @@ export default function UserProfile() {
     ? JSON.parse(localStorage.getItem('user')).user_id
     : null;
 
-  // 현재 유저 정보 불러오기
-  useEffect(() => {
-    authAxios
-      .get(`/users/${userId}`)
-      .then(response => {
-        console.log('Current User Information:', response.data);
-        setUserData(response.data);
-        setSelectedImage(response.data.profile || '');
-      })
-      .catch(error => {
-        console.error('사용자 정보 불러오기 실패:', error);
-      });
-  }, [token, userId]);
+  const navigate = useNavigate();
 
-  if (!token || !userId) {
-    return <Navigate to="/login" replace />;
-  }
+  // 마이페이지 접근 시 로그인 여부 확인
+  useEffect(() => {
+    if (!token || !userId) {
+      // 로그인되지 않은 경우 알림창 표시
+      mypageConfirmLoginAlert(
+        '로그인 필요',
+        '마이페이지에 접근하려면 로그인이 필요합니다.',
+        '로그인',
+        '취소'
+      ).then(result => {
+        if (result.isConfirmed) {
+          navigate('/login', { replace: true, state: { from: '/mypage' } });
+        } else {
+          navigate('/', { replace: true });
+        }
+      });
+    } else {
+      // 현재 유저 정보 불러오기
+      authAxios
+        .get(`/users/${userId}`)
+        .then(response => {
+          setUserData(response.data);
+          setSelectedImage(response.data.profile || '');
+        })
+        .catch(error => {
+          console.error('사용자 정보 불러오기 실패:', error);
+        });
+    }
+  }, [token, userId, navigate]);
 
   if (!userData) {
     return <div style={{ color: 'white' }}>Loading...</div>;
@@ -72,7 +88,6 @@ export default function UserProfile() {
         profile: selectedImage,
       })
       .then(response => {
-        console.log('Modified User Information:', response.userInfo);
         successAlert('수정 성공!', '사용자 님의 정보 수정이 완료되었습니다.');
         setIsEditing(false);
       })
