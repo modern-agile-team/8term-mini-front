@@ -150,3 +150,15 @@ export const tokenExpirationAlert = (title, text, confirm, cancel) => {
     }
   });
 };
+
+/**@마이페이지로그인필요알림창 */
+export const mypageConfirmLoginAlert = (title, text, confirm, cancel) => {
+  return Swal.fire({
+    title: title,
+    text: text,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: confirm,
+    cancelButtonText: cancel,
+  });
+};
