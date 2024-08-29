@@ -12,7 +12,7 @@ export default function UserProfile() {
   const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [confirmPassword, setPasswordConfirm] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
@@ -58,7 +58,7 @@ export default function UserProfile() {
 
   // '완료' 버튼을 클릭 시 유저 정보 업데이트
   function handleCompleteClick() {
-    const isValid = userValidation(userData, passwordConfirm);
+    const isValid = userValidation(userData, confirmPassword);
 
     if (!isValid) {
       return;
@@ -67,7 +67,7 @@ export default function UserProfile() {
     authAxios
       .put(`/users/${userId}`, {
         password: userData.password,
-        passwordConfirm: passwordConfirm,
+        confirmPassword: confirmPassword,
         nickname: userData.nickname,
         profile: selectedImage,
       })
@@ -164,9 +164,9 @@ export default function UserProfile() {
               <S.PasswordContainerDiv>
                 <S.labelDiv>비밀번호 확인</S.labelDiv>
                 <S.PasswordInput
-                  name="passwordConfirm"
+                  name="confirmPassword"
                   type={showConfirmPassword ? 'text' : 'password'}
-                  value={passwordConfirm}
+                  value={confirmPassword}
                   onChange={handlePasswordConfirmChange}
                   disabled={!isEditing}
                   $isEditing={isEditing}
