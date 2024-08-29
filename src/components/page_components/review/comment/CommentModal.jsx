@@ -5,6 +5,7 @@ import { useState, useEffect, useContext } from 'react';
 import { basicAxios } from '../../../../axios/instance';
 import AddComment from './AddComment.jsx';
 import { ReFetchContext } from '../contextAPI/ReviewContext.js';
+import { warningAlert } from '../../../public_components/Alert.jsx';
 
 export default function CommentModal({
   reviewData,
@@ -24,17 +25,20 @@ export default function CommentModal({
     }
   }
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflowY = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
     basicAxios
-      .get(`/reviews/${reviewData.reviewId}/comments?page=${page}`)
+      .get(`/reviews/${reviewData.reviewId}/comments?page=${page}&size=4`)
       .then(res => {
         setTotalCount(res.data.totalCount);
         setCommnets(res.data.comments);
+      })
+      .catch(err => {
+        console.error(err.data);
       });
     return () => {
       setReRequest(new Date());
-      document.body.style.overflow = 'auto';
+      document.body.style.overflowY = 'auto';
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [commentRerequest, page]);
@@ -120,7 +124,7 @@ export default function CommentModal({
               setPage={setPage}
               totalItems={totalCount || 1}
               color="black"
-              size={5}
+              size={4}
             />
             <AddComment
               reviewId={reviewData.reviewId}

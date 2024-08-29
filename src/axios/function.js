@@ -5,7 +5,6 @@ import { parseJwt } from '../function/parseJwt';
 //응답 에러핸들러
 export function resErrorHandler(err) {
   if (err.response && err.response.status) {
-    console.log(err.response.status);
     return HTTP_STATUS[err.response.status](err.response.data);
   }
 
@@ -20,9 +19,6 @@ export function authReqHandler(config) {
   if (accessToken) {
     // 토큰 만료 여부 확인
     if (isTokenExpired(accessToken)) {
-      console.log(
-        '토큰이 만료되었습니다. 새로고침 후 다시 로그인을 시도해주세요.'
-      );
       localStorage.removeItem('token');
       localStorage.removeItem('user');
     }
@@ -60,7 +56,6 @@ export function authReqHandler(config) {
 
 //response값 핸들러
 export function publicResHandler(res) {
-  console.log(res);
   HTTP_STATUS[res.status]();
   return res;
 }
