@@ -1,5 +1,5 @@
 //상태코드별 에러핸들링 여기에 함수 작성
-import { warningAlert } from '../components/public_components/Alert';
+import { tokenExpirationAlert } from '../components/public_components/Alert';
 export const HTTP_STATUS = {
   200: () => {
     console.log('%cSuccess', 'color:white; background-color:green ');
@@ -16,7 +16,15 @@ export const HTTP_STATUS = {
   },
   403: msg => {
     console.error(msg);
-    warningAlert('요청 권한이 없습니다');
+    if (msg.error === '유효하지 않거나 만료된 토큰입니다.') {
+      tokenExpirationAlert(
+        '토큰이 만료되었습니다.',
+        '새로고침 후 다시 로그인을 시도해주세요.',
+        '확인',
+        '취소'
+      );
+    }
+    // warningAlert('요청 권한이 없습니다');
     return Promise.reject(new Error('권한이 없습니다'));
   },
   404: msg => {

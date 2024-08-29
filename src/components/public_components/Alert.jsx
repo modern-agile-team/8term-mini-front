@@ -132,3 +132,21 @@ export const confirmLogoutAlert = () => {
     },
   });
 };
+
+/**@토큰만료알림창 */
+export const tokenExpirationAlert = (title, text, confirm, cancel) => {
+  return Swal.fire({
+    title: title,
+    text: text,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: confirm,
+    cancelButtonText: cancel,
+  }).then(result => {
+    if (result.isConfirmed) {
+      window.location.href = '/login';
+    } else {
+      window.location.reload(true);
+    }
+  });
+};
