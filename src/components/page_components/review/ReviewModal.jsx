@@ -72,6 +72,7 @@ export default function ReviewModal({
         console.error(err.data);
       });
   }
+  console.log(profile);
   return (
     <>
       <S.ModalContainer
@@ -85,7 +86,7 @@ export default function ReviewModal({
         <S.ModalContent>
           <S.ReviewColumnDiv>
             <S.ReviewRowDiv $marginRight="7px">
-              <S.ReviewImg src={`${baseUrl}profileimg.png`}></S.ReviewImg>
+              <S.ReviewImg src={`${baseUrl}${profile}`}></S.ReviewImg>
             </S.ReviewRowDiv>
             <S.ReviewRowDiv $fontSize="20px" $marginRight="7px">
               {nickName}

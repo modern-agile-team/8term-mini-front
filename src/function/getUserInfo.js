@@ -3,7 +3,7 @@ export default function getUserInfo() {
   const user = JSON.parse(localStorage.getItem('user'));
   //유저가 있으면 다음 리턴
   if (user) {
-    return [user.user_id, user.id, user.nickname, user.profileimg];
+    return [user.user_id, user.id, user.nickname, user.profile];
   }
-  return [null, null, null];
+  return [null, null, null, null];
 }

@@ -29,6 +29,7 @@ export default function ReviewContainer() {
       //데이터 총 수
       setTotalItems(res.data.totalCount);
       //리뷰데이터
+      console.log(res.data.reviews);
       setReviews(res.data.reviews);
     });
     //로그인되어있으면 좋아요한 리뷰 가져옴 토큰없으면 에러발생
