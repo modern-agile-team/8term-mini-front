@@ -44,10 +44,10 @@ export function authReqHandler(config) {
   //요청이 POST, DELETE ,PUT 등등일때는 얼럿창도 띄움
   if (!(config.method === 'get')) {
     confirmLoginAlert(
-      '로그인 필요',
       '로그인이 필요한 기능입니다.',
-      '로그인 페이지 이동',
-      '확인'
+      '로그인 페이지로 이동하기',
+      '확인',
+      '취소'
     );
   }
   //Promise.reject로 에러메세지 반환
