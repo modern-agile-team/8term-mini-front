@@ -6,8 +6,8 @@ import { authAxios } from '../../../axios/instance';
 import { successAlert } from '../../public_components/Alert';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { mypageConfirmLoginAlert } from '../../public_components/Alert';
-
 import { useNavigate } from 'react-router-dom';
+import { parseJwt } from '../../../function/parseJwt';
 
 export default function UserProfile() {
   const baseUrl = import.meta.env.VITE_IMG_BASE_URL;
@@ -72,7 +72,6 @@ export default function UserProfile() {
     setIsEditing(true);
   }
 
-  // '완료' 버튼을 클릭 시 유저 정보 업데이트
   function handleCompleteClick() {
     const isValid = userValidation(userData, confirmPassword);
 
@@ -80,15 +79,32 @@ export default function UserProfile() {
       return;
     }
 
+    // 비밀번호가 입력되지 않은 경우 기존 비밀번호를 유지
+    const passwordToUpdate = userData.password ? userData.password : undefined;
+    const confirmPasswordToUpdate = confirmPassword
+      ? confirmPassword
+      : undefined;
+
+    // 유저 정보 수정
     authAxios
       .put(`/users/${userId}`, {
-        password: userData.password,
-        confirmPassword: confirmPassword,
+        password: passwordToUpdate,
+        confirmPassword: confirmPasswordToUpdate,
         nickname: userData.nickname,
         profile: selectedImage,
       })
       .then(response => {
+        // 백엔드에서 새로운 토큰 발급해준 것으로 업데이트
+        const newToken = response.data.token;
+        localStorage.setItem('token', newToken);
+
+        // 새로운 토큰을 파싱하여 유저 정보 업데이트
+        const parsedUser = parseJwt(newToken);
+        localStorage.setItem('user', JSON.stringify(parsedUser));
+
+        // 성공 알림 및 상태 업데이트
         successAlert('수정 성공!', '사용자 님의 정보 수정이 완료되었습니다.');
+        setPasswordConfirm('');
         setIsEditing(false);
       })
       .catch(error => {
